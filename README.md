@@ -4,6 +4,6 @@ Projet Atelier 1
 
 # Groupe
 * AUBRY Cyprien
-* BAIER Godfroy
+* BAIER Geoffrey
 * BINET Paul
 * WILMOUTH Steven
