@@ -1,0 +1,38 @@
+@import "vars";
+
+$bgdefault: #16a085 !default;
+$bgsuccess: #27ae60 !default;
+$bgerror: #d35400 !default;
+$bginfos: #2980b9 !default;
+$bgdanger: red !default;
+$alert_text_color: #fff !default;
+
+.alert {
+  width: 100%;
+  background-color: $bgdefault;
+  margin: 10px 0;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid darken($bgdefault, 10);
+  color: $alert_text_color;
+}
+
+.alert-success {
+  background-color: $bgsuccess;
+  border: 1px solid darken($bgsuccess, 10);
+}
+
+.alert-error {
+  background-color: $bgerror;
+  border: 1px solid darken($bgerror, 10);
+}
+
+.alert-danger {
+  background-color: $bgdanger;
+  border: 1px solid darken($bgdanger, 10);
+}
+
+.alert-info {
+  background-color: $bginfos;
+  border: 1px solid darken($bginfos, 10);
+}
