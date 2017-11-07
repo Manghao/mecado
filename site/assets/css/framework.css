@@ -1,0 +1,794 @@
+/*
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com
+Twitter: @rich_clark
+*/
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent; }
+
+body {
+  line-height: 1; }
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+nav ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent; }
+
+/* change colours to suit your needs */
+ins {
+  background-color: #ff9;
+  color: #000;
+  text-decoration: none; }
+
+/* change colours to suit your needs */
+mark {
+  background-color: #ff9;
+  color: #000;
+  font-style: italic;
+  font-weight: bold; }
+
+del {
+  text-decoration: line-through; }
+
+abbr[title], dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* change border colour to suit your needs */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #cccccc;
+  margin: 1em 0;
+  padding: 0; }
+
+input, select {
+  vertical-align: middle; }
+
+/**
+* $bgdefault : background color alerts and button defefault
+* $bgsuccess : background color alerts and button success
+* $bgerror : background color alerts and button error
+* $bginfos : background color alerts and button infos
+* $bgdanger : background color alerts and button danger
+* $alert_text_color : text color for alerts
+* $btn_text_color : text color for buttons
+* $btnradius : radius for buttons
+* $max_columns : columns number
+* $columns_spacing : space beetween columns
+* $header_max_size: font-size header (h1, h2, h3, h4, h5, h6)
+* $header_interval: font-size interval;
+* $color_small_header: text color for small header;
+* $size_small_header: font-size small header;
+* $text_color: text color for header;
+* $font_size: default font-size;
+* $font: font for header
+* $bgcolor: background color for navbar
+* $link_color: text color for link in navbar
+* $mark: color for mark
+* $del: color for del
+* $ins: color for ins;
+* $quote_border_color: border color for quote;
+* $text_color: text color;
+* $font_size: font-size for text;
+* $font: font fotr text
+*/
+/**
+* $bgdefault : background color alerts and button defefault
+* $bgsuccess : background color alerts and button success
+* $bgerror : background color alerts and button error
+* $bginfos : background color alerts and button infos
+* $bgdanger : background color alerts and button danger
+* $alert_text_color : text color for alerts
+* $btn_text_color : text color for buttons
+* $btnradius : radius for buttons
+* $max_columns : columns number
+* $columns_spacing : space beetween columns
+* $header_max_size: font-size header (h1, h2, h3, h4, h5, h6)
+* $header_interval: font-size interval;
+* $color_small_header: text color for small header;
+* $size_small_header: font-size small header;
+* $text_color: text color for header;
+* $font_size: default font-size;
+* $font: font for header
+* $bgcolor: background color for navbar
+* $link_color: text color for link in navbar
+* $mark: color for mark
+* $del: color for del
+* $ins: color for ins;
+* $quote_border_color: border color for quote;
+* $text_color: text color;
+* $font_size: font-size for text;
+* $font: font fotr text
+*/
+.btn {
+  width: 100px;
+  height: 30px;
+  margin: 10px 0;
+  border-radius: 3px;
+  transition: opacity 0.5s;
+  display: block;
+  line-height: 30px;
+  padding: 0 10px;
+  background-color: #16a085;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  text-align: center; }
+  .btn:hover {
+    opacity: 0.9;
+    cursor: pointer; }
+
+.btn-lg {
+  width: 150px;
+  height: 30px;
+  margin: 10px 0;
+  border-radius: 3px;
+  transition: opacity 0.5s;
+  display: block;
+  line-height: 30px;
+  padding: 10px 10px;
+  background-color: #16a085;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  text-align: center; }
+  .btn-lg:hover {
+    opacity: 0.9;
+    cursor: pointer; }
+
+.btn-sm {
+  width: 100px;
+  height: 10px;
+  margin: 10px 0;
+  border-radius: 3px;
+  transition: opacity 0.5s;
+  display: block;
+  line-height: 10px;
+  padding: 5px 5px;
+  background-color: #16a085;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  text-align: center; }
+  .btn-sm:hover {
+    opacity: 0.9;
+    cursor: pointer; }
+
+.btn-el {
+  width: 100%;
+  height: 30px;
+  margin: 10px 0;
+  border-radius: 3px;
+  transition: opacity 0.5s;
+  display: block;
+  line-height: 30px;
+  padding: 0 10px;
+  background-color: #16a085;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  text-align: center;
+  box-sizing: border-box; }
+  .btn-el:hover {
+    opacity: 0.9;
+    cursor: pointer; }
+
+.btn-success {
+  background-color: #27ae60;
+  border: 1px solid #1e8449; }
+
+.btn-error {
+  background-color: #d35400;
+  border: 1px solid #a04000; }
+
+.btn-danger {
+  background-color: red;
+  border: 1px solid #cc0000; }
+
+.btn-info {
+  background-color: #2980b9;
+  border: 1px solid #20638f; }
+
+.btn-flat {
+  border-radius: 0px;
+  border: 0px solid; }
+
+.btn-fancy {
+  box-shadow: 0px 6px 0px grey; }
+  .btn-fancy:active {
+    transform: translate(0, 3px);
+    box-shadow: 0px 3px 0px #676767; }
+  .btn-fancy.btn-success {
+    box-shadow: 0px 6px 0px #1e8449; }
+    .btn-fancy.btn-success:active {
+      transform: translate(0, 3px);
+      box-shadow: 0px 3px 0px #1e8449; }
+  .btn-fancy.btn-error {
+    box-shadow: 0px 6px 0px #a04000; }
+    .btn-fancy.btn-error:active {
+      transform: translate(0, 3px);
+      box-shadow: 0px 3px 0px #a04000; }
+  .btn-fancy.btn-danger {
+    box-shadow: 0px 6px 0px #cc0000; }
+    .btn-fancy.btn-danger:active {
+      transform: translate(0, 3px);
+      box-shadow: 0px 3px 0px #cc0000; }
+  .btn-fancy.btn-info {
+    box-shadow: 0px 6px 0px #20638f; }
+    .btn-fancy.btn-info:active {
+      transform: translate(0, 3px);
+      box-shadow: 0px 3px 0px #20638f; }
+
+/**
+* $bgdefault : background color alerts and button defefault
+* $bgsuccess : background color alerts and button success
+* $bgerror : background color alerts and button error
+* $bginfos : background color alerts and button infos
+* $bgdanger : background color alerts and button danger
+* $alert_text_color : text color for alerts
+* $btn_text_color : text color for buttons
+* $btnradius : radius for buttons
+* $max_columns : columns number
+* $columns_spacing : space beetween columns
+* $header_max_size: font-size header (h1, h2, h3, h4, h5, h6)
+* $header_interval: font-size interval;
+* $color_small_header: text color for small header;
+* $size_small_header: font-size small header;
+* $text_color: text color for header;
+* $font_size: default font-size;
+* $font: font for header
+* $bgcolor: background color for navbar
+* $link_color: text color for link in navbar
+* $mark: color for mark
+* $del: color for del
+* $ins: color for ins;
+* $quote_border_color: border color for quote;
+* $text_color: text color;
+* $font_size: font-size for text;
+* $font: font fotr text
+*/
+.alert {
+  width: 100%;
+  background-color: #16a085;
+  margin: 10px 0;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #107360;
+  color: #fff; }
+
+.alert-success {
+  background-color: #27ae60;
+  border: 1px solid #1e8449; }
+
+.alert-error {
+  background-color: #d35400;
+  border: 1px solid #a04000; }
+
+.alert-danger {
+  background-color: red;
+  border: 1px solid #cc0000; }
+
+.alert-info {
+  background-color: #2980b9;
+  border: 1px solid #20638f; }
+
+table {
+  width: 100%; }
+  table td, table th {
+    padding: 5px; }
+  table thead, table tbody, table tfoot {
+    text-align: left; }
+  table tfoot {
+    font-weight: bold; }
+  table.bordered thead tr th, table.bordered tbody tr td, table.bordered tfoot tr td {
+    border: 1px solid #000; }
+  table.centered thead tr th, table.centered tbody tr td, table.centered tfoot tr td {
+    text-align: center; }
+  table.striped tbody tr:nth-child(odd) {
+    background-color: #ccc; }
+  table.highlight tbody tr:hover {
+    background-color: #eee; }
+
+/**
+* $bgdefault : background color alerts and button defefault
+* $bgsuccess : background color alerts and button success
+* $bgerror : background color alerts and button error
+* $bginfos : background color alerts and button infos
+* $bgdanger : background color alerts and button danger
+* $alert_text_color : text color for alerts
+* $btn_text_color : text color for buttons
+* $btnradius : radius for buttons
+* $max_columns : columns number
+* $columns_spacing : space beetween columns
+* $header_max_size: font-size header (h1, h2, h3, h4, h5, h6)
+* $header_interval: font-size interval;
+* $color_small_header: text color for small header;
+* $size_small_header: font-size small header;
+* $text_color: text color for header;
+* $font_size: default font-size;
+* $font: font for header
+* $bgcolor: background color for navbar
+* $link_color: text color for link in navbar
+* $mark: color for mark
+* $del: color for del
+* $ins: color for ins;
+* $quote_border_color: border color for quote;
+* $text_color: text color;
+* $font_size: font-size for text;
+* $font: font fotr text
+*/
+h1, h2, h3, h4, h5, h6 {
+  color: #000;
+  font-family: "Helvetica", "Arial", sans-serif; }
+
+h1 {
+  font-size: 1.8em; }
+  h1 small, h1.small {
+    color: grey;
+    font-size: 0.8em; }
+
+h2 {
+  font-size: 1.6em; }
+  h2 small, h2.small {
+    color: grey;
+    font-size: 0.8em; }
+
+h3 {
+  font-size: 1.4em; }
+  h3 small, h3.small {
+    color: grey;
+    font-size: 0.8em; }
+
+h4 {
+  font-size: 1.2em; }
+  h4 small, h4.small {
+    color: grey;
+    font-size: 0.8em; }
+
+h5 {
+  font-size: 1em; }
+  h5 small, h5.small {
+    color: grey;
+    font-size: 0.8em; }
+
+h6 {
+  font-size: 0.8em; }
+  h6 small, h6.small {
+    color: grey;
+    font-size: 0.8em; }
+
+/**
+* $bgdefault : background color alerts and button defefault
+* $bgsuccess : background color alerts and button success
+* $bgerror : background color alerts and button error
+* $bginfos : background color alerts and button infos
+* $bgdanger : background color alerts and button danger
+* $alert_text_color : text color for alerts
+* $btn_text_color : text color for buttons
+* $btnradius : radius for buttons
+* $max_columns : columns number
+* $columns_spacing : space beetween columns
+* $header_max_size: font-size header (h1, h2, h3, h4, h5, h6)
+* $header_interval: font-size interval;
+* $color_small_header: text color for small header;
+* $size_small_header: font-size small header;
+* $text_color: text color for header;
+* $font_size: default font-size;
+* $font: font for header
+* $bgcolor: background color for navbar
+* $link_color: text color for link in navbar
+* $mark: color for mark
+* $del: color for del
+* $ins: color for ins;
+* $quote_border_color: border color for quote;
+* $text_color: text color;
+* $font_size: font-size for text;
+* $font: font fotr text
+*/
+.left {
+  text-align: left; }
+
+.right {
+  text-align: right; }
+
+.center {
+  text-align: center; }
+
+.justify {
+  text-align: justify; }
+
+.maj {
+  text-transform: uppercase; }
+
+.min {
+  text-transform: lowercase; }
+
+p {
+  margin-bottom: 15px; }
+
+mark {
+  color: #000;
+  background-color: yellow;
+  padding: 5px; }
+
+del {
+  color: grey; }
+
+ins {
+  background-color: green;
+  padding: 5px;
+  text-decoration: underline; }
+
+u {
+  text-decoration: underline; }
+
+strong {
+  font-weight: bold; }
+
+em {
+  font-style: italic; }
+
+abbr {
+  text-decoration: underline;
+  text-decoration-style: dotted; }
+
+ul, ol {
+  margin: 10px 0 10px 0; }
+
+ul li, ol li {
+  margin: 5px 0 0 20px; }
+
+ul.square li, ol.square li {
+  list-style: square; }
+
+ul.no-chip li, ol.no-chip li {
+  list-style: none; }
+
+quote {
+  font-style: italic; }
+
+quote::before, quote::after {
+  content: '"'; }
+
+blockquote {
+  margin: 20px 20px;
+  border: 1px solid #000;
+  padding: 5px; }
+
+code {
+  font-size: 1em;
+  font-weight: 300;
+  color: grey; }
+
+pre {
+  font-size: 1em;
+  font-family: "Helvetica", "Arial", sans-serif;
+  border: 1px solid #000;
+  padding: 5px;
+  display: inline-block;
+  margin: 5px 0; }
+
+kbd {
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-style: italic;
+  display: inline-block;
+  border: 1px dotted #000;
+  padding: 5px; }
+
+/**
+* $bgdefault : background color alerts and button defefault
+* $bgsuccess : background color alerts and button success
+* $bgerror : background color alerts and button error
+* $bginfos : background color alerts and button infos
+* $bgdanger : background color alerts and button danger
+* $alert_text_color : text color for alerts
+* $btn_text_color : text color for buttons
+* $btnradius : radius for buttons
+* $max_columns : columns number
+* $columns_spacing : space beetween columns
+* $header_max_size: font-size header (h1, h2, h3, h4, h5, h6)
+* $header_interval: font-size interval;
+* $color_small_header: text color for small header;
+* $size_small_header: font-size small header;
+* $text_color: text color for header;
+* $font_size: default font-size;
+* $font: font for header
+* $bgcolor: background color for navbar
+* $link_color: text color for link in navbar
+* $mark: color for mark
+* $del: color for del
+* $ins: color for ins;
+* $quote_border_color: border color for quote;
+* $text_color: text color;
+* $font_size: font-size for text;
+* $font: font fotr text
+*/
+.row {
+  width: 100%;
+  display: flex;
+  flex-direction: row; }
+
+.col-1 {
+  flex-basis: 6.33333%;
+  flex-shrink: 1;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3px;
+  padding: 10px;
+  box-sizing: border-box; }
+
+.col-2 {
+  flex-basis: 14.66667%;
+  flex-shrink: 1;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3px;
+  padding: 10px;
+  box-sizing: border-box; }
+
+.col-3 {
+  flex-basis: 23%;
+  flex-shrink: 1;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3px;
+  padding: 10px;
+  box-sizing: border-box; }
+
+.col-4 {
+  flex-basis: 31.33333%;
+  flex-shrink: 1;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3px;
+  padding: 10px;
+  box-sizing: border-box; }
+
+.col-5 {
+  flex-basis: 39.66667%;
+  flex-shrink: 1;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3px;
+  padding: 10px;
+  box-sizing: border-box; }
+
+.col-6 {
+  flex-basis: 48%;
+  flex-shrink: 1;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3px;
+  padding: 10px;
+  box-sizing: border-box; }
+
+.col-7 {
+  flex-basis: 56.33333%;
+  flex-shrink: 1;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3px;
+  padding: 10px;
+  box-sizing: border-box; }
+
+.col-8 {
+  flex-basis: 64.66667%;
+  flex-shrink: 1;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3px;
+  padding: 10px;
+  box-sizing: border-box; }
+
+.col-9 {
+  flex-basis: 73%;
+  flex-shrink: 1;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3px;
+  padding: 10px;
+  box-sizing: border-box; }
+
+.col-10 {
+  flex-basis: 81.33333%;
+  flex-shrink: 1;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3px;
+  padding: 10px;
+  box-sizing: border-box; }
+
+.col-11 {
+  flex-basis: 89.66667%;
+  flex-shrink: 1;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3px;
+  padding: 10px;
+  box-sizing: border-box; }
+
+.col-12 {
+  flex-basis: 98%;
+  flex-shrink: 1;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3px;
+  padding: 10px;
+  box-sizing: border-box; }
+
+.offset-12 {
+  margin-left: 100% !important; }
+
+.offset-11 {
+  margin-left: 91% !important; }
+
+.offset-10 {
+  margin-left: 83% !important; }
+
+.offset-9 {
+  margin-left: 75% !important; }
+
+.offset-8 {
+  margin-left: 66% !important; }
+
+.offset-7 {
+  margin-left: 58% !important; }
+
+.offset-6 {
+  margin-left: 50% !important; }
+
+.offset-5 {
+  margin-left: 41% !important; }
+
+.offset-4 {
+  margin-left: 33% !important; }
+
+.offset-3 {
+  margin-left: 25% !important; }
+
+.offset-2 {
+  margin-left: 16% !important; }
+
+.offset-1 {
+  margin-left: 8% !important; }
+
+.col-bg-grey {
+  background-color: #ccc; }
+
+ul.pagination {
+  display: inline-flex;
+  margin: 5px; }
+
+ul.pagination > li {
+  text-align: center;
+  list-style: none;
+  margin: 0 -1px 0 0;
+  border: 1px solid #1e1e1e;
+  transition: background 0.5s ease-in; }
+
+ul.pagination > li a {
+  color: #1e1e1e;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer; }
+
+ul.pagination > li a:hover {
+  background-color: #c2c2c2;
+  color: #f8f8f8; }
+
+ul.pagination > li.active {
+  background-color: #acacac; }
+
+ul.pagination > li.disabled a, ul.pagination > li.disabled {
+  cursor: not-allowed;
+  opacity: 0.6; }
+
+ul.breadcrumb {
+  display: flex;
+  list-style: none;
+  background-color: #d9d9d9;
+  padding: 10px 16px; }
+
+ul.breadcrumb li a {
+  text-decoration: none;
+  color: #28659a; }
+
+ul.breadcrumb li:last-child {
+  color: #5d5d5d; }
+
+ul.breadcrumb li + li:before {
+  color: #5d5d5d;
+  padding: 0 20px 0 0;
+  content: "/"; }
+
+/**
+* $bgdefault : background color alerts and button defefault
+* $bgsuccess : background color alerts and button success
+* $bgerror : background color alerts and button error
+* $bginfos : background color alerts and button infos
+* $bgdanger : background color alerts and button danger
+* $alert_text_color : text color for alerts
+* $btn_text_color : text color for buttons
+* $btnradius : radius for buttons
+* $max_columns : columns number
+* $columns_spacing : space beetween columns
+* $header_max_size: font-size header (h1, h2, h3, h4, h5, h6)
+* $header_interval: font-size interval;
+* $color_small_header: text color for small header;
+* $size_small_header: font-size small header;
+* $text_color: text color for header;
+* $font_size: default font-size;
+* $font: font for header
+* $bgcolor: background color for navbar
+* $link_color: text color for link in navbar
+* $mark: color for mark
+* $del: color for del
+* $ins: color for ins;
+* $quote_border_color: border color for quote;
+* $text_color: text color;
+* $font_size: font-size for text;
+* $font: font fotr text
+*/
+nav ul.navBar {
+  display: flex;
+  list-style: none;
+  background-color: #d9d9d9;
+  margin-top: 0;
+  padding: 15px 16px; }
+
+nav ul.navBar li a {
+  text-decoration: none;
+  color: #000; }
+
+nav ul.navBar li a:hover {
+  border-bottom: 1px dotted #000; }
+
+body {
+  color: #000;
+  font-size: 1em;
+  font-family: "Helvetica", "Arial", sans-serif; }
+
+/*# sourceMappingURL=framework.css.map */
