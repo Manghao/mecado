@@ -2,6 +2,14 @@
 
 {% set title = '404' %}
 
+{% block css_includes %}
+    {{ parent() }}
+{% endblock %}
+
 {% block content %}
 <strong>La page demandée est introuvable</strong>
+{% endblock %}
+
+{% block js_includes %}
+    {{ parent() }}
 {% endblock %}
