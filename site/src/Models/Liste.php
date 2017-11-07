@@ -4,9 +4,9 @@ namespace Mecado\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ListProducts extends Model
+class Liste extends Model
 {
-    protected $table = 'list_products';
+    protected $table = 'list';
 
     protected $primaryKey = 'id';
 
@@ -23,18 +23,18 @@ class ListProducts extends Model
 
     public $timestamps = true;
 
-    public function getMessage()
+    public function getUser()
     {
-        return $this->belongsTo(Message::class, 'id_list_products');
+        return $this->belongsTo(User::class, 'id_creator');
     }
 
-    public function getLists()
+    public function getComments()
     {
-        return $this->hasMany(Liste::class, 'id_list');
+        return $this->hasMany(Comment::class, 'id_list');
     }
 
     public function getProducts()
     {
-        return $this->hasMany(Product::class, 'id_prod');
+        return $this->belongsToMany(Product::class, 'list_products', 'id_list', 'id_prod');
     }
 }

@@ -14,8 +14,14 @@ class User extends Model
         'last_name',
         'first_name',
         'mail',
-        'password'
+        'password',
+        'token'
     ];
 
     public $timestamps = true;
+
+    public function getLists()
+    {
+        return $this->hasMany(Liste::class, 'id_creator');
+    }
 }

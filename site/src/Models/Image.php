@@ -16,4 +16,9 @@ class Image extends Model
     ];
 
     public $timestamps = true;
+
+    public function getProduct()
+    {
+        return $this->belongsTo(Product::class, 'id_prod');
+    }
 }

@@ -11,11 +11,16 @@ class Message extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id_list_product',
+        'id_list_products',
         'author',
         'msg'
 
     ];
 
     public $timestamps = true;
+
+    public function getListProducts()
+    {
+        return $this->belongsTo(ListProducts::class, 'id_list_products');
+    }
 }
