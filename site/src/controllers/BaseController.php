@@ -1,14 +1,14 @@
 <?php
 
-namespace mecado\controllers;
+namespace Mecado\Controllers;
 
 use Psr\Http\Message\ResponseInterface;
-use mecado\utils\Session;
+use Mecado\Utils\Session;
 
 /**
  * Class BaseController
- * Classe parent des controllers
- * @package mecado\controllers
+ * Classe parent des Controllers
+ * @package Mecado\Controllers
  */
 class BaseController
 {

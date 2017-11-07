@@ -1,5 +1,7 @@
-{% extends "layouts/errors.html.twig" %}
+{% extends "layouts/layout.html.twig" %}
 
 {% set title = '404' %}
 
-{% set text = 'La page demandée est introuvable' %}
+{% block content %}
+<strong>La page demandée est introuvable</strong>
+{% endblock %}

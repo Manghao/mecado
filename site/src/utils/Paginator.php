@@ -1,11 +1,11 @@
 <?php
 
-namespace mecado\utils;
+namespace Mecado\Utils;
 
 /**
  * Class Paginator
  * Permet la pagination
- * @package mecado\utils
+ * @package Mecado\Utils
  */
 class Paginator
 {

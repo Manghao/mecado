@@ -1,10 +1,10 @@
 <?php
 
-namespace mecado\utils;
+namespace Mecado\Utils;
 
 /**
  * Class Sessions
- * @package mecado\utils
+ * @package Mecado\Utils
  */
 class Session
 {

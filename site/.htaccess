@@ -1,6 +1,6 @@
 RewriteEngine On
 
-RewriteRule ^utils(/.*|)$ - [NC,F]
+RewriteRule ^Utils(/.*|)$ - [NC,F]
 RewriteRule ^src(/.*|)$ - [NC,F]
 RewriteRule ^vendor(/.*|)$ - [NC,F]
 

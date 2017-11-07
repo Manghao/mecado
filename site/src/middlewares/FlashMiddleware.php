@@ -1,15 +1,15 @@
 <?php
 
-namespace mecado\middlewares;
+namespace Mecado\Middlewares;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
-use mecado\utils\Session;
+use Mecado\Utils\Session;
 
 /**
  * Middleware de messages flash
  * Class FlashMiddleware
- * @package mecado\middlewares
+ * @package Mecado\Middlewares
  */
 class FlashMiddleware
 {

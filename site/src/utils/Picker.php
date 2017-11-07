@@ -1,6 +1,6 @@
 <?php
 
-namespace mecado\utils;
+namespace Mecado\Utils;
 
 class Picker
 {
