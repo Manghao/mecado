@@ -1,6 +1,7 @@
 <?php
 
 use Mecado\DatabaseFactory;
+use Mecado\Middlewares\AssetsTwigMiddleware;
 use Mecado\Middlewares\AuthMiddleware;
 use Mecado\Middlewares\AuthTwigMiddleware;
 use Mecado\Middlewares\CsrfMiddleware;
@@ -23,8 +24,9 @@ setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
 
 // Variables globales
 define('DS', DIRECTORY_SEPARATOR);
-define('SRC', __DIR__ . DS . 'src');
-define('UPLOADS', __DIR__ . DS . 'assets' . DS . 'uploads');
+define('SRC', dirname(basename(__DIR__)) . DS . 'src');
+define('ASSETS', dirname(basename(__DIR__)) . DS . 'assets');
+define('UPLOADS', ASSETS . DS . 'uploads');
 
 // Configuration de la connexion a la base de donnees
 DatabaseFactory::setConfig();
@@ -33,7 +35,7 @@ DatabaseFactory::makeConnection();
 // Initialisation de Slim
 $app = new \Slim\App([
     'settings' => [
-        'displayErrorDetails' => true // Affichage des erreurs
+        'displayErrorDetails' => ((\Mecado\Utils\Picker::get('app.env') === 'dev') ? true : false) // Affichage des erreurs
     ]
 ]);
 
@@ -43,7 +45,7 @@ $container = $app->getContainer();
 // Initialisation des vues dans le container
 $container['views'] = function ($container) {
     $view = new \Slim\Views\Twig(SRC . DS . 'Views', [
-        'cache' => false // Pas de cache sur les vues
+        'cache' => ((\Mecado\Utils\Picker::get('app.env') === 'dev') ? false : 'var/cache/views') // Cache des vues
     ]);
 
     $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
@@ -59,7 +61,12 @@ $container['flash'] = function () {
 
 // Initialisation de la protection csrf dans le container
 $container['csrf'] = function () {
-    return new Slim\Csrf\Guard();
+    $guard =  new Slim\Csrf\Guard();
+    $guard->setFailureCallable(function ($request, $response, $next) {
+        $request = $request->withAttribute("csrf_status", false);
+        return $next($request, $response);
+    });
+    return $guard;
 };
 
 // Redefinition de la page d'erreur 404
@@ -74,6 +81,9 @@ $app->add(new FlashMiddleware($container->views->getEnvironment()));
 
 // Ajouts du Middleware de valeurs persistantes dans les fomulaires
 $app->add(new PersistentValuesMiddleware($container->views->getEnvironment()));
+
+// Ajouts du Middleware de recuperation d'assets
+$app->add(new AssetsTwigMiddleware($container->views->getEnvironment()));
 
 // Ajouts du Middleware de recuperation de variable dans des fichiers de configuration
 $app->add(new PickerMiddleware($container->views->getEnvironment()));

@@ -10,7 +10,7 @@ class AppController extends BaseController
 
     public function index(RequestInterface $request, ResponseInterface $response, $args)
     {
-        $this->render($response, 'errors/404');
+        $this->render($response, 'app/index');
     }
 
 }
