@@ -1,13 +1,13 @@
 <?php
 
-namespace mecado;
+namespace Mecado;
 
 use Illuminate\Database\Capsule\Manager as DB;
 
 /**
  * Classe de connection a la base de donees
  * Class DatabaseFactory
- * @package mecado
+ * @package Mecado
  */
 class DatabaseFactory
 {

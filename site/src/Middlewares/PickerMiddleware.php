@@ -1,6 +1,6 @@
 <?php
 
-namespace mecado\middlewares;
+namespace Mecado\Middlewares;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -8,7 +8,7 @@ use Slim\Http\Response;
 /**
  * Permet de récuperer des valeurs dans les fichiers de configurations
  * Class PickerMiddleware
- * @package mecado\middlewares
+ * @package Mecado\Middlewares
  */
 class PickerMiddleware
 {

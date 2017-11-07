@@ -1,5 +1,7 @@
 <?php
 
 return array(
-    'name' => 'Mecado'
+    'name' => 'Mecado',
+
+    'env' => 'dev' // prod
 );

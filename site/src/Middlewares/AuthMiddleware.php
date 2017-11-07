@@ -1,15 +1,15 @@
 <?php
 
-namespace mecado\middlewares;
+namespace Mecado\Middlewares;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use mecado\utils\Session;
+use Mecado\Utils\Session;
 
 /**
  * Middleware de gestion connexion
  * Class AuthMiddleware
- * @package mecado\middlewares
+ * @package Mecado\Middlewares
  */
 class AuthMiddleware
 {

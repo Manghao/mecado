@@ -1,15 +1,15 @@
 <?php
 
-use mecado\DatabaseFactory;
-use mecado\middlewares\AuthMiddleware;
-use mecado\middlewares\AuthTwigMiddleware;
-use mecado\middlewares\CsrfMiddleware;
-use mecado\middlewares\FlashMiddleware;
-use mecado\middlewares\GuestMiddleware;
-use mecado\middlewares\PersistentValuesMiddleware;
-use mecado\middlewares\PickerMiddleware;
-use mecado\utils\Session;
-use mecado\controllers\AppController;
+use Mecado\DatabaseFactory;
+use Mecado\Middlewares\AuthMiddleware;
+use Mecado\Middlewares\AuthTwigMiddleware;
+use Mecado\Middlewares\CsrfMiddleware;
+use Mecado\Middlewares\FlashMiddleware;
+use Mecado\Middlewares\GuestMiddleware;
+use Mecado\Middlewares\PersistentValuesMiddleware;
+use Mecado\Middlewares\PickerMiddleware;
+use Mecado\Utils\Session;
+use Mecado\Controllers\AppController;
 
 // Importation de l'autoloader
 require 'vendor/autoload.php';
@@ -42,7 +42,7 @@ $container = $app->getContainer();
 
 // Initialisation des vues dans le container
 $container['views'] = function ($container) {
-    $view = new \Slim\Views\Twig(SRC . DS . 'views', [
+    $view = new \Slim\Views\Twig(SRC . DS . 'Views', [
         'cache' => false // Pas de cache sur les vues
     ]);
 
@@ -86,7 +86,8 @@ $app->add(new CsrfMiddleware($container->views->getEnvironment(), $container->cs
 $app->add($container->get('csrf'));
 
 // Routes
-$app->get('/', AppController::class . ':index')->setName('index');
+$app->get('/', AppController::class . ':index')
+    ->setName('index');
 
 
 $app->run();

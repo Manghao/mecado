@@ -1,6 +1,6 @@
 <?php
 
-namespace mecado\middlewares;
+namespace Mecado\Middlewares;
 
 use Slim\Csrf\Guard;
 use Slim\Http\Request;
@@ -9,7 +9,7 @@ use Slim\Http\Response;
 /**
  * Middleware de CSRF
  * Class CsrfMiddleware
- * @package mecado\middlewares
+ * @package Mecado\Middlewares
  */
 class CsrfMiddleware
 {

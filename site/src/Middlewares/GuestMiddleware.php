@@ -1,16 +1,16 @@
 <?php
 
-namespace mecado\middlewares;
+namespace Mecado\Middlewares;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use mecado\utils\Session;
-use mecado\utils\Utils;
+use Mecado\Utils\Session;
+use Mecado\Utils\Utils;
 
 /**
  * Middleware de gestion connexion visiteur
  * Class GuestMiddleware
- * @package mecado\middlewares
+ * @package Mecado\Middlewares
  */
 class GuestMiddleware
 {

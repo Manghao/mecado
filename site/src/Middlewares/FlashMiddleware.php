@@ -1,23 +1,23 @@
 <?php
 
-namespace mecado\middlewares;
+namespace Mecado\Middlewares;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
-use mecado\utils\Session;
+use Mecado\Utils\Session;
 
 /**
- * Middleware de gestion connexion
- * Class AuthTwigMiddleware
- * @package mecado\middlewares
+ * Middleware de messages flash
+ * Class FlashMiddleware
+ * @package Mecado\Middlewares
  */
-class AuthTwigMiddleware
+class FlashMiddleware
 {
 
     private $twig;
 
     /**
-     * AuthMiddleware constructor.
+     * FlashMiddleware constructor.
      * @param \Twig_Environment $twig
      */
     public function __construct(\Twig_Environment $twig)
@@ -30,11 +30,14 @@ class AuthTwigMiddleware
      * @param Request $request
      * @param Response $response
      * @param $next
-     * @return Response
+     * @return mixed
      */
     public function __invoke(Request $request, Response $response, $next)
     {
-        $this->twig->addGlobal('auth', Session::isLogged('user') ?  Session::get('user') : []);
+        $this->twig->addGlobal('flash', Session::exist('flash') ? Session::get('flash') : []);
+        if (Session::exist('flash')) {
+            Session::unset('flash');
+        }
         return $next($request, $response);
     }
 
