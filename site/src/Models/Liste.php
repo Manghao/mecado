@@ -4,7 +4,7 @@ namespace Mecado\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class List extends Model
+class Liste extends Model
 {
     protected $table = 'list';
 
@@ -22,4 +22,14 @@ class List extends Model
     ];
 
     public $timestamps = true;
+
+    public function getComments()
+    {
+        return $this->hasMany(Comment::class, 'id_list');
+    }
+
+    public function getProducts()
+    {
+        return $this->belongsToMany(Product::class, 'list_products', 'id_list', 'id_prod');
+    }
 }

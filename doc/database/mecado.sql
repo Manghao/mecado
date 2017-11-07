@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 07 Novembre 2017 à 15:34
+-- Généré le :  Mar 07 Novembre 2017 à 15:58
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -90,7 +90,7 @@ CREATE TABLE `list_products` (
 
 CREATE TABLE `message` (
   `id` int(10) UNSIGNED NOT NULL,
-  `id_list_product` int(10) UNSIGNED NOT NULL,
+  `id_list_products` int(10) UNSIGNED NOT NULL,
   `author` varchar(255) DEFAULT NULL,
   `msg` text,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -128,6 +128,7 @@ CREATE TABLE `user` (
   `first_name` varchar(255) DEFAULT NULL,
   `mail` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `token` varchar(255) DEFAULT NULL,
   `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -177,7 +178,7 @@ ALTER TABLE `list_products`
 ALTER TABLE `message`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`),
-  ADD KEY `id_list_product` (`id_list_product`);
+  ADD KEY `id_list_product` (`id_list_products`);
 
 --
 -- Index pour la table `product`
@@ -256,7 +257,7 @@ ALTER TABLE `list_products`
 -- Contraintes pour la table `message`
 --
 ALTER TABLE `message`
-  ADD CONSTRAINT `fk_message_list_product` FOREIGN KEY (`id_list_product`) REFERENCES `list_products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_message_list_products` FOREIGN KEY (`id_list_products`) REFERENCES `list_products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -23,4 +23,14 @@ class Product extends Model
     ];
 
     public $timestamps = true;
+
+    public function getImages()
+    {
+        return $this->hasMany(Image::class, 'id_prod');
+    }
+
+    public function getLists()
+    {
+        return $this->belongsToMany(Liste::class, 'list_products', 'id_prod', 'id_list');
+    }
 }

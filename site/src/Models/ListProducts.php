@@ -22,4 +22,19 @@ class ListProducts extends Model
     ];
 
     public $timestamps = true;
+
+    public function getMessage()
+    {
+        return $this->belongsTo(Message::class, 'id_list_products');
+    }
+
+    public function getLists()
+    {
+        return $this->hasMany(Liste::class, 'id_list');
+    }
+
+    public function getProducts()
+    {
+        return $this->hasMany(Product::class, 'id_prod');
+    }
 }

@@ -14,8 +14,12 @@ class Comment extends Model
         'id_list',
         'author',
         'msg'
-
     ];
 
     public $timestamps = true;
+
+    public function getList()
+    {
+        return $this->belongsTo(Liste::class, 'id_list');
+    }
 }
