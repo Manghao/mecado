@@ -23,6 +23,11 @@ class Liste extends Model
 
     public $timestamps = true;
 
+    public function getUser()
+    {
+        return $this->belongsTo(User::class, 'id_creator');
+    }
+
     public function getComments()
     {
         return $this->hasMany(Comment::class, 'id_list');

@@ -19,4 +19,9 @@ class User extends Model
     ];
 
     public $timestamps = true;
+
+    public function getLists()
+    {
+        return $this->hasMany(Liste::class, 'id_creator');
+    }
 }
