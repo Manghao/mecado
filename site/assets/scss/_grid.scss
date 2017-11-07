@@ -1,0 +1,45 @@
+@import "vars";
+
+$max_columns: 12 !default;
+$columns_spacing: 1% !default;
+
+@mixin grid($width: 100%) {
+  width: $width;
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin col($width, $margin: 1%) {
+  flex-basis: $width;
+  flex-shrink: 1;
+  margin-left: $margin;
+  margin-right: $margin;
+  margin-bottom: 3px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+@mixin offset($col, $cols) {
+  margin-left: floor((($col / $cols) * 100%)) !important;
+}
+
+.row {
+  @include grid();
+}
+
+@for $col from 0 to $max_columns {
+  .col-#{($col + 1)} {
+    $margins: 0;
+    @include col((((($col + 1) / $max_columns) * 100%) - (2 * $columns_spacing)));
+  }
+}
+
+@for $col from $max_columns to 0 {
+  .offset-#{$col} {
+    @include offset($col, $max_columns);
+  }
+}
+
+.col-bg-grey {
+  background-color: #ccc;
+}

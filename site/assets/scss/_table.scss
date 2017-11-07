@@ -1,0 +1,35 @@
+table {
+  width: 100%;
+
+  & td, & th {
+    padding: 5px;
+  }
+
+  & thead,
+  & tbody,
+  & tfoot {
+    text-align: left;
+  }
+
+  & tfoot {
+    font-weight: bold;
+  }
+
+  &.bordered thead tr th,
+  &.bordered tbody tr td,
+  &.bordered tfoot tr td {
+    border: 1px solid #000;
+  }
+
+  &.centered thead tr th,
+  &.centered tbody tr td,
+  &.centered tfoot tr td {
+    text-align: center;
+  }
+
+  &.striped tbody tr:nth-child(odd) { background-color: #ccc; }
+
+  &.highlight tbody tr:hover {
+    background-color: #eee;
+  }
+}

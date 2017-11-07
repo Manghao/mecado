@@ -1,0 +1,21 @@
+@import "reset";
+@import "vars";
+@import "buttons";
+@import "alerts";
+@import "table";
+@import "headers";
+@import "text";
+@import "grid";
+@import "pagination";
+@import "breadcrumb";
+@import "navbar";
+
+$text_color: #000 !default;
+$font_size: 14px !default;
+$font: 'Helvetica', 'Arial', sans-serif !default;
+
+body {
+  color: $text_color;
+  font-size: $font_size;
+  font-family: $font;
+}

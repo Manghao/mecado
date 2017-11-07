@@ -1,0 +1,25 @@
+@import "vars";
+
+$header_max_size: 1.8em !default;
+$header_interval: 0.2em !default;
+$color_small_header: grey !default;
+$size_small_header: 0.8em !default;
+$text_color: #000 !default;
+$font_size: 1em !default;
+$font: 'Helvetica', 'Arial', sans-serif !default;
+
+h1, h2, h3, h4, h5, h6 {
+  color: $text_color;
+  font-family: $font;
+}
+
+@for $header from 1 to 7 {
+  h#{$header} {
+    font-size: ($header_max_size - ($header_interval * ($header - 1)));
+
+    & small, &.small {
+      color: $color_small_header;
+      font-size: $size_small_header;
+    }
+  }
+}
