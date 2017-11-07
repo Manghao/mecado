@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 07 Novembre 2017 à 12:59
+-- Généré le :  Mar 07 Novembre 2017 à 14:23
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -100,7 +100,8 @@ CREATE TABLE `product` (
   `url` varchar(255) DEFAULT NULL,
   `price` int(10) UNSIGNED DEFAULT NULL,
   `reserve` tinyint(1) NOT NULL DEFAULT '0',
-  `user_reserve` varchar(255) DEFAULT NULL
+  `user_reserve` varchar(255) DEFAULT NULL,
+  `custom_product` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
