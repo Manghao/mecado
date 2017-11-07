@@ -2,14 +2,6 @@
 
 {% set title = '404' %}
 
-{% block css_includes %}
-    {{ parent() }}
-{% endblock %}
-
 {% block content %}
-<strong>La page demandée est introuvable</strong>
-{% endblock %}
-
-{% block js_includes %}
-    {{ parent() }}
+    <div class="alert alert-danger"><strong>Erreur 404</strong> : La page demandée est introuvable !</div>
 {% endblock %}
