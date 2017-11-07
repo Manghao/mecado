@@ -9,9 +9,9 @@
 
     {% block css_includes %}
         {% if picker('app.env') == 'dev' %}
-            <link rel="stylesheet" href="{{ base_url('assets/css/bootstrap.css') }}">
+            <link rel="stylesheet" href="{{ base_url() ~ '/assets/css/bootstrap.css' }}">
         {% elseif picker('app.env') == 'prod' %}
-            <link rel="stylesheet" href="{{ base_url('assets/css/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="{{ base_url() ~ '/assets/css/bootstrap.min.css' }}">
         {% endif %}
     {% endblock %}
 </head>
@@ -22,13 +22,13 @@
     {% block content %}{% endblock %}
 
 {% block js_includes %}
-    <script type="text/javascript" src="{{ base_url('assets/js/jquery-3.2.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ base_url() ~ '/assets/js/jquery-3.2.1.min.js' }}"></script>
     {% if picker('app.env') == 'dev' %}
-        <script type="text/javascript" src="{{ base_url('assets/js/popper.js') }}"></script>
-        <script type="text/javascript" src="{{ base_url('assets/js/bootstrap.js') }}"></script>
+        <script type="text/javascript" src="{{ base_url() ~ '/assets/js/popper.js' }}"></script>
+        <script type="text/javascript" src="{{ base_url() ~ '/assets/js/bootstrap.js' }}"></script>
     {% elseif picker('app.env') == 'prod' %}
-        <script type="text/javascript" src="{{ base_url('assets/js/popper.min.js') }}"></script>
-        <script type="text/javascript" src="{{ base_url('assets/js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ base_url() ~ '/assets/js/popper.min.js' }}"></script>
+        <script type="text/javascript" src="{{ base_url() ~ '/assets/js/bootstrap.min.js' }}"></script>
     {% endif %}
 {% endblock %}
 </body>
