@@ -10,6 +10,14 @@
     <link rel="stylesheet" href="{{ base_url() ~ '/assets/css/framework.css' }}">
     <link rel="stylesheet" href="{{ base_url() ~ '/assets/css/app.css' }}">
     <link rel="stylesheet" href="{{ base_url() ~ '/assets/css/materialicons.css' }}">
+    <link rel="stylesheet" href="{{ base_url() ~ '/assets/css/jqueryui.css' }}">
+    <script src="{{ base_url() ~ '/assets/js/jquery-3.2.1.min.js' }}"> </script>
+    <script src="{{ base_url() ~ '/assets/js/jqueryui.js' }}"> </script>
+    <script>
+        $( function() {
+            $( "#datepicker" ).datepicker();
+        } );
+    </script>
 </head>
 <body>
     {% block navbar %}

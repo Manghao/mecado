@@ -4,6 +4,7 @@ namespace Mecado\Controllers;
 
 use Mecado\Models\Liste;
 use Mecado\Models\Product;
+use Mecado\Utils\Session;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Respect\Validation\Validator;
@@ -46,11 +47,11 @@ class ListController extends BaseController
         $liste = new Liste();
         $liste->name=$request->getParam('list_title');
         $liste->descr=$request->getParam('description');
-        $liste->dateExp=$request->getParam('end_date');
+        $liste->dateExp=date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
         $liste->other_dest=$request->getParam('other_dest') === 'on' ? 1 : 0;
 
         //TMP
-        $liste->id_creator=66;
+        $liste->id_creator=Session::get('user')->id;
         $liste->save();
 
         return $this->redirect($response, 'list.listitems', ['id' => $liste->id]);

@@ -19,7 +19,7 @@
     {% endif %}
 
     <label for="end_date">Date de fin</label>
-    <input class="{% if flash.errors.first_name %}has-error{% endif %}" type="date" name="end_date" id="end_date" value="{{ persistValues.end_date }}" required>
+    <input class="{% if flash.errors.first_name %}has-error{% endif %}" type="text" name="end_date" id="datepicker" value="{{ persistValues.end_date }}" required>
     {% if flash.errors.end_date %}
       <span class="error">{{ flash.errors.end_date }}</span>
     {% endif %}
