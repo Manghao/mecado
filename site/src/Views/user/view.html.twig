@@ -16,8 +16,27 @@
         </div>
 
         <div class="column-6">
-            <h2 class="center">Mes listes</h2>
-            <hr class="clear-r">
+            <table class="bordered centered">
+                <thead>
+                <tr>
+                    <th colspan="2" class="center">
+                        Mes listes
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for list in auth.getLists %}
+                        <tr>
+                            <td>
+                                {{ list.name }}
+                            </td>
+                            <td>
+                                {{ list.dateExp|date('d-m-y') }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock %}
