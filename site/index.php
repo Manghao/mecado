@@ -30,9 +30,9 @@ $app = new \Slim\App([
     ]
 ]);
 
-require SRC . DS . 'app' . DS . 'container.php';
-require SRC . DS . 'app' . DS . 'handlers.php';
-require SRC . DS . 'app' . DS . 'middlewares.php';
-require SRC . DS . 'app' . DS . 'routes.php';
+require 'src' . DS . 'app' . DS . 'container.php';
+require 'src' . DS . 'app' . DS . 'handlers.php';
+require 'src' . DS . 'app' . DS . 'middlewares.php';
+require 'src' . DS . 'app' . DS . 'routes.php';
 
 $app->run();
