@@ -3,6 +3,7 @@
 namespace Mecado\Controllers;
 
 use Mecado\Models\Liste;
+use Mecado\Models\Product;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Respect\Validation\Validator;
@@ -42,16 +43,31 @@ class ListController extends BaseController
       }
 
       if (empty($errors)) {
-        return $this->redirect($response, 'list.listitems', $args, 400);
-
+          return $this->redirect($response, 'list.listitems', $args);
       } else {
           $this->flash('errors', $errors);
-          return $this->redirect($response, 'user.register.form', $args, 400);
+          return $this->redirect($response, 'user.register.form', $args);
       }
     }
   }
 
   public function listitems(RequestInterface $request, ResponseInterface $response, $args) {
-      var_dump($args);
+      /*var_dump($args);
+      $liste = new Liste();
+      $liste->name = 'test';
+      $liste->id_prod = 1;
+      $liste->id_creator = 1;
+      $liste->save();*/
+
+      // a la place de args mettre ['id' => ] dans la redirection
+
+      $products = Product::get();
+
+      if (!empty($products)) {
+          $this->render($response, 'list/listitems', ['products' => $products], $args);
+      }
+      else {
+          return $this->redirect($response, 'index', $args);
+      }
   }
 }

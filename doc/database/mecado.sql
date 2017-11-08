@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 07 Novembre 2017 à 15:58
+-- Généré le :  Mer 08 Novembre 2017 à 11:53
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -68,6 +68,13 @@ CREATE TABLE `list` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `list`
+--
+
+INSERT INTO `list` (`id`, `name`, `descr`, `dateExp`, `id_prod`, `url_share`, `id_creator`, `other_dest`, `created_at`, `updated_at`) VALUES
+(2, 'test', NULL, '2017-11-08 10:47:26', 1, NULL, 1, 0, '2017-11-08 10:47:26', '2017-11-08 10:47:26');
+
 -- --------------------------------------------------------
 
 --
@@ -116,6 +123,13 @@ CREATE TABLE `product` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `product`
+--
+
+INSERT INTO `product` (`id`, `name`, `descr`, `url`, `price`, `reserve`, `user_reserve`, `custom_product`, `created_at`, `updated_at`) VALUES
+(1, 'test', NULL, NULL, NULL, 0, NULL, 0, '2017-11-08 10:47:17', '2017-11-08 10:47:17');
+
 -- --------------------------------------------------------
 
 --
@@ -133,6 +147,13 @@ CREATE TABLE `user` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `user`
+--
+
+INSERT INTO `user` (`id`, `last_name`, `first_name`, `mail`, `password`, `token`, `last_login`, `created_at`, `updated_at`) VALUES
+(1, NULL, NULL, 'test@test.fr', 'test', NULL, '2017-11-08 10:47:04', '2017-11-08 10:47:04', '2017-11-08 10:47:04');
 
 --
 -- Index pour les tables exportées
@@ -209,6 +230,11 @@ ALTER TABLE `comment`
 ALTER TABLE `image`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT pour la table `list`
+--
+ALTER TABLE `list`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT pour la table `list_products`
 --
 ALTER TABLE `list_products`
@@ -217,12 +243,12 @@ ALTER TABLE `list_products`
 -- AUTO_INCREMENT pour la table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Contraintes pour les tables exportées
 --
