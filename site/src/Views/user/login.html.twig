@@ -4,28 +4,26 @@
 
 {% block content %}
 
-    <h2 class="pd-10">Inscription</h2>
+    <h2 class="pd-10">Connexion</h2>
     <hr class="clear-r">
 
-    <div class="grid">
-        <form action="{{ path_for('user.login') }}" method="post">
-            {{ csrf() }}
+    <form action="{{ path_for('user.login') }}" method="post">
+        {{ csrf() }}
 
-            <label for="email">Adresse email</label>
-            <input type="email" name="email" id="email" value="{{ persistValues.email }}" class="{% if flash.errors.email %}has-error{% endif %}" required>
-            {% if flash.errors.email %}
-                <span class="error">{{ flash.errors.email }}</span>
-            {% endif %}
+        <label for="email">Adresse email</label>
+        <input type="email" name="email" id="email" value="{{ persistValues.email }}" class="{% if flash.errors.email %}has-error{% endif %}" required>
+        {% if flash.errors.email %}
+            <span class="error">{{ flash.errors.email }}</span>
+        {% endif %}
 
-            <label for="password">Mot de passe</label>
-            <input type="password" name="password" id="password" class="{% if flash.errors.password %}has-error{% endif %}" required>
-            {% if flash.errors.password %}
-                <span class="error">{{ flash.errors.password }}</span>
-            {% endif %}
+        <label for="password">Mot de passe</label>
+        <input type="password" name="password" id="password" class="{% if flash.errors.password %}has-error{% endif %}" required>
+        {% if flash.errors.password %}
+            <span class="error">{{ flash.errors.password }}</span>
+        {% endif %}
 
-            <button type="submit" class="btn btn-info btn-el btn-fancy">Connexion</button>
-        </form>
-        <a href="{{ path_for('user.register.form') }}" class="btn btn-success btn-el btn-fancy">Inscription</a>
-    </div>
+        <button type="submit" class="btn btn-info btn-el btn-fancy">Connexion</button>
+    </form>
+    <a href="{{ path_for('user.register.form') }}" class="btn btn-success btn-el btn-fancy">Inscription</a>
 
 {% endblock %}
