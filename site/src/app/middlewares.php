@@ -1,6 +1,5 @@
 <?php
 
-use Mecado\Middlewares\AssetsTwigMiddleware;
 use Mecado\Middlewares\AuthTwigMiddleware;
 use Mecado\Middlewares\CsrfMiddleware;
 use Mecado\Middlewares\FlashMiddleware;
@@ -12,9 +11,6 @@ $app->add(new FlashMiddleware($container->views->getEnvironment()));
 
 // Ajouts du Middleware de valeurs persistantes dans les fomulaires
 $app->add(new PersistentValuesMiddleware($container->views->getEnvironment()));
-
-// Ajouts du Middleware de recuperation d'assets
-$app->add(new AssetsTwigMiddleware($container->views->getEnvironment()));
 
 // Ajouts du Middleware de recuperation de variable dans des fichiers de configuration
 $app->add(new PickerMiddleware($container->views->getEnvironment()));
