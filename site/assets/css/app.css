@@ -385,7 +385,7 @@ a.btn_create {
     opacity: 0.9;
     cursor: pointer; }
 
-button.btn_new_item {
+button.btn_new_item, a.btn_new_list {
   width: auto;
   height: 30px;
   margin: 10px 0;
@@ -407,7 +407,7 @@ button.btn_new_item {
   border: 1px solid #20638f;
   float: right;
   margin-top: 0; }
-  button.btn_new_item:hover {
+  button.btn_new_item:hover, a.btn_new_list:hover {
     opacity: 0.9;
     cursor: pointer; }
 
@@ -491,6 +491,20 @@ form label {
 
 .clear-r {
   clear: right; }
+
+span.price {
+  float: right;
+  color: white;
+  background-color: #00aa00;
+  padding: 4px;
+  border-radius: 5px; }
+
+a.product_url {
+  color: blue;
+  text-decoration: none; }
+  a.product_url:hover {
+    color: #000099;
+    text-decoration: underline; }
 
 .grid {
   width: 100%;
