@@ -99,7 +99,7 @@ class UserController extends BaseController
                     if (password_verify($request->getParam('password'), $user->password)) {
                         Session::set('user', $user);
                         $this->flash('success', "Connexion réussie avec succès.");
-                        return $this->redirect($response, 'index');
+                        return $this->redirect($response, 'user.view');
                     } else {
                         $this->flash('error', "Mot de passe incorrecte");
                         return $this->redirect($response, 'user.login.form', []);

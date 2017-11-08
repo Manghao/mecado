@@ -478,6 +478,15 @@ form span.error {
   display: block;
   margin: -5px 0 5px 0; }
 
+form input[type="checkbox"] {
+  display: inline-block;
+  width: 10px;
+  margin: 0; }
+
+form label {
+  display: inline-block;
+  width: 90%; }
+
 .clear-r {
   clear: right; }
 

@@ -4,6 +4,7 @@ namespace Mecado\Controllers;
 
 use Mecado\Models\Liste;
 use Mecado\Models\Product;
+use Mecado\Utils\Session;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Respect\Validation\Validator;
@@ -100,11 +101,11 @@ class ListController extends BaseController
         $liste = new Liste();
         $liste->name=$request->getParam('list_title');
         $liste->descr=$request->getParam('description');
-        $liste->dateExp=$request->getParam('end_date');
+        $liste->dateExp=date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
         $liste->other_dest=is_null($request->getParam('other_dest')) ? 0 : 1;
 
         //TMP
-        $liste->id_creator=66;
+        $liste->id_creator=Session::get('user')->id;
         $liste->save();
 
         return $this->redirect($response, 'list.listitems', ['id' => $liste->id]);
@@ -117,18 +118,10 @@ class ListController extends BaseController
   }
 
   public function listitems(RequestInterface $request, ResponseInterface $response, $args) {
-      /*var_dump($args);
-      $liste = new Liste();
-      $liste->name = 'test';
-      $liste->id_creator = 1;
-      $liste->save();*/
-
-      // a la place de args mettre ['id' => ] dans la redirection
-
       $list = Liste::where('id', '=', $args['id'])
           ->first();
 
-      if (!empty($liste)) {
+      if (!empty($list)) {
           $products = Product::get();
 
           if (!empty($products)) {
@@ -136,10 +129,10 @@ class ListController extends BaseController
                   'list' => $list,
                   'products' => $products], $args);
           } else {
-              return $this->redirect($response, 'index', $args);
+              return $this->redirect($response, 'index');
           }
       } else {
-          return $this->redirect($response, 'index', $args);
+          return $this->redirect($response, 'index');
       }
   }
 }
