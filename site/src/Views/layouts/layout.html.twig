@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ base_url() ~ '/assets/css/bootstrap.min.css' }}">
     <link rel="stylesheet" href="{{ base_url() ~ '/assets/css/framework.css' }}">
     <link rel="stylesheet" href="{{ base_url() ~ '/assets/css/app.css' }}">
+    <script src="{{ base_url() ~ '/assets/js/jquery-3.2.1.min.js' }}"> </script>
     <link rel="stylesheet" href="{{ base_url() ~ '/assets/css/materialicons.css' }}">
 </head>
 <body>
@@ -37,6 +38,6 @@
 
         {% block content %}{% endblock %}
     </div>
-
+  {% block js %}{% endblock %}
 </body>
 </html>
