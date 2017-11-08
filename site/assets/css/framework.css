@@ -548,11 +548,12 @@ kbd {
 .row {
   width: 100%;
   display: flex;
-  flex-direction: row; }
+  flex-direction: row;
+  flex-wrap: wrap; }
 
 .col-1 {
   flex-basis: 6.33333%;
-  flex-shrink: 1;
+  flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 3px;
@@ -561,7 +562,7 @@ kbd {
 
 .col-2 {
   flex-basis: 14.66667%;
-  flex-shrink: 1;
+  flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 3px;
@@ -570,7 +571,7 @@ kbd {
 
 .col-3 {
   flex-basis: 23%;
-  flex-shrink: 1;
+  flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 3px;
@@ -579,7 +580,7 @@ kbd {
 
 .col-4 {
   flex-basis: 31.33333%;
-  flex-shrink: 1;
+  flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 3px;
@@ -588,7 +589,7 @@ kbd {
 
 .col-5 {
   flex-basis: 39.66667%;
-  flex-shrink: 1;
+  flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 3px;
@@ -597,7 +598,7 @@ kbd {
 
 .col-6 {
   flex-basis: 48%;
-  flex-shrink: 1;
+  flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 3px;
@@ -606,7 +607,7 @@ kbd {
 
 .col-7 {
   flex-basis: 56.33333%;
-  flex-shrink: 1;
+  flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 3px;
@@ -615,7 +616,7 @@ kbd {
 
 .col-8 {
   flex-basis: 64.66667%;
-  flex-shrink: 1;
+  flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 3px;
@@ -624,7 +625,7 @@ kbd {
 
 .col-9 {
   flex-basis: 73%;
-  flex-shrink: 1;
+  flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 3px;
@@ -633,7 +634,7 @@ kbd {
 
 .col-10 {
   flex-basis: 81.33333%;
-  flex-shrink: 1;
+  flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 3px;
@@ -642,7 +643,7 @@ kbd {
 
 .col-11 {
   flex-basis: 89.66667%;
-  flex-shrink: 1;
+  flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 3px;
@@ -651,7 +652,7 @@ kbd {
 
 .col-12 {
   flex-basis: 98%;
-  flex-shrink: 1;
+  flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 3px;

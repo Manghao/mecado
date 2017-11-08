@@ -4,15 +4,23 @@
 
 {% block content %}
   <div class="contains">
-    <div class="div_head">
+    <div>
       <a class="btn_new_item">+ Ajouter un cadeau d'un autre site</a>
       <h2>Produits</h2>
       <hr class="clear-r">
     </div>
-    <div class="div_body row_grid">
+    <div class="grid">
       {% for product in products %}
-        <div class="column-4" style="border: solid 1px black;">
-          <p>test</p>
+        <div class="column-4 card">
+          <div class="card_body">
+            <form action="{{ path_for('list.additem', {id: list.id}) }}" method="post">
+              <img src="{{ base_url() ~ '/assets/img/' ~ product.getImages[0].name }}" alt="{{ product.name }}">
+              <span style="float: right">{{ product.price }}</span>
+              <h4>{{ product.name }}</h4>
+              <p class="mt-10">{{ product.descr }}</p>
+              <a class="btn_add_item">Ajouter à la liste</a>
+            </form>
+          </div>
         </div>
       {% endfor %}
     </div>
