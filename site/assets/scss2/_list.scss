@@ -1,0 +1,144 @@
+/*******************************************************************************/
+/*       			  	   	  <ul> & <li> elements                             */
+/*******************************************************************************/
+@mixin navbar($nav-display, $nav-dir, $nav-bg, $nav-j, $nav-m, $nav-basis, $nav-grow, $nav-shrink) {
+	display: $nav-display;
+	flex-direction: $nav-dir;
+	background-color: $nav-bg;
+	justify-content: $nav-j;
+	margin: $nav-m;
+	flex-basis: $nav-basis;
+	flex-grow: $nav-grow;
+	flex-shrink: $nav-shrink;
+
+	@media screen and (max-width: 50rem) {
+		flex-direction: column;
+	}
+	@media screen and (orientation: portrait) {
+		flex-direction: column;
+	}
+
+	& > li {
+		list-style: none;
+		margin: 0;
+		width: 20%;
+
+		@media screen and (max-width: 50rem) {
+			width: 100%;
+		}
+		@media screen and (orientation: portrait) {
+			width: 100%;
+		}
+	}
+
+	& > li:nth-child(n+2) {
+		border-left: #222222 2px solid;
+
+		@media screen and (max-width: 50rem){
+			border-left: none;
+			border-top: #222222 2px solid;
+		}
+
+		@media screen and (orientation: portrait){
+			border-left: none;
+			border-top: #222222 2px solid;
+		}
+	}
+
+	& > li > a {
+		display: block;
+		text-decoration: none;
+		color: white;
+		padding: 10px 0;
+		text-align: center;
+		margin: 0;
+	}
+
+	& > li > a:hover {
+		background-color: #212428;
+	}
+
+	& > li > .disabled {
+		pointer-events: none;
+		cursor: not-allowed;
+		color: grey;
+	}
+
+	& > li > .active {
+		background-color: #656e82;
+	}
+}
+
+@mixin breadcrumb($b-dis, $b-dir, $b-bg, $b-j, $b-basis, $b-grow, $b-shrink, $b-pd, $b-m) {
+	display: $b-dis;
+	flex-direction: $b-dir;
+	background-color: $b-bg;
+	justify-content: $b-j;
+	flex-basis: $b-basis;
+	flex-grow: $b-grow;
+	flex-shrink: $b-shrink;
+	padding: $b-pd;
+	margin: $b-m;
+
+	& > li {
+		list-style: none;
+		margin: 0;
+	}
+
+	& > li > a {
+		display: inline;
+		text-decoration: none;
+		color: blue;
+		padding: 10px 2vw;
+		text-align: center;
+		margin: 0;
+	}
+
+	& > li > a:hover{
+		text-decoration: underline;
+	}
+
+	& > li >.active {
+		pointer-events: none;
+		color : black;
+		font-weight: bold;
+	}
+
+	& li+li:before {
+		content: "/";
+	}
+}
+
+@mixin pagination($p-display, $p-border, $p-br) {
+	display: $p-display;
+	border: $p-border;
+	border-radius: $p-br;
+
+	& > li {
+		display: inline-block;
+		height: auto;
+		margin: 0;
+		padding: 0.55rem 0;
+		list-style: none;
+	}
+
+	& > li:nth-child(n+2) {
+		border-left: 1px solid grey;
+	}
+
+	& > li > a {
+		color: black;
+		padding: 0.5rem;
+		text-decoration: none;
+	}
+
+	& > li > .active {
+		background-color: lightgrey;
+	}
+
+	& > li > .disabled {
+		pointer-events: none;
+		cursor: not-allowed;
+		color: grey;
+	}
+}

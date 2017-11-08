@@ -1,0 +1,32 @@
+/*******************************************************************************/
+/*                                Flex grid                                    */
+/*******************************************************************************/
+@mixin grid-row($flex-display, $flex-direction) {
+	display: $flex-display;
+	flex-direction: $flex-direction;
+	margin: 0;
+}
+
+@mixin grid-structure($box-sizing, $flex-basis, $flex-grow, $flex-shrink, $margin-flex, $padding-flex, $background-flex) {
+	box-sizing: $box-sizing;
+	flex-basis: $flex-basis;
+	flex-grow: $flex-grow;
+	flex-shrink: $flex-shrink;
+	margin: $margin-flex;
+	padding: $padding-flex;
+	background-color: $background-flex;
+}
+
+@mixin grid-col($cols, $numcols) {
+	@include grid-structure($box_sizing, ((($cols / $numcols) * 100%) - 1%), 0, 0, $margin_flex, $padding_flex, $background_flex);
+}
+
+@mixin grid-default() {
+	@include grid-structure($box_sizing, $flex_basis, $flex_grow, $flex_shrink, $margin-flex, $padding_flex, $background_flex);
+}
+
+@for $cols from 1 to $numcols {
+	.flex-#{$cols} {
+		@include grid-col($cols, $numcols);
+	}
+}

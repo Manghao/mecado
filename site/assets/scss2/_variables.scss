@@ -1,0 +1,217 @@
+// font family
+$font-family: Arial, Helvetica, sans-serif;
+
+/*
+* Buttons :
+* '-s' stands for small button, '-m' for medium and '-l' for large
+*/
+
+// Button - Structure
+// width & height
+$btn-width: auto;
+$btn-height: auto;
+
+// padding - firts value is top/bottom padding - second value is left/right padding
+$btn-p-s: 0.2rem 0.5rem;
+$btn-p-m: 0.5rem 1rem;
+$btn-p-l: 0.7rem 1.5rem;
+
+// cursor
+$btn-cursor: pointer;
+
+// Button - Text
+// font family
+$btn-f-family: inherit;
+
+// font color
+$btn-f-color-dark: black;
+$btn-f-color-light: white;
+
+// font size
+$btn-f-size-s: 0.8rem;
+$btn-f-size-m: 1rem;
+$btn-f-size-l: 1.2rem;
+
+// font weight
+$btn-f-weight: normal;
+
+// text decoration
+$btn-text-decoration: none;
+
+// text align
+$btn-text-align: center;
+
+// Button - Style
+// background image
+$btn-bg-img: none;
+
+// background color
+$btn-bg-color-1: white;
+$btn-bg-color-2: black;
+$btn-bg-color-3: red;
+$btn-bg-color-4: green;
+$btn-bg-color-5: #1350BD; // blue
+
+// border
+$btn-border: solid grey 1px;
+
+// border-radius
+$btn-br-s: 4px;
+$btn-br-m: 5px;
+$btn-br-l: 6px;
+
+// shadow
+$btn-shadow: none;
+
+// transform while active (clicked)
+$btn-active-transform: none;
+
+// transition while active (clicked)
+$btn-active-transition: all 0.3s ease;
+
+
+
+
+// Alert - Structure
+// width & height
+$alt-width: auto;
+$alt-height: auto;
+
+// border-radius
+$alt-br: 10px;
+
+// padding
+$alt-p: 10px;
+
+// margin
+$alt-margin: 2px;
+
+// Alert - Text
+// font family
+$alt-f-family: inherit;
+
+// font size
+$alt-f-size: 1.2rem;
+
+// font weight
+$alt-f-weight: normal;
+
+// text decoration
+$alt-text-decoration: none;
+
+// text text align
+$alt-text-align: inherit;
+
+// font color
+$alt-f-color-dark: black;
+$alt-f-color-light: white;
+
+// background color
+$alt-bg-color-default: red;
+$alt-bg-color-success: green;
+$alt-bg-color-info: blue;
+$alt-bg-color-warning: orange;
+
+// Alert - close
+$alt-close-f-family: Arial, Verdana, sans-serif;
+$alt-close-f-size: 3rem;
+$alt-close-transition: 0.5s;
+$alt-close-float: right;
+$alt-close-lh: 1.5rem;
+$alt-close-f-color: white;
+$alt-close-cursor: pointer;
+
+// Grid - Structure
+// total columns
+$numcols: 12;
+
+// display
+$flex_display: flex;
+
+// flex-direction
+$flex_direction: row;
+
+// box-sizing
+$box_sizing: border-box;
+
+// flex-basis
+$flex_basis: 20px;
+
+// flex-grow
+$flex_grow: 1;
+
+// flex-shrink
+$flex_shrink: 1;
+
+// margin
+$margin_flex: 2px 0 0 1%;
+
+// padding
+$padding_flex: 5px;
+
+// background-color
+$background_flex: white;
+
+// List - Structure
+// Navbar
+// display
+$nav_display: flex;
+
+// flex-direction
+$nav_flex_dir: row;
+
+// background-color
+$nav_bg: #31353a;
+
+// justify-content
+$nav_justify: flex-start;
+
+// margin
+$nav_margin: 0;
+
+// flex-basis
+$nav_basis: 20vw;
+
+// flex-grow
+$nav_grow: 1;
+
+// flex-shrink
+$nav_shrink: 1;
+
+// Breadcrumb
+// display
+$bread_display: flex;
+
+// flex-direction
+$bread_flex_dir: row;
+
+// background-color
+$bread_bg: gainsboro;
+
+// justify-content
+$bread_justify: flex-start;
+
+// margin
+$bread_margin: 2px;
+
+// padding
+$bread_pd: 5px;
+
+// flex-basis
+$bread_basis: 20vw;
+
+// flex-grow
+$bread_grow: 1;
+
+// flex-shrink
+$bread_shrink: 1;
+
+// Pagination
+// display
+$pag_display: inline-flex;
+
+// border
+$pag_border: 1px solid grey;
+
+// border-radius
+$pag_br: 5px;

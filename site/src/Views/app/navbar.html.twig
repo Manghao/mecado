@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+
+
+    <div id="navBar">
+        <ul class="navBar">
+            <li>
+                <a class="navbar-brand" href="#">Mecado</a>
+            </li>
+            {% if auth.check() %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Account
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ path_for('account') }}">My account</a>
+                        <a class="dropdown-item" href="#">My orders</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ path_for('logout') }}">Logout</a>
+                    </div>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Register</a>
+                </li>
+            {% endif %}
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
