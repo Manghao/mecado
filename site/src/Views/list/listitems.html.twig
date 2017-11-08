@@ -1,0 +1,20 @@
+{% extends "layouts/layout.html.twig" %}
+
+{% set title = 'Ajout de produits' %}
+
+{% block content %}
+  <div class="contains">
+    <div class="div_head">
+      <a class="btn_new_item">+ Ajouter un cadeau d'un autre site</a>
+      <h2>Produits</h2>
+      <hr class="clear-r">
+    </div>
+    <div class="div_body row_grid">
+      {% for product in products %}
+        <div class="column-4" style="border: solid 1px black;">
+          <p>test</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

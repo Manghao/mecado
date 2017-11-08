@@ -1,5 +1,6 @@
 @import "vars";
 @import "buttons";
+@import "grid";
 
 .contains {
   padding: 0 10vw;
@@ -8,12 +9,22 @@
 .headband img {
   width: 100%;
   height: auto;
+  border-bottom: solid 1px #cccccc;
+  margin-top: -10px;
 }
 
 a.btn_create {
   @include button($width: 200px, $height: 70px);
   @include btn_text($fontSize: 25px);
   margin: 0 calc((100% - 200px) / 2);
+}
+
+a.btn_new_item {
+  @include button($width: auto);
+  @include btn_text($fontSize: 14px);
+  @include btn_color($bgcolor: #1966ff);
+  float: right;
+  margin-top: 0;
 }
 
 .presentation {
@@ -70,4 +81,20 @@ form span.error {
   color: red;
   display: block;
   margin: -5px 0 5px 0;
+
+.clear-r {
+  clear: right;
+}
+
+hr {
+  border-color: black;
+  margin: 0;
+}
+
+.row_grid {
+  @include grid();
+}
+
+.column-4 {
+  @include col((((5 / 12) * 100%) - (2 * 1%)));
 }
