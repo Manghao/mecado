@@ -433,29 +433,6 @@ a.btn_add_item {
     opacity: 0.9;
     cursor: pointer; }
 
-button.submit {
-  width: 100px;
-  height: 30px;
-  margin: 10px 0;
-  border-radius: 3px;
-  transition: opacity 0.5s;
-  display: block;
-  line-height: 30px;
-  padding: 0 10px;
-  background-color: #16a085;
-  color: #fff;
-  text-decoration: none;
-  font-size: 12px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 14px;
-  text-align: center;
-  background-color: #1966ff;
-  color: #fff; }
-  button.submit:hover {
-    opacity: 0.9;
-    cursor: pointer; }
-
 .presentation {
   font-size: large;
   text-align: left; }

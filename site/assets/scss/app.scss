@@ -33,12 +33,6 @@ a.btn_add_item {
   @include btn_color($bgcolor: #1966ff);
 }
 
-button.submit {
-  @include button($width: 100px);
-  @include btn_text($fontSize: 14px);
-  @include btn_color($bgcolor: #1966ff);
-}
-
 .presentation {
   font-size: large;
   text-align: left;
