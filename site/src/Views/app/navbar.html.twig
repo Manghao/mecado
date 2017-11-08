@@ -1,7 +1,7 @@
 <nav>
     <ul class="navBar">
         <li>
-            <a href="#" class="titleNav">Mecado</a>
+            <a href="{{ path_for('index') }}" class="titleNav">Mecado</a>
         </li>
         <li>
                 <a href="{{ path_for('index') }}">Accueil</a>
@@ -11,17 +11,14 @@
             </li>
             {% if auth %}
                 <li>
-                    <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Compte
-                    </a>
-                    <div>
-                        <a href="{{ path_for('account') }}">Mon compte</a>
-                        <a href="{{ path_for('logout') }}">Déconnexion</a>
-                    </div>
+                    <a href="{{ path_for('user.view') }}">Mon compte</a>
+                </li>
+                <li>
+                    <a href="{{ path_for('user.logout') }}">Déconnexion</a>
                 </li>
             {% else %}
                 <li>
-                    <a href="#">Connexion</a>
+                    <a href="{{ path_for('user.login.form') }}">Connexion</a>
                 </li>
                 <li>
                     <a href="{{ path_for('user.register.form') }}">Inscription</a>

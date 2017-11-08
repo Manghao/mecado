@@ -1,0 +1,23 @@
+{% extends "layouts/layout.html.twig" %}
+
+{% set title = 'Mon compte' %}
+
+{% block content %}
+    <h2 class="pd-10">Mon compte</h2>
+    <hr class="clear-r">
+
+    <div class="grid">
+        <div class="column-6">
+            <h2 class="center">Mes informations</h2>
+            <hr class="clear-r">
+            <p><strong>Pr&eacute;nom:</strong> {{ auth.first_name }}</p>
+            <p><strong>Nom:</strong> {{ auth.last_name }}</p>
+            <p><strong>Email:</strong> {{ auth.mail }}</p>
+        </div>
+
+        <div class="column-6">
+            <h2 class="center">Mes listes</h2>
+            <hr class="clear-r">
+        </div>
+    </div>
+{% endblock %}

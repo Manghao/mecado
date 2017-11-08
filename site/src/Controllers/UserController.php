@@ -3,6 +3,7 @@
 namespace Mecado\Controllers;
 
 use Mecado\Models\User;
+use Mecado\Utils\Session;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Respect\Validation\Validator;
@@ -67,6 +68,62 @@ class UserController extends BaseController
                 return $this->redirect($response, 'user.register.form', []);
             }
         }
+    }
+
+    public function loginForm(RequestInterface $request, ResponseInterface $response)
+    {
+        $this->render($response, 'user/login');
+    }
+
+    public function login(RequestInterface $request, ResponseInterface $response)
+    {
+        if (false === $request->getAttribute('csrf_status')) {
+            $this->flash('error', 'Une erreur est survenue pendant l\'envoi du formulaire !');
+            return $this->redirect($response, 'user.login.form', []);
+        } else {
+
+            $errors = [];
+
+
+            if (!Validator::email()->validate($request->getParam('email'))) {
+                $errors['email'] = "Veuillez saisir un email valide.";
+            }
+
+            if (!Validator::stringType()->notEmpty()->validate($request->getParam('password'))) {
+                $errors['password'] = "Veuillez saisir un mot de passe valide.";
+            }
+
+            if (empty($errors)) {
+                $user = User::where('mail', '=', $request->getParam('email'))->first();
+                if (!is_null($user)) {
+                    if (password_verify($request->getParam('password'), $user->password)) {
+                        Session::set('user', $user);
+                        $this->flash('success', "Connexion réussie avec succès.");
+                        return $this->redirect($response, 'index');
+                    } else {
+                        $this->flash('error', "Mot de passe incorrecte");
+                        return $this->redirect($response, 'user.login.form', []);
+                    }
+                } else {
+                    $this->flash('error', "Adresse email ou mot de passe incorrecte");
+                    return $this->redirect($response, 'user.login.form', []);
+                }
+            } else {
+                $this->flash('errors', $errors);
+                return $this->redirect($response, 'user.login.form', []);
+            }
+        }
+    }
+
+    public function view(RequestInterface $request, ResponseInterface $response)
+    {
+        $this->render($response, 'user/view');
+    }
+
+    public function logout(RequestInterface $request, ResponseInterface $response)
+    {
+        Session::unset('user');
+        return $this->redirect($response, 'user.login.form');
     }
 
 }

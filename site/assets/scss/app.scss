@@ -87,6 +87,7 @@ form span.error {
   color: red;
   display: block;
   margin: -5px 0 5px 0;
+}
 
 .clear-r {
   clear: right;
@@ -110,6 +111,10 @@ form span.error {
   .column-4 {
     @include col((((12 / $max_columns) * 100%) - (2 * $columns_spacing)));
   }
+}
+
+.column-6 {
+  @include col((((6 / $max_columns) * 100%) - (2 * $columns_spacing)));
 }
 
 .card {
