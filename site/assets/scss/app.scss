@@ -1,0 +1,31 @@
+@import "vars";
+@import "buttons";
+
+.contains {
+  padding: 0 10vw;
+  text-align: center;
+}
+
+.headband img {
+  width: 100%;
+  height: auto;
+}
+
+a.btn_create {
+  @include button($width: 200px, $height: 70px);
+  @include btn_text($fontSize: 25px);
+  margin: 0 calc((100% - 200px) / 2);
+}
+
+.presentation {
+  font-size: large;
+  text-align: left;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
