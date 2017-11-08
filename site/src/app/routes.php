@@ -30,6 +30,13 @@ $app->group('/list', function() {
         ->setName('list.creationlist.form');
 
     $this->post('/creationlist', ListController::class . ':creationlist')
-        ->add(new GuestMiddleware($container))            ->setName('list.creationlist');
+        ->add(new GuestMiddleware($container))
+        ->setName('list.creationlist');
 
+    $this->get('/listitems/{id:[0-9]+}', ListController::class . ':listitems')
+        ->add(new GuestMiddleware($container))
+        ->setName('list.listitems');
 });
+
+var_dump($_SERVER);
+die();

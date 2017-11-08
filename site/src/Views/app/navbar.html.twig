@@ -5,27 +5,27 @@
                 <a href="#">Mecado</a>
             </li>
             <li>
-                <a href="{{ path_for('index') }}">Home</a>
+                <a href="{{ path_for('index') }}">Accueil</a>
             </li>
             <li>
-                <a href="#">Products</a>
+                <a href="#">Produits</a>
             </li>
             {% if auth %}
                 <li>
                     <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Account
+                        Compte
                     </a>
                     <div>
-                        <a href="{{ path_for('account') }}">My account</a>
-                        <a href="{{ path_for('logout') }}">Logout</a>
+                        <a href="{{ path_for('account') }}">Mon compte</a>
+                        <a href="{{ path_for('logout') }}">Déconnexion</a>
                     </div>
                 </li>
             {% else %}
                 <li>
-                    <a href="#">Login</a>
+                    <a href="#">Connexion</a>
                 </li>
                 <li>
-                    <a href="#">Register</a>
+                    <a href="#">Inscription</a>
                 </li>
             {% endif %}
         </ul>

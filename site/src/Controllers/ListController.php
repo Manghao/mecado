@@ -2,6 +2,7 @@
 
 namespace Mecado\Controllers;
 
+use Mecado\Models\Liste;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Respect\Validation\Validator;
@@ -41,13 +42,16 @@ class ListController extends BaseController
       }
 
       if (empty($errors)) {
-        die('a');
-        return $this->redirect($response, 'list.addtolist', $args, 400);
+        return $this->redirect($response, 'list.listitems', $args, 400);
 
       } else {
           $this->flash('errors', $errors);
           return $this->redirect($response, 'user.register.form', $args, 400);
       }
     }
+  }
+
+  public function listitems(RequestInterface $request, ResponseInterface $response, $args) {
+      var_dump($args);
   }
 }
