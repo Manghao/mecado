@@ -1,0 +1,28 @@
+{% extends "layouts/layout.html.twig" %}
+
+{% set title = 'Produits' %}
+
+{% block content %}
+  <div>
+    <a class="btn_new_list" href="{{ path_for('list.creationlist.form') }}">Créer ma liste</a>
+    <h2>Produits</h2>
+    <hr class="clear-r">
+  </div>
+  <div class="grid">
+      {% for product in products %}
+        <div class="column-4 card">
+          <div class="card_body">
+            <img src="{{ base_url() ~ '/assets/img/' ~ product.getImages[0].name }}" alt="{{ product.name }}">
+              {% if product.price %}
+                <span class="price">{{ product.price }} €</span>
+              {% endif %}
+            <h4>{{ product.name }}</h4>
+            <p class="mt-10">{{ product.descr }}</p>
+              {% if product.url %}
+                <a class="product_url" href="{{ product.url }}">Voir le produit en vente</a>
+              {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+  </div>
+{% endblock %}

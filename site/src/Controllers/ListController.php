@@ -3,6 +3,7 @@
 namespace Mecado\Controllers;
 
 use Mecado\Models\Liste;
+use Mecado\Models\ListProducts;
 use Mecado\Models\Product;
 use Mecado\Utils\Session;
 use Psr\Http\Message\RequestInterface;
@@ -47,11 +48,11 @@ class ListController extends BaseController
         $liste = new Liste();
         $liste->name=$request->getParam('list_title');
         $liste->descr=$request->getParam('description');
-        $liste->dateExp=$request->getParam('end_date');
+        $liste->date_exp=date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
         $liste->other_dest=is_null($request->getParam('other_dest')) ? 0 : 1;
 
         //TMP
-        $liste->id_creator=66;
+        $liste->id_creator=Session::get('user')->id;
         $liste->save();
 
         return $this->redirect($response, 'list.listitems', ['id' => $liste->id]);
@@ -101,7 +102,7 @@ class ListController extends BaseController
         $liste = new Liste();
         $liste->name=$request->getParam('list_title');
         $liste->descr=$request->getParam('description');
-        $liste->dateExp=date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
+        $liste->date_exp=date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
         $liste->other_dest=is_null($request->getParam('other_dest')) ? 0 : 1;
 
         //TMP
@@ -121,17 +122,48 @@ class ListController extends BaseController
       $list = Liste::where('id', '=', $args['id'])
           ->first();
 
-      if (!empty($list)) {
-          $products = Product::get();
+      if (!is_null($list)) {
+          $products = Product::whereNotIn('id', function($query) {
+              $query->select('id_prod')
+                  ->from('list_products');
+          })->get();
 
-          if (!empty($products)) {
-              $this->render($response, 'list/listitems', [
-                  'list' => $list,
-                  'products' => $products], $args);
+          if (!is_null($products)) {
+             $this->render($response, 'list/listitems', [
+                 'list' => $list,
+                 'products' => $products]);
           } else {
+              $this->flash('error', 'Les produits n\'existent pas !');
               return $this->redirect($response, 'index');
           }
       } else {
+          $this->flash('error', 'La liste n\'existe pas !');
+          return $this->redirect($response, 'index');
+      }
+  }
+
+  public function additem(RequestInterface $request, ResponseInterface $response, $args) {
+      $list = Liste::where('id', '=', $args['id'])
+          ->first();
+
+      if (!is_null($list)) {
+          $product = Product::where('id', '=', $args['idProd'])
+              ->first();
+
+          if (!is_null($product)) {
+              $list_product = new ListProducts();
+              $list_product->id_list = $list->id;
+              $list_product->id_prod = $product->id;
+              $list_product->save();
+
+              $this->flash('success', 'Le produit "' . $product->name . '" a bien été ajouté à votre liste !');
+              return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
+          } else {
+              $this->flash('error', 'Le produit n\'existe pas !');
+              return $this->redirect($response, 'index');
+          }
+      } else {
+          $this->flash('error', 'La liste n\'existe pas !');
           return $this->redirect($response, 'index');
       }
   }

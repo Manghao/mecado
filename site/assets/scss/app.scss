@@ -19,18 +19,20 @@ a.btn_create {
   margin: 0 calc((100% - 200px) / 2);
 }
 
-a.btn_new_item {
+button.btn_new_item, a.btn_new_list {
   @include button($width: auto);
   @include btn_text($fontSize: 14px);
   @include btn_color($bgcolor: #1966ff);
+  border: 1px solid darken($bginfos, 10);
   float: right;
   margin-top: 0;
 }
 
-a.btn_add_item {
-  @include button($width: auto);
+button.btn_add_item {
+  @include button($width: 100%);
   @include btn_text($fontSize: 14px);
   @include btn_color($bgcolor: #1966ff);
+  border: 1px solid darken($bginfos, 10);
 }
 
 .presentation {
@@ -104,6 +106,26 @@ form label {
   clear: right;
 }
 
+span.price {
+  float: right;
+  color: white;
+  background-color: #00aa00;
+  padding: 4px;
+  border-radius: 5px;
+}
+
+a.product_url {
+  $color_url: blue;
+
+  color: $color_url;
+  text-decoration: none;
+
+  &:hover {
+    color: darken($color_url, 20%);
+    text-decoration: underline;
+  }
+}
+
 .grid {
   @include grid();
 }
@@ -154,7 +176,7 @@ form label {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rbg(0,0,0);
+  //background-color: rbg(0,0,0);
   background-color: rgba(0,0,0,0.2);
 }
 

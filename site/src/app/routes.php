@@ -1,6 +1,7 @@
 <?php
 
 use Mecado\Controllers\AppController;
+use Mecado\Controllers\ProductController;
 use Mecado\Controllers\UserController;
 use Mecado\Controllers\ListController;
 use Mecado\Middlewares\GuestMiddleware;
@@ -53,10 +54,18 @@ $app->group('/list', function() {
         ->add(new AuthMiddleware($container))
         ->setName('list.listitems');
 
-    $this->post('/{id:[0-9]+}/createproduct', ListController::class . ':createproduct')
-        ->add(new GuestMiddleware($container))
-          ->setName('list.createproduct');
-    $this->post('/{id:[0-9]+}/additem', ListController::class . ':additem')
+    $this->post('/{id:[0-9]+}/additem/{idProd:[0-9]+}', ListController::class . ':additem')
         ->add(new AuthMiddleware($container))
         ->setName('list.additem');
+
+    $this->post('/{id:[0-9]+}/createproduct', ListController::class . ':createproduct')
+        ->add(new AuthMiddleware($container))
+        ->setName('list.createproduct');
+});
+
+$app->group('/products', function() {
+   $container = $this->getContainer();
+
+   $this->get('[/]', ProductController::class . ':products')
+       ->setName('product.products');
 });
