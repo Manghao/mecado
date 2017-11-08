@@ -1,0 +1,21 @@
+ul.breadcrumb {
+  display: flex;
+  list-style: none;
+  background-color: #d9d9d9;
+  padding: 10px 16px;
+}
+
+ul.breadcrumb li a {
+  text-decoration: none;
+  color: #28659a;
+}
+
+ul.breadcrumb li:last-child {
+  color: #5d5d5d;
+}
+
+ul.breadcrumb li + li:before {
+  color: #5d5d5d;
+  padding: 0 20px 0 0;
+  content: '/' ;
+}

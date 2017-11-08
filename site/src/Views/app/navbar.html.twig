@@ -1,0 +1,33 @@
+<nav>
+    <div id="navbar">
+        <ul class="navBar">
+            <li>
+                <a href="#">Mecado</a>
+            </li>
+            <li>
+                <a href="{{ path_for('index') }}">Home</a>
+            </li>
+            <li>
+                <a href="#">Products</a>
+            </li>
+            {% if auth %}
+                <li>
+                    <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Account
+                    </a>
+                    <div>
+                        <a href="{{ path_for('account') }}">My account</a>
+                        <a href="{{ path_for('logout') }}">Logout</a>
+                    </div>
+                </li>
+            {% else %}
+                <li>
+                    <a href="#">Login</a>
+                </li>
+                <li>
+                    <a href="#">Register</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

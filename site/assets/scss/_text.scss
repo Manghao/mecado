@@ -1,0 +1,88 @@
+@import "vars";
+
+$mark: yellow !default;
+$del: grey !default;
+$ins: green !default;
+$quote_border_color: #000 !default;
+$text_color: #000 !default;
+$font_size: 1em !default;
+$font: 'Helvetica', 'Arial', sans-serif !default;
+
+.left { text-align: left; }
+
+.right { text-align: right; }
+
+.center { text-align: center; }
+
+.justify { text-align: justify;	 }
+
+.maj { text-transform: uppercase; }
+
+.min { text-transform: lowercase; }
+
+p { margin-bottom: 15px; }
+
+mark {
+  color: $text_color;
+  background-color: $mark;
+  padding: 5px;
+}
+
+del { color: $del; }
+
+ins {
+  background-color: $ins;
+  padding: 5px;
+  text-decoration: underline;
+}
+
+u {	text-decoration: underline; }
+
+strong { font-weight: bold;  }
+
+em { font-style: italic; }
+
+abbr {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+ul, ol { margin: 10px 0 10px 0; }
+
+ul li, ol li { margin: 5px 0 0 20px; }
+
+ul.square li, ol.square li { list-style: square; }
+
+ul.no-chip li, ol.no-chip li { list-style: none; }
+
+quote { font-style: italic; }
+quote::before, quote::after { content: '"'; }
+
+blockquote {
+  margin: 20px 20px;
+  border: 1px solid $quote_border_color;
+  padding: 5px;
+}
+
+code {
+  font-size: $font_size;
+  font-weight: 300;
+  color: grey;
+}
+
+pre {
+  font-size: $font_size;
+  font-family: $font;
+  border: 1px solid $quote_border_color;
+  padding: 5px;
+  display: inline-block;
+  margin: 5px 0;
+}
+
+kbd {
+  font-family: $font;
+  font-style: italic;
+  display: inline-block;
+  border: 1px dotted $quote_border_color;
+  padding: 5px;
+}
