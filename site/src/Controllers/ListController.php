@@ -33,11 +33,20 @@ class ListController extends BaseController
       if (!Validator::notEmpty()->validate($request->getParam('end_date'))) {
         $errors['end_date'] = "Veuillez saisir une date valide.";
       }
-      $dateListe = strtotime($request->getParam('date'));
+      $dateListe = strtotime($request->getParam('end_date'));
       $date = strtotime(date('Y-m-d'));
 
       if ($date > $dateListe) {
         $errors['end_date'] = "Veuillez saisir une date qui n'est pas encore passée.";
+      }
+
+      if (empty($errors)) {
+        die('a');
+        return $this->redirect($response, 'list.addtolist', $args, 400);
+
+      } else {
+          $this->flash('errors', $errors);
+          return $this->redirect($response, 'user.register.form', $args, 400);
       }
     }
   }

@@ -24,11 +24,13 @@
       <span>{{ flash.errors.end_date }}</span>
     {% endif %}
 
-    <label for="other_dest">Liste pour une autre personne que moi</label>
+    <label for="other_dest">Liste pour une autre personne que moi
+    </label>
     <input type="checkbox" name="other_dest" id="other_dest" value="{{ persistValues.other_dest }}">
     {% if flash.errors.other_dest %}
       <span>{{ flash.errors.other_dest }}</span>
     {% endif %}
+    <i class="material-icons" title="Cochez cette case si la liste que vous créer ne vous est pas déstinée, ainsi vous aurez accès en direct aux messages postés par les participants">help_outline</i>
 
     <button>Créer la liste</button>
   </form>
