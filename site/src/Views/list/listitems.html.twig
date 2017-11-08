@@ -5,10 +5,62 @@
 {% block content %}
   <div class="contains">
     <div class="div_head">
-      <a class="btn_new_item">+ Ajouter un cadeau d'un autre site</a>
+      <a id="modalBtn"class="btn_new_item">+ Ajouter un cadeau d'un autre site</a>
       <h2>Produits</h2>
       <hr class="clear-r">
     </div>
+
+    {% if errorModal %}
+      <script>
+      $( document ).ready(function() {
+        $('#modalBtn').trigger('click')
+      });
+      </script>
+    {% endif %}
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span id="closeModal" class="close">&times;</span>
+        <h2>Ajouter un produit</h2>
+          <hr>
+          <form action="{{ path_for('list.createproduct', {id: list.id}) }}" method="post">
+            {{ csrf() }}
+
+            <label for="name">Nom du produit</label>
+            <input type="text" name="name" id="name" value="{{ persistValues.name }}" required>
+            {% if flash.errors.name %}
+              <span>{{ flash.errors.name }}</span>
+            {% endif %}
+
+            <label for="descritpion">Description</label>
+            <textarea name="description" id="description" value="{{ persistValues.description }}" required></textarea>
+            {% if flash.errors.description %}
+              <span>{{ flash.errors.description }}</span>
+            {% endif %}
+
+            <label for="link">Lien du produit</label>
+            <input type="text" name="link" id="link" value="{{ persistValues.link }}" required>
+            {% if flash.errors.link %}
+              <span>{{ flash.errors.link }}</span>
+            {% endif %}
+
+            <label for="price">Prix du produit</label>
+            <input type="text" name="price" id="price" value="{{ persistValues.price }}" required>
+            {% if flash.errors.price %}
+              <span>{{ flash.errors.price }}</span>
+            {% endif %}
+
+            <label for="pic">Photo du produit</label>
+            <input type="text" name="pic" id="pic" value="{{ persistValues.pic }}" required>
+            {% if flash.errors.pic %}
+              <span>{{ flash.errors.pic }}</span>
+            {% endif %}
+
+            <button>Ajouter</button>
+          </form>
+      </div>
+    </div>
+
     <div class="div_body row_grid">
       {% for product in products %}
         <div class="column-4" style="border: solid 1px black;">
@@ -17,4 +69,8 @@
       {% endfor %}
     </div>
   </div>
+{% endblock %}
+
+{% block js %}
+  <script src="{{ base_url() ~ '/assets/js/modal.js' }}"> </script>
 {% endblock %}

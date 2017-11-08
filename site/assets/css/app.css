@@ -207,7 +207,7 @@
   flex-direction: row; }
 
 .col-1 {
-  flex-basis: 6.33333%;
+  flex-basis: 6.3333333333%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -216,7 +216,7 @@
   box-sizing: border-box; }
 
 .col-2 {
-  flex-basis: 14.66667%;
+  flex-basis: 14.6666666667%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -234,7 +234,7 @@
   box-sizing: border-box; }
 
 .col-4 {
-  flex-basis: 31.33333%;
+  flex-basis: 31.3333333333%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -243,7 +243,7 @@
   box-sizing: border-box; }
 
 .col-5 {
-  flex-basis: 39.66667%;
+  flex-basis: 39.6666666667%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -261,7 +261,7 @@
   box-sizing: border-box; }
 
 .col-7 {
-  flex-basis: 56.33333%;
+  flex-basis: 56.3333333333%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -270,7 +270,7 @@
   box-sizing: border-box; }
 
 .col-8 {
-  flex-basis: 64.66667%;
+  flex-basis: 64.6666666667%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -288,7 +288,7 @@
   box-sizing: border-box; }
 
 .col-10 {
-  flex-basis: 81.33333%;
+  flex-basis: 81.3333333333%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -297,7 +297,7 @@
   box-sizing: border-box; }
 
 .col-11 {
-  flex-basis: 89.66667%;
+  flex-basis: 89.6666666667%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -432,12 +432,42 @@ hr {
   flex-direction: row; }
 
 .column-4 {
-  flex-basis: 39.66667%;
+  flex-basis: 39.6666666667%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 3px;
   padding: 10px;
   box-sizing: border-box; }
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rbg(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.2); }
+
+.modal-content {
+  background-color: white;
+  margin: 8% auto;
+  padding: 5px;
+  border: 1px solid grey;
+  width: 50%; }
+
+.close {
+  color: grey;
+  float: right;
+  font-size: 30px;
+  font-weight: bold; }
+
+.close:hover, .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer; }
 
 /*# sourceMappingURL=app.css.map */

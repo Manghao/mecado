@@ -47,7 +47,61 @@ class ListController extends BaseController
         $liste->name=$request->getParam('list_title');
         $liste->descr=$request->getParam('description');
         $liste->dateExp=$request->getParam('end_date');
-        $liste->other_dest=$request->getParam('other_dest') === 'on' ? 1 : 0;
+        $liste->other_dest=is_null($request->getParam('other_dest')) ? 0 : 1;
+
+        //TMP
+        $liste->id_creator=66;
+        $liste->save();
+
+        return $this->redirect($response, 'list.listitems', ['id' => $liste->id]);
+
+      } else {
+          $this->flash('errors', $errors);
+          return $this->redirect($response, 'user.register.form', $args);
+      }
+    }
+  }
+
+  public function createproductForm(RequestInterface $request, ResponseInterface $response, $args)
+  {
+    $this->render($response, 'list/createproduct');
+  }
+
+  public function createproduct(RequestInterface $request, ResponseInterface $response, $args)
+  {
+    if (false === $request->getAttribute('csrf_status')) {
+      $this->flash('error', 'Une erreur est survenue pendant l\'envoi du formulaire !');
+      return $this->redirect($response, 'list.createproduct.form', $request->getparams());
+    } else {
+
+      $errors = [];
+
+      if (!Validator::stringType()->notEmpty()->validate($request->getParam('name'))) {
+        $errors['name'] = "Veuillez saisir un nom valide.";
+      }
+
+      if (!Validator::stringType()->notEmpty()->validate($request->getParam('description'))) {
+        $errors['description'] = "Veuillez saisir une descritpion valide.";
+      }
+
+      if (!Validator::url()->validate($request->getParam('link'))) {
+        $errors['link'] = "Veuillez saisir un lien valide.";
+      }
+
+      if (!Validator::floatval()->notEmpty()->validate($request->getParam('price'))) {
+        $errors['price'] = "Veuillez saisir un lien valide.";
+      }
+      if (!Validator::notEmpty()->validate($request->getParam('pic'))) {
+        $errors['pic'] = "Veuillez ajouter un fichier valide.";
+      }
+
+
+      if (empty($errors)) {
+        $liste = new Liste();
+        $liste->name=$request->getParam('list_title');
+        $liste->descr=$request->getParam('description');
+        $liste->dateExp=$request->getParam('end_date');
+        $liste->other_dest=is_null($request->getParam('other_dest')) ? 0 : 1;
 
         //TMP
         $liste->id_creator=66;
@@ -75,7 +129,7 @@ class ListController extends BaseController
       $products = Product::get();
 
       if (!empty($products)) {
-          $this->render($response, 'list/listitems', ['products' => $products], $args);
+          $this->render($response, 'list/listitems', ['products' => $products]);
       }
       else {
           return $this->redirect($response, 'index', $args);

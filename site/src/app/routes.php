@@ -36,4 +36,8 @@ $app->group('/list', function() {
     $this->get('/{id:[0-9]+}/listitems', ListController::class . ':listitems')
         ->add(new GuestMiddleware($container))
         ->setName('list.listitems');
+
+    $this->post('/{id:[0-9]+}/createproduct', ListController::class . ':createproduct')
+        ->add(new GuestMiddleware($container))
+          ->setName('list.createproduct');
 });
