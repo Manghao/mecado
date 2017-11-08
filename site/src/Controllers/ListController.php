@@ -63,18 +63,10 @@ class ListController extends BaseController
   }
 
   public function listitems(RequestInterface $request, ResponseInterface $response, $args) {
-      /*var_dump($args);
-      $liste = new Liste();
-      $liste->name = 'test';
-      $liste->id_creator = 1;
-      $liste->save();*/
-
-      // a la place de args mettre ['id' => ] dans la redirection
-
       $list = Liste::where('id', '=', $args['id'])
           ->first();
 
-      if (!empty($liste)) {
+      if (!empty($list)) {
           $products = Product::get();
 
           if (!empty($products)) {
@@ -82,10 +74,10 @@ class ListController extends BaseController
                   'list' => $list,
                   'products' => $products], $args);
           } else {
-              return $this->redirect($response, 'index', $args);
+              return $this->redirect($response, 'index');
           }
       } else {
-          return $this->redirect($response, 'index', $args);
+          return $this->redirect($response, 'index');
       }
   }
 }
