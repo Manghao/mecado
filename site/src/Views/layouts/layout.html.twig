@@ -14,6 +14,18 @@
     {% endblock %}
 
     <div class="container">
+        {% if flash.success %}
+            {{ flash.success }}
+        {% endif %}
+
+        {% if flash.error %}
+            {{ flash.error }}
+        {% endif %}
+
+        {% if flash.info %}
+            {{ flash.info }}
+        {% endif %}
+
         {% block content %}{% endblock %}
     </div>
 
