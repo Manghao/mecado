@@ -9,5 +9,5 @@
             Mecado.net est une application en ligne pour créer, partager et gérer des listes de cadeaux.L'application permet à un utilisateur de créer une liste de souhaits à l'occasion d'un événement particulier(anniversaire, fin d'année, mariage, retraite ...) et lui permet de diffuser cette liste de souhaits à un ensemble de personnes concernées. Ces personnes peuvent alors consulter cette liste et s'engager à offrir 1 item de la liste. Cet élément est alors marqué comme réservé afin d’éviter qu’un autre invité n’offre le même cadeau. Cette application est utilisable sur smartphone, tablette et ordinateur.
         </p>
     </div>
-    <a class="btn_create" href="#">Créer ma liste</a>
+    <a class="btn_create" href="{{ path_for('list.creationlist.form') }}">Créer ma liste</a>
 {% endblock %}
