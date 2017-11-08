@@ -1,9 +1,9 @@
 @import "vars";
 @import "buttons";
+@import "grid";
 
 .contains {
   padding: 0 10vw;
-  text-align: center;
 }
 
 .headband img {
@@ -17,6 +17,14 @@ a.btn_create {
   margin: 0 calc((100% - 200px) / 2);
 }
 
+a.btn_new_item {
+  @include button($width: auto);
+  @include btn_text($fontSize: 14px);
+  @include btn_color($bgcolor: #1966ff);
+  float: right;
+  margin-top: 0;
+}
+
 .presentation {
   font-size: large;
   text-align: left;
@@ -28,4 +36,21 @@ a.btn_create {
 
 .mt-10 {
   margin-top: 10px;
+}
+
+.clear-r {
+  clear: right;
+}
+
+hr {
+  border-color: black;
+  margin: 0;
+}
+
+.row_grid {
+  @include grid();
+}
+
+.column-4 {
+  @include col((((5 / 12) * 100%) - (2 * 1%)));
 }
