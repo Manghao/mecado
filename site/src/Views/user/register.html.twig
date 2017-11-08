@@ -1,0 +1,41 @@
+{% extends "layouts/layout.html.twig" %}
+
+{% set title = 'Inscription' %}
+
+{% block content %}
+    <form action="{{ path_for('user.register') }}" method="post">
+        {{ csrf() }}
+
+        <label for="last_name">Nom</label>
+        <input type="text" name="last_name" id="last_name" value="{{ persistValues.last_name }}" required>
+        {% if flash.errors.last_name %}
+            <span>{{ flash.errors.last_name }}</span>
+        {% endif %}
+
+        <label for="first_name">Pr&eacute;nom</label>
+        <input type="text" name="first_name" id="first_name" value="{{ persistValues.first_name }}" required>
+        {% if flash.errors.first_name %}
+            <span>{{ flash.errors.first_name }}</span>
+        {% endif %}
+
+        <label for="email">Adresse email</label>
+        <input type="email" name="email" id="email" value="{{ persistValues.email }}" required>
+        {% if flash.errors.email %}
+            <span>{{ flash.errors.email }}</span>
+        {% endif %}
+
+        <label for="password">Mot de passe</label>
+        <input type="password" name="password" id="password" required>
+        {% if flash.errors.password %}
+            <span>{{ flash.errors.password }}</span>
+        {% endif %}
+
+        <label for="password_repeat">Mot de passe (vérification)</label>
+        <input type="password" name="password_repeat" id="password_repeat" required>
+        {% if flash.errors.password_repeat %}
+            <span>{{ flash.errors.password_repeat }}</span>
+        {% endif %}
+
+        <button>Inscription</button>
+    </form>
+{% endblock %}
