@@ -8,7 +8,7 @@ return array(
 		'host' => '192.168.99.100',
 		'user' => 'root',
 		'pass' => 'root',
-		'dbName' => 'Mecado',
+		'dbName' => 'mecado',
 		'port' => 3307
 	)
 );

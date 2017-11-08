@@ -2,9 +2,9 @@
 
 namespace Mecado\Middlewares;
 
+use Mecado\Utils\Session;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Mecado\Utils\Session;
 
 /**
  * Middleware de valeurs persistantes dans les formulaires
@@ -27,7 +27,7 @@ class PersistentValuesMiddleware
 
     /**
      * Fonction d'invocation du middleware
-     * @param Request $request
+     * @param Request$request
      * @param Response $response
      * @param $next
      * @return Response
@@ -39,7 +39,7 @@ class PersistentValuesMiddleware
             Session::unset('persistValues');
         }
         $response = $next($request, $response);
-        if ($response->getStatusCode() === 400) {
+        if ($response->getStatusCode() !== 200) {
             Session::set('persistValues', $request->getParams());
         }
         return $response;
