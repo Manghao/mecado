@@ -120,18 +120,25 @@ class ListController extends BaseController
       /*var_dump($args);
       $liste = new Liste();
       $liste->name = 'test';
-      $liste->id_prod = 1;
       $liste->id_creator = 1;
       $liste->save();*/
 
       // a la place de args mettre ['id' => ] dans la redirection
 
-      $products = Product::get();
+      $list = Liste::where('id', '=', $args['id'])
+          ->first();
 
-      if (!empty($products)) {
-          $this->render($response, 'list/listitems', ['products' => $products]);
-      }
-      else {
+      if (!empty($liste)) {
+          $products = Product::get();
+
+          if (!empty($products)) {
+              $this->render($response, 'list/listitems', [
+                  'list' => $list,
+                  'products' => $products], $args);
+          } else {
+              return $this->redirect($response, 'index', $args);
+          }
+      } else {
           return $this->redirect($response, 'index', $args);
       }
   }

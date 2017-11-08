@@ -27,6 +27,12 @@ a.btn_new_item {
   margin-top: 0;
 }
 
+a.btn_add_item {
+  @include button($width: auto);
+  @include btn_text($fontSize: 14px);
+  @include btn_color($bgcolor: #1966ff);
+}
+
 .presentation {
   font-size: large;
   text-align: left;
@@ -40,21 +46,92 @@ a.btn_new_item {
   margin-top: 10px;
 }
 
+.pd-20 {
+  padding-top: 20px;
+}
+
+.pd-10 {
+  padding-top: 10px;
+}
+
+ul.navBar li a.titleNav {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+ul.navBar li a.titleNav:hover {
+  border-bottom: 0;
+  transition: color 0.5s ease-in;
+  color: darken(#eee, 5);
+}
+
+form label, form input {
+  display: block;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+form input.has-error {
+  border: 1px solid red;
+  border-bottom: 5px solid red;
+}
+
+form span.error {
+  font-size: 0.9em;
+  color: red;
+  display: block;
+  margin: -5px 0 5px 0;
+}
+
 .clear-r {
   clear: right;
 }
 
-hr {
-  border-color: black;
-  margin: 0;
-}
-
-.row_grid {
+.grid {
   @include grid();
 }
 
 .column-4 {
-  @include col((((5 / 12) * 100%) - (2 * 1%)));
+  @include col((((4 / $max_columns) * 100%) - (2 * $columns_spacing)));
+}
+
+@media screen and (max-width: 600px) {
+  .column-4 {
+    @include col((((6 / $max_columns) * 100%) - (2 * $columns_spacing)));
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .column-4 {
+    @include col((((12 / $max_columns) * 100%) - (2 * $columns_spacing)));
+  }
+}
+
+.column-6 {
+  @include col((((6 / $max_columns) * 100%) - (2 * $columns_spacing)));
+}
+
+.card {
+  border: solid 1px grey;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.card_body {
+  font-size: 14px;
+}
+
+.card_body img {
+  width: 100%;
+  height: auto;
+  border-bottom: solid 1px #cccccc;
+  margin-bottom: 5px;
 }
 
 .modal {
