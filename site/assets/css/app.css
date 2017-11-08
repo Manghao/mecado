@@ -358,7 +358,9 @@
 
 .headband img {
   width: 100%;
-  height: auto; }
+  height: auto;
+  border-bottom: solid 1px #cccccc;
+  margin-top: -10px; }
 
 a.btn_create {
   width: 200px;
