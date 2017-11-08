@@ -49,7 +49,7 @@ class UserController extends BaseController
             }
 
             if ($request->getParam('password_repeat') !== $request->getParam('password')) {
-                $errors['password'] = "Le mot de passe de vérification ne correspond pas au mot de passe.";
+                $errors['password_repeat'] = "Le mot de passe de vérification ne correspond pas au mot de passe.";
             }
 
             if (empty($errors)) {

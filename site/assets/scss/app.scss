@@ -40,6 +40,48 @@ a.btn_new_item {
   margin-top: 10px;
 }
 
+.pd-20 {
+  padding-top: 20px;
+}
+
+.pd-10 {
+  padding-top: 10px;
+}
+
+ul.navBar li a.titleNav {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+ul.navBar li a.titleNav:hover {
+  border-bottom: 0;
+  transition: color 0.5s ease-in;
+  color: darken(#eee, 5);
+}
+
+form label, form input {
+  display: block;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+form input.has-error {
+  border: 1px solid red;
+  border-bottom: 5px solid red;
+}
+
+form span.error {
+  font-size: 0.9em;
+  color: red;
+  display: block;
+  margin: -5px 0 5px 0;
+
 .clear-r {
   clear: right;
 }

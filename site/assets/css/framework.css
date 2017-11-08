@@ -551,7 +551,7 @@ kbd {
   flex-direction: row; }
 
 .col-1 {
-  flex-basis: 6.33333%;
+  flex-basis: 6.3333333333%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -560,7 +560,7 @@ kbd {
   box-sizing: border-box; }
 
 .col-2 {
-  flex-basis: 14.66667%;
+  flex-basis: 14.6666666667%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -578,7 +578,7 @@ kbd {
   box-sizing: border-box; }
 
 .col-4 {
-  flex-basis: 31.33333%;
+  flex-basis: 31.3333333333%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -587,7 +587,7 @@ kbd {
   box-sizing: border-box; }
 
 .col-5 {
-  flex-basis: 39.66667%;
+  flex-basis: 39.6666666667%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -605,7 +605,7 @@ kbd {
   box-sizing: border-box; }
 
 .col-7 {
-  flex-basis: 56.33333%;
+  flex-basis: 56.3333333333%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -614,7 +614,7 @@ kbd {
   box-sizing: border-box; }
 
 .col-8 {
-  flex-basis: 64.66667%;
+  flex-basis: 64.6666666667%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -632,7 +632,7 @@ kbd {
   box-sizing: border-box; }
 
 .col-10 {
-  flex-basis: 81.33333%;
+  flex-basis: 81.3333333333%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -641,7 +641,7 @@ kbd {
   box-sizing: border-box; }
 
 .col-11 {
-  flex-basis: 89.66667%;
+  flex-basis: 89.6666666667%;
   flex-shrink: 1;
   margin-left: 1%;
   margin-right: 1%;
@@ -776,16 +776,16 @@ nav ul.navBar {
   display: flex;
   flex-direction: row;
   list-style: none;
-  background-color: #d9d9d9;
+  background-color: #2c3e50;
   margin-top: 0;
   padding: 15px 16px; }
 
 nav ul.navBar li a {
   text-decoration: none;
-  color: #000; }
+  color: #fff; }
 
 nav ul.navBar li a:hover {
-  border-bottom: 1px dotted #000; }
+  border-bottom: 1px dotted #fff; }
 
 body {
   color: #000;

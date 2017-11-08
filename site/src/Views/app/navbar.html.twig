@@ -1,10 +1,9 @@
 <nav>
-    <div id="navbar">
-        <ul class="navBar">
-            <li>
-                <a href="{{ path_for('index') }}">Mecado</a>
-            </li>
-            <li>
+    <ul class="navBar">
+        <li>
+            <a href="#" class="titleNav">Mecado</a>
+        </li>
+        <li>
                 <a href="{{ path_for('index') }}">Accueil</a>
             </li>
             <li>
@@ -25,7 +24,7 @@
                     <a href="#">Connexion</a>
                 </li>
                 <li>
-                    <a href="#">Inscription</a>
+                    <a href="{{ path_for('user.register.form') }}">Inscription</a>
                 </li>
             {% endif %}
         </ul>
