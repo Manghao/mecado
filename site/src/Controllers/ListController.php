@@ -3,6 +3,7 @@
 namespace Mecado\Controllers;
 
 use Mecado\Models\Liste;
+use Mecado\Models\ListProducts;
 use Mecado\Models\Product;
 use Mecado\Utils\Session;
 use Psr\Http\Message\RequestInterface;
@@ -67,17 +68,44 @@ class ListController extends BaseController
       $list = Liste::where('id', '=', $args['id'])
           ->first();
 
-      if (!empty($list)) {
-          $products = Product::get();
+      if (!is_null($list)) {
+          $products = Products::get();
 
-          if (!empty($products)) {
+          if (!is_null($products)) {
               $this->render($response, 'list/listitems', [
                   'list' => $list,
-                  'products' => $products], $args);
+                  'products' => $products]);
           } else {
+              $this->flash('error', 'Les produits n\'existent pas');
               return $this->redirect($response, 'index');
           }
       } else {
+          $this->flash('error', 'La liste n\'existe pas');
+          return $this->redirect($response, 'index');
+      }
+  }
+
+  public function additem(RequestInterface $request, ResponseInterface $response, $args) {
+      $list = Liste::where('id', '=', $args['id'])
+          ->first();
+
+      if (!is_null($list)) {
+          $product = Product::where('id', '=', $args['idProd'])
+              ->first();
+
+          if (!is_null($product)) {
+              $list_product = new ListProducts();
+              $list_product->id_list = $list->id;
+              $list_product->id_prod = $product->id;
+              $list_product->save();
+
+              return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
+          } else {
+              $this->flash('error', 'Le produit n\'existe pas');
+              return $this->redirect($response, 'index');
+          }
+      } else {
+          $this->flash('error', 'La liste n\'existe pas');
           return $this->redirect($response, 'index');
       }
   }
