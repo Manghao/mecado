@@ -43,7 +43,18 @@ class ListController extends BaseController
       }
 
       if (empty($errors)) {
-          return $this->redirect($response, 'list.listitems', $args);
+        $liste = new Liste();
+        $liste->name=$request->getParam('list_title');
+        $liste->descr=$request->getParam('description');
+        $liste->dateExp=$request->getParam('end_date');
+        $liste->other_dest=$request->getParam('other_dest') === 'on' ? 1 : 0;
+
+        //TMP
+        $liste->id_creator=66;
+        $liste->save();
+
+        return $this->redirect($response, 'list.listitems', ['id' => $liste->id]);
+
       } else {
           $this->flash('errors', $errors);
           return $this->redirect($response, 'user.register.form', $args);
