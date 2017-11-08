@@ -5,6 +5,7 @@ namespace Mecado\Controllers;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Respect\Validation\Validator;
+use Mecado\Models\Liste;
 
 class ListController extends BaseController
 {
@@ -41,12 +42,18 @@ class ListController extends BaseController
       }
 
       if (empty($errors)) {
-        die('a');
-        return $this->redirect($response, 'list.addtolist', $args, 400);
+        $liste = new Liste();
+        $liste->name=$request->getParam('list_title');
+        $liste->descr=$request->getParam('description');
+        $liste->dateExp=$request->getParam('end_date');
+        $liste->other_dest=$request->getParam('other_dest') === 'on' ? 1 : 0;
+        $liste->save();
+
+        return $this->redirect($response, 'index', $args);
 
       } else {
           $this->flash('errors', $errors);
-          return $this->redirect($response, 'user.register.form', $args, 400);
+          return $this->redirect($response, 'user.register.form', $args);
       }
     }
   }
