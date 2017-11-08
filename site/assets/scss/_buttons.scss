@@ -1,0 +1,131 @@
+@import "vars";
+
+$bgdefault: #16a085 !default;
+$bgsuccess: #27ae60 !default;
+$bgerror: #d35400 !default;
+$bginfos: #2980b9 !default;
+$bgdanger: red !default;
+$bgfancy: grey !default;
+$btn_text_color: #fff !default;
+$btnradius: 3px !default;
+
+@mixin btn_color($bgcolor: $bgdefault, $color: $btn_text_color) {
+  background-color: $bgcolor;
+  color: $color;
+}
+
+@mixin btn_text($fontSize: 12px, $text_align: center) {
+  text-decoration: none;
+  font-size: $fontSize;
+  text-align: $text_align;
+}
+
+@mixin button($width: 100px, $height: 30px,
+  $radius: $btnradius, $padding: 0 10px,
+  $bgcolor: $bgdefault, $color: $btn_text_color,
+  $fontSize: 12px, $text_align: center
+) {
+  width: $width;
+  height: $height;
+  margin: 10px 0;
+  border-radius: $radius;
+  transition: opacity 0.5s;
+  display: block;
+  line-height: $height;
+  padding: $padding;
+
+  @include btn_color();
+  @include btn_text();
+
+  &:hover {
+    opacity: 0.9;
+    cursor: pointer;
+  }
+}
+
+.btn {
+  @include button($fontSize: 14px);
+}
+
+.btn-lg {
+  @include button($width: 150px, $fontSize: 16px, $padding: 10px 10px);
+}
+
+.btn-sm {
+  @include button($height: 10px, $fontSize: 12px, $padding: 5px 5px);
+}
+
+.btn-el {
+  @include button($width: 100%);
+  box-sizing: border-box;
+}
+
+.btn-success {
+  background-color: $bgsuccess;
+  border: 1px solid darken($bgsuccess, 10);
+}
+
+.btn-error {
+  background-color: $bgerror;
+  border: 1px solid darken($bgerror, 10);
+}
+
+.btn-danger {
+  background-color: $bgdanger;
+  border: 1px solid darken($bgdanger, 10);
+}
+
+.btn-info {
+  background-color: $bginfos;
+  border: 1px solid darken($bginfos, 10);
+}
+
+.btn-flat {
+  border-radius: 0px;
+  border: 0px solid;
+}
+
+.btn-fancy {
+  box-shadow: 0px 6px 0px $bgfancy;
+
+  &:active {
+    transform: translate(0, 3px);
+    box-shadow: 0px 3px 0px darken($bgfancy, 10);
+  }
+
+  &.btn-success {
+    box-shadow: 0px 6px 0px darken($bgsuccess, 10);
+
+    &:active {
+      transform: translate(0, 3px);
+      box-shadow: 0px 3px 0px darken($bgsuccess, 10);
+    }
+  }
+
+  &.btn-error {
+    box-shadow: 0px 6px 0px darken($bgerror, 10);
+
+    &:active {
+      transform: translate(0, 3px);
+      box-shadow: 0px 3px 0px darken($bgerror, 10);
+    }
+  }
+
+  &.btn-danger {
+    box-shadow: 0px 6px 0px darken($bgdanger, 10);
+
+    &:active {
+      transform: translate(0, 3px);
+      box-shadow: 0px 3px 0px darken($bgdanger, 10);
+    }
+  }
+
+  &.btn-info {
+    box-shadow: 0px 6px 0px darken($bginfos, 10);
+
+    &:active {
+      transform: translate(0, 3px);
+      box-shadow: 0px 3px 0px darken($bginfos, 10);
+    }
+  }
+}

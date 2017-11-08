@@ -1,0 +1,37 @@
+{% extends "layouts/layout.html.twig" %}
+
+{% set title = 'Creation de liste' %}
+
+{% block content %}
+  <form action="{{ path_for('list.creationlist') }}" method="post">
+    {{ csrf() }}
+
+    <label for="list_title">Titre de la liste</label>
+    <input type="text" name="list_title" id="list_title" value="{{ persistValues.list_title }}" required>
+    {% if flash.errors.list_title %}
+      <span>{{ flash.errors.list_title }}</span>
+    {% endif %}
+
+    <label for="descritpion">Description</label>
+    <textarea name="description" id="description" value="{{ persistValues.description }}" required></textarea>
+    {% if flash.errors.description %}
+      <span>{{ flash.errors.description }}</span>
+    {% endif %}
+
+    <label for="end_date">Date de fin</label>
+    <input type="date" name="end_date" id="end_date" value="{{ persistValues.end_date }}" required>
+    {% if flash.errors.end_date %}
+      <span>{{ flash.errors.end_date }}</span>
+    {% endif %}
+
+    <label for="other_dest">Liste pour une autre personne que moi
+    </label>
+    <input type="checkbox" name="other_dest" id="other_dest" value="{{ persistValues.other_dest }}">
+    {% if flash.errors.other_dest %}
+      <span>{{ flash.errors.other_dest }}</span>
+    {% endif %}
+    <i class="material-icons" title="Cochez cette case si la liste que vous créer ne vous est pas déstinée, ainsi vous aurez accès en direct aux messages postés par les participants">help_outline</i>
+
+    <button>Créer la liste</button>
+  </form>
+{% endblock %}

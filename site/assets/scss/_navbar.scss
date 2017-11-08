@@ -1,0 +1,22 @@
+@import "vars";
+
+$bgcolor: #d9d9d9 !default;
+$link_color: #000 !default;
+
+nav ul.navBar {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  background-color: $bgcolor;
+  margin-top: 0;
+  padding: 15px 16px;
+}
+
+nav ul.navBar li a {
+  text-decoration: none;
+  color: $link_color;
+}
+
+nav ul.navBar li a:hover {
+  border-bottom: 1px dotted $link_color;
+}
