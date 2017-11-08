@@ -25,7 +25,7 @@
     {% endif %}
 
     <label for="other_dest">Liste pour une autre personne que moi</label>
-    <input type="checkbox" name="other_dest" id="other_dest" value="{{ persistValues.other_dest }}" required>
+    <input type="checkbox" name="other_dest" id="other_dest" value="{{ persistValues.other_dest }}">
     {% if flash.errors.other_dest %}
       <span>{{ flash.errors.other_dest }}</span>
     {% endif %}
