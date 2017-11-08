@@ -3,6 +3,7 @@
 use Mecado\Controllers\AppController;
 use Mecado\Controllers\UserController;
 use Mecado\Controllers\ListController;
+use Mecado\Middlewares\AuthMiddleware;
 use Mecado\Middlewares\GuestMiddleware;
 use Mecado\Middlewares\AuthMiddleware;
 
@@ -20,6 +21,21 @@ $app->group('/user', function() {
         ->add(new GuestMiddleware($container))
         ->setName('user.register');
 
+    $this->get('/login', UserController::class . ':loginForm')
+        ->add(new GuestMiddleware($container))
+        ->setName('user.login.form');
+
+    $this->post('/login', UserController::class . ':login')
+        ->add(new GuestMiddleware($container))
+        ->setName('user.login');
+
+    $this->get('/view', UserController::class . ':view')
+        ->add(new AuthMiddleware($container))
+        ->setName('user.view');
+
+    $this->get('/logout', UserController::class . ':logout')
+        ->add(new AuthMiddleware($container))
+        ->setName('user.logout');
 
 });
 

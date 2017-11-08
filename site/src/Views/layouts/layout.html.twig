@@ -16,17 +16,23 @@
         {% include 'app/navbar.html.twig' %}
     {% endblock %}
 
-    <div class="container">
+    {% if title == 'Accueil' %}
+        <div class="headband">
+            <img src="{{ base_url() ~ '/assets/img/gift.png' }}">
+        </div>
+    {% endif %}
+
+    <div class="contains">
         {% if flash.success %}
-            {{ flash.success }}
+            <div class="alert alert-success">{{ flash.success }}</div>
         {% endif %}
 
         {% if flash.error %}
-            {{ flash.error }}
+            <div class="alert alert-danger">{{ flash.error }}</div>
         {% endif %}
 
         {% if flash.info %}
-            {{ flash.info }}
+            <div class="alert alert-info">{{ flash.info }}</div>
         {% endif %}
 
         {% block content %}{% endblock %}
