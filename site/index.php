@@ -15,8 +15,8 @@ setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
 
 // Variables globales
 define('DS', DIRECTORY_SEPARATOR);
-define('SRC', dirname(basename(__DIR__)) . DS . 'src');
-define('ASSETS', dirname(basename(__DIR__)) . DS . 'assets');
+define('SRC', __DIR__ . DS . 'src');
+define('ASSETS', dirname($_SERVER['SCRIPT_NAME']) . DS . 'assets');
 define('UPLOADS', ASSETS . DS . 'uploads');
 
 // Configuration de la connexion a la base de donnees
@@ -30,9 +30,9 @@ $app = new \Slim\App([
     ]
 ]);
 
-require SRC . DS . 'app' . DS . 'container.php';
-require SRC . DS . 'app' . DS . 'handlers.php';
-require SRC . DS . 'app' . DS . 'middlewares.php';
-require SRC . DS . 'app' . DS . 'routes.php';
+require 'src' . DS . 'app' . DS . 'container.php';
+require 'src' . DS . 'app' . DS . 'handlers.php';
+require 'src' . DS . 'app' . DS . 'middlewares.php';
+require 'src' . DS . 'app' . DS . 'routes.php';
 
 $app->run();
