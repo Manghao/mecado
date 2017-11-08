@@ -5,6 +5,7 @@ $link_color: #000 !default;
 
 nav ul.navBar {
   display: flex;
+  flex-direction: row;
   list-style: none;
   background-color: $bgcolor;
   margin-top: 0;
