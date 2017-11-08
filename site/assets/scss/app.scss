@@ -33,6 +33,12 @@ a.btn_add_item {
   @include btn_color($bgcolor: #1966ff);
 }
 
+button.submit {
+  @include button($width: 100px);
+  @include btn_text($fontSize: 14px);
+  @include btn_color($bgcolor: #1966ff);
+}
+
 .presentation {
   font-size: large;
   text-align: left;
@@ -87,6 +93,17 @@ form span.error {
   color: red;
   display: block;
   margin: -5px 0 5px 0;
+}
+
+form input[type="checkbox"] {
+  display: inline-block;
+  width: 10px;
+  margin: 0;
+}
+
+form label {
+  display: inline-block;
+  width: 90%;
 }
 
 .clear-r {

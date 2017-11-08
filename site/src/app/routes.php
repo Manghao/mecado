@@ -3,7 +3,6 @@
 use Mecado\Controllers\AppController;
 use Mecado\Controllers\UserController;
 use Mecado\Controllers\ListController;
-use Mecado\Middlewares\AuthMiddleware;
 use Mecado\Middlewares\GuestMiddleware;
 use Mecado\Middlewares\AuthMiddleware;
 
