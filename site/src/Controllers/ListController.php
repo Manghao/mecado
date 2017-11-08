@@ -48,8 +48,62 @@ class ListController extends BaseController
         $liste = new Liste();
         $liste->name=$request->getParam('list_title');
         $liste->descr=$request->getParam('description');
-        $liste->dateExp=date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
-        $liste->other_dest=$request->getParam('other_dest') === 'on' ? 1 : 0;
+        $liste->date_exp=date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
+        $liste->other_dest=is_null($request->getParam('other_dest')) ? 0 : 1;
+
+        //TMP
+        $liste->id_creator=Session::get('user')->id;
+        $liste->save();
+
+        return $this->redirect($response, 'list.listitems', ['id' => $liste->id]);
+
+      } else {
+          $this->flash('errors', $errors);
+          return $this->redirect($response, 'user.register.form', $args);
+      }
+    }
+  }
+
+  public function createproductForm(RequestInterface $request, ResponseInterface $response, $args)
+  {
+    $this->render($response, 'list/createproduct');
+  }
+
+  public function createproduct(RequestInterface $request, ResponseInterface $response, $args)
+  {
+    if (false === $request->getAttribute('csrf_status')) {
+      $this->flash('error', 'Une erreur est survenue pendant l\'envoi du formulaire !');
+      return $this->redirect($response, 'list.createproduct.form', $request->getparams());
+    } else {
+
+      $errors = [];
+
+      if (!Validator::stringType()->notEmpty()->validate($request->getParam('name'))) {
+        $errors['name'] = "Veuillez saisir un nom valide.";
+      }
+
+      if (!Validator::stringType()->notEmpty()->validate($request->getParam('description'))) {
+        $errors['description'] = "Veuillez saisir une descritpion valide.";
+      }
+
+      if (!Validator::url()->validate($request->getParam('link'))) {
+        $errors['link'] = "Veuillez saisir un lien valide.";
+      }
+
+      if (!Validator::floatval()->notEmpty()->validate($request->getParam('price'))) {
+        $errors['price'] = "Veuillez saisir un lien valide.";
+      }
+      if (!Validator::notEmpty()->validate($request->getParam('pic'))) {
+        $errors['pic'] = "Veuillez ajouter un fichier valide.";
+      }
+
+
+      if (empty($errors)) {
+        $liste = new Liste();
+        $liste->name=$request->getParam('list_title');
+        $liste->descr=$request->getParam('description');
+        $liste->date_exp=date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
+        $liste->other_dest=is_null($request->getParam('other_dest')) ? 0 : 1;
 
         //TMP
         $liste->id_creator=Session::get('user')->id;
@@ -69,18 +123,21 @@ class ListController extends BaseController
           ->first();
 
       if (!is_null($list)) {
-          $products = Products::get();
+          $products = Product::whereNotIn('id', function($query) {
+              $query->select('id_prod')
+                  ->from('list_products');
+          })->get();
 
           if (!is_null($products)) {
-              $this->render($response, 'list/listitems', [
-                  'list' => $list,
-                  'products' => $products]);
+             $this->render($response, 'list/listitems', [
+                 'list' => $list,
+                 'products' => $products]);
           } else {
-              $this->flash('error', 'Les produits n\'existent pas');
+              $this->flash('error', 'Les produits n\'existent pas !');
               return $this->redirect($response, 'index');
           }
       } else {
-          $this->flash('error', 'La liste n\'existe pas');
+          $this->flash('error', 'La liste n\'existe pas !');
           return $this->redirect($response, 'index');
       }
   }
@@ -99,13 +156,14 @@ class ListController extends BaseController
               $list_product->id_prod = $product->id;
               $list_product->save();
 
+              $this->flash('success', 'Le produit "' . $product->name . '" a bien été ajouté à votre liste !');
               return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
           } else {
-              $this->flash('error', 'Le produit n\'existe pas');
+              $this->flash('error', 'Le produit n\'existe pas !');
               return $this->redirect($response, 'index');
           }
       } else {
-          $this->flash('error', 'La liste n\'existe pas');
+          $this->flash('error', 'La liste n\'existe pas !');
           return $this->redirect($response, 'index');
       }
   }

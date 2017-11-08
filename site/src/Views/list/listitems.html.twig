@@ -4,23 +4,83 @@
 
 {% block content %}
   <div>
-    <button class="btn_new_item">+ Ajouter un cadeau d'un autre site</button>
+    <button id="modalBtn" class="btn_new_item">+ Ajouter un cadeau d'un autre site</button>
     <h2>Produits</h2>
     <hr class="clear-r">
   </div>
-  <div class="grid">
-      {% for product in products %}
-        <div class="column-4 card">
-          <div class="card_body">
-            <form action="{{ path_for('list.additem', {id: list.id, idProd: product.id}) }}" method="post">
-              <img src="{{ base_url() ~ '/assets/img/' ~ product.getImages[0].name }}" alt="{{ product.name }}">
-              <span style="float: right">{{ product.price }}</span>
-              <h4>{{ product.name }}</h4>
-              <p class="mt-10">{{ product.descr }}</p>
-              <button class="btn_add_item">Ajouter à la liste</button>
-            </form>
+
+    {% if errorModal %}
+      <script>
+      $( document ).ready(function() {
+        $('#modalBtn').trigger('click')
+      });
+      </script>
+    {% endif %}
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span id="closeModal" class="close">&times;</span>
+        <h2>Ajouter un produit</h2>
+          <hr>
+          <form action="{{ path_for('list.createproduct', {id: list.id}) }}" method="post">
+            {{ csrf() }}
+
+            <label for="name">Nom du produit</label>
+            <input type="text" name="name" id="name" value="{{ persistValues.name }}" required>
+            {% if flash.errors.name %}
+              <span>{{ flash.errors.name }}</span>
+            {% endif %}
+
+            <label for="descritpion">Description</label>
+            <textarea name="description" id="description" value="{{ persistValues.description }}" required></textarea>
+            {% if flash.errors.description %}
+              <span>{{ flash.errors.description }}</span>
+            {% endif %}
+
+            <label for="link">Lien du produit</label>
+            <input type="text" name="link" id="link" value="{{ persistValues.link }}" required>
+            {% if flash.errors.link %}
+              <span>{{ flash.errors.link }}</span>
+            {% endif %}
+
+            <label for="price">Prix du produit</label>
+            <input type="text" name="price" id="price" value="{{ persistValues.price }}" required>
+            {% if flash.errors.price %}
+              <span>{{ flash.errors.price }}</span>
+            {% endif %}
+
+            <label for="pic">Photo du produit</label>
+            <input type="text" name="pic" id="pic" value="{{ persistValues.pic }}" required>
+            {% if flash.errors.pic %}
+              <span>{{ flash.errors.pic }}</span>
+            {% endif %}
+
+            <button>Ajouter</button>
+          </form>
+      </div>
+    </div>
+
+    <div class="grid">
+      {%  if products | length != 0 %}
+        {% for product in products %}
+          <div class="column-4 card">
+            <div class="card_body">
+              <form action="{{ path_for('list.additem', {id: list.id, idProd: product.id}) }}" method="post">
+                <img src="{{ base_url() ~ '/assets/img/' ~ product.getImages[0].name }}" alt="{{ product.name }}">
+                <span style="float: right">{{ product.price }}</span>
+                <h4>{{ product.name }}</h4>
+                <p class="mt-10">{{ product.descr }}</p>
+                <button class="btn_add_item">Ajouter à la liste</button>
+              </form>
+            </div>
           </div>
-        </div>
-      {% endfor %}
-  </div>
+        {% endfor %}
+      {% else %}
+          <p class="alert alert-info">Les produits ont tous été ajouté à votre liste !</p>
+      {% endif %}
+    </div>
+{% endblock %}
+
+{% block js %}
+  <script src="{{ base_url() ~ '/assets/js/modal.js' }}"> </script>
 {% endblock %}

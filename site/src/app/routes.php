@@ -56,4 +56,8 @@ $app->group('/list', function() {
     $this->post('/{id:[0-9]+}/additem/{idProd:[0-9]+}', ListController::class . ':additem')
         ->add(new AuthMiddleware($container))
         ->setName('list.additem');
+
+    $this->post('/{id:[0-9]+}/createproduct', ListController::class . ':createproduct')
+        ->add(new AuthMiddleware($container))
+        ->setName('list.createproduct');
 });
