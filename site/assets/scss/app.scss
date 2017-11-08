@@ -27,6 +27,12 @@ a.btn_new_item {
   margin-top: 0;
 }
 
+a.btn_add_item {
+  @include button($width: auto);
+  @include btn_text($fontSize: 14px);
+  @include btn_color($bgcolor: #1966ff);
+}
+
 .presentation {
   font-size: large;
   text-align: left;
@@ -87,10 +93,43 @@ form span.error {
   clear: right;
 }
 
-.row_grid {
+.grid {
   @include grid();
 }
 
 .column-4 {
-  @include col((((5 / 12) * 100%) - (2 * 1%)));
+  @include col((((4 / $max_columns) * 100%) - (2 * $columns_spacing)));
+}
+
+@media screen and (max-width: 600px) {
+  .column-4 {
+    @include col((((6 / $max_columns) * 100%) - (2 * $columns_spacing)));
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .column-4 {
+    @include col((((12 / $max_columns) * 100%) - (2 * $columns_spacing)));
+  }
+}
+
+.column-6 {
+  @include col((((6 / $max_columns) * 100%) - (2 * $columns_spacing)));
+}
+
+.card {
+  border: solid 1px grey;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.card_body {
+  font-size: 14px;
+}
+
+.card_body img {
+  width: 100%;
+  height: auto;
+  border-bottom: solid 1px #cccccc;
+  margin-bottom: 5px;
 }
