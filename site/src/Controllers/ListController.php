@@ -42,8 +42,7 @@ class ListController extends BaseController
       }
 
       if (empty($errors)) {
-        return $this->redirect($response, 'list.listitems', $args, 400);
-
+          return $this->redirect($response, 'list.listitems', $args, 400);
       } else {
           $this->flash('errors', $errors);
           return $this->redirect($response, 'user.register.form', $args, 400);
@@ -52,6 +51,13 @@ class ListController extends BaseController
   }
 
   public function listitems(RequestInterface $request, ResponseInterface $response, $args) {
-      var_dump($args);
+      /*var_dump($args);
+      $liste = new Liste();
+      $liste->name = 'test';
+      $liste->id_prod = 1;
+      $liste->id_creator = 1;
+      $liste->save();*/
+
+      // a la place de args mettre ['id' => ] dans la redirection
   }
 }

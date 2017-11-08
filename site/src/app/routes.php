@@ -33,10 +33,7 @@ $app->group('/list', function() {
         ->add(new GuestMiddleware($container))
         ->setName('list.creationlist');
 
-    $this->get('/listitems/{id:[0-9]+}', ListController::class . ':listitems')
+    $this->get('/{id:[0-9]+}/listitems', ListController::class . ':listitems')
         ->add(new GuestMiddleware($container))
         ->setName('list.listitems');
 });
-
-var_dump($_SERVER);
-die();
