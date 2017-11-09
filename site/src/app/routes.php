@@ -61,6 +61,15 @@ $app->group('/list', function() {
     $this->post('/{id:[0-9]+}/createproduct', ListController::class . ':createproduct')
         ->add(new AuthMiddleware($container))
         ->setName('list.createproduct');
+  
+    $this->get('/view/{id:[0-9]+}', ListController::class . ':view')
+        ->setName('list.view');
+
+    $this->get('/share/{id:[0-9]+}', ListController::class . ':share')
+        ->setName('list.share');
+
+    $this->get('/{token:[0-9]+}', ListController::class . ':share')
+        ->setName('list.view.shared');
 });
 
 $app->group('/products', function() {

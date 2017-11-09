@@ -1,0 +1,48 @@
+{% extends "layouts/layout.html.twig" %}
+
+{% set title = list.name %}
+
+{% block content %}
+
+    <h2 class="pd-10">{{ list.name }}</h2>
+    <hr class="clear-r">
+
+    <div class="grid">
+        {% if auth.id == list.id_creator %}
+            <div class="column-6">
+                <a href="" class="btn btn-success btn-el">&Eacute;diter la liste</a>
+            </div>
+            <div class="column-6">
+                {% if list.url_share|length > 0 %}
+                    <script>
+                        function copyToClipboard(text) {
+                            var copyText = document.getElementById("url_share");
+                            copyText.select();
+                            document.execCommand("Copy");
+                            alert("Url copiée dans le presse-papier.");
+                        }
+                    </script>
+                    <input type="text" value="{{ list.url_share }}" id="url_share" class="url_share">
+                    <button onclick="copyToClipboard()" class="btn btn-info btn-el">Url de partage</button>
+                {% else %}
+                    <a href="{{ path_for('list.share', {id: list.id}) }}" onclick="return confirm('Partager la liste, clôture l\'ajout de produit.')" class="btn btn-info btn-el">Partager</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    
+    <div class="grid">
+        {% for product in list.getProducts %}
+            <div class="column-4 card">
+                <div class="card_body">
+                    <img src="{{ base_url() ~ '/assets/img/' ~ product.getImages[0].name }}" alt="{{ product.name }}">
+                    <span style="float: right">{{ product.price }} &euro;</span>
+                    <h4>{{ product.name }}</h4>
+                    <p class="mt-10">{{ product.descr }}</p>
+                    <a class="btn_add_item" href="#">R&eacute;server le cadeau</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

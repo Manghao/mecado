@@ -176,4 +176,37 @@ class ListController extends BaseController
             return $this->redirect($response, 'index');
         }
     }
+  
+    public function view(RequestInterface $request, ResponseInterface $response, $args)
+  {
+        $list = Liste::where('id', '=', $args['id'])->first();
+        if (!is_null($list)) {
+            $this->render($response, 'list/view', ['list' => $list]);
+        } else {
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable.');
+            return $this->redirect($response, 'index');
+        }
+    }
+
+    public function share(RequestInterface $request, ResponseInterface $response, $args)
+    {
+        $list = Liste::where('id', '=', $args['id'])->first();
+        if (!is_null($list)) {
+            $url = $_SERVER['REQUEST_SCHEME'] . '://';
+            $url .= $_SERVER['HTTP_HOST'];
+            $url .= $this->container->get('router')
+                        ->pathFor('list.view.shared', [
+                            'token' => uniqid()
+                        ]);
+
+            $list->url_share = $url;
+            $list->save();
+
+            $this->flash('success', 'URL de partage : ' . $url);
+            return $this->redirect($response, 'list.view', ['id' => $list->id]);
+        } else {
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable.');
+            return $this->redirect($response, 'index');
+        }
+    }
 }
