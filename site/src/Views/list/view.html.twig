@@ -4,15 +4,27 @@
 
 {% block content %}
 
+    <a class="right date_exp_head">
+        <i class="material-icons">notifications_active</i>&nbsp;&nbsp;{{ list.date_exp|date('d/m/Y') }}
+    </a>
     <h2 class="pd-10">{{ list.name }}</h2>
     <hr class="clear-r">
 
+    <blockquote>{{ list.descr }}</blockquote>
+    
     <div class="grid">
         {% if auth.id == list.id_creator %}
-            <div class="column-6">
+            <div class="column-4">
                 <a href="" class="btn btn-success btn-el">&Eacute;diter la liste</a>
             </div>
-            <div class="column-6">
+            <div class="column-4">
+                {% if list.getComments|length == 0 %}
+                    <div class="btn btn-danger btn-el">Aucun message</div>
+                {% else %}
+                    <a href="" class="btn btn-danger btn-el">Messages</a>
+                {% endif %}
+            </div>
+            <div class="column-4">
                 {% if list.url_share|length > 0 %}
                     <script>
                         function copyToClipboard(text) {
@@ -25,21 +37,28 @@
                     <input type="text" value="{{ list.url_share }}" id="url_share" class="url_share">
                     <button onclick="copyToClipboard()" class="btn btn-info btn-el">Url de partage</button>
                 {% else %}
-                    <a href="{{ path_for('list.share', {id: list.id}) }}" onclick="return confirm('Partager la liste, clôture l\'ajout de produit.')" class="btn btn-info btn-el">Partager</a>
+                    <a href="{{ path_for('list.share', {id: list.id}) }}" class="btn btn-info btn-el">Partager</a>
                 {% endif %}
             </div>
         {% endif %}
     </div>
-    
+
     <div class="grid">
-        {% for product in list.getProducts %}
-            <div class="column-4 card">
+        {% for product in products %}
+            <div class="column-4 card {% if product.isReserved == 1%}is_reserved{% endif %}">
+                {% if product.isReserved == 1%}
+                    <div class="ribbon"><span>Réservé</span></div>
+                {% endif %}
                 <div class="card_body">
                     <img src="{{ base_url() ~ '/assets/img/' ~ product.getImages[0].name }}" alt="{{ product.name }}">
-                    <span style="float: right">{{ product.price }} &euro;</span>
+                    {% if product.price %}
+                        <span class="price">{{ product.price }} €</span>
+                    {% endif %}
                     <h4>{{ product.name }}</h4>
                     <p class="mt-10">{{ product.descr }}</p>
-                    <a class="btn_add_item" href="#">R&eacute;server le cadeau</a>
+                    {% if product.url %}
+                        <a class="product_url" href="{{ product.url }}">Voir le produit en vente</a>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
