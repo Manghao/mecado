@@ -537,4 +537,10 @@ form span.error {
   border-bottom: solid 1px #cccccc;
   margin-bottom: 5px; }
 
+.url_share {
+  border: none;
+  position: absolute;
+  width: 0;
+  height: 0; }
+
 /*# sourceMappingURL=app.css.map */

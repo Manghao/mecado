@@ -28,7 +28,7 @@
                     {% for list in auth.getLists %}
                         <tr>
                             <td>
-                                {{ list.name }}
+                                <a href="{{ path_for('list.view', {id: list.id}) }}">{{ list.name }}</a>
                             </td>
                             <td>
                                 {{ list.dateExp|date('d-m-y') }}

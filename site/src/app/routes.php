@@ -56,4 +56,13 @@ $app->group('/list', function() {
     $this->post('/{id:[0-9]+}/additem', ListController::class . ':additem')
         ->add(new GuestMiddleware($container))
         ->setName('list.additem');
+
+    $this->get('/view/{id:[0-9]+}', ListController::class . ':view')
+        ->setName('list.view');
+
+    $this->get('/share/{id:[0-9]+}', ListController::class . ':share')
+        ->setName('list.share');
+
+    $this->get('/{token:[0-9]+}', ListController::class . ':share')
+        ->setName('list.view.shared');
 });
