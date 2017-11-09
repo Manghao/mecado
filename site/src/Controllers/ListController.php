@@ -97,7 +97,6 @@ class ListController extends BaseController
                 $errors['pic'] = "Veuillez ajouter un fichier valide.";
             }
 
-
             if (empty($errors)) {
                 $liste = new Liste();
                 $liste->name=$request->getParam('list_title');
@@ -183,7 +182,7 @@ class ListController extends BaseController
         if (!is_null($list)) {
             $this->render($response, 'list/view', ['list' => $list]);
         } else {
-            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable.');
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
             return $this->redirect($response, 'index');
         }
     }
@@ -205,7 +204,7 @@ class ListController extends BaseController
             $this->flash('success', 'URL de partage : ' . $url);
             return $this->redirect($response, 'list.view', ['id' => $list->id]);
         } else {
-            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable.');
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
             return $this->redirect($response, 'index');
         }
     }

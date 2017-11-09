@@ -1,9 +1,9 @@
 $( document ).ready(function() {
   $('#modalBtn').on('click', function(e){
-    e.preventDefault()
+    e.preventDefault();
     $('#modal').fadeIn("fast")
-  })
-  $('#closeModal').on('click', function(e){
-    $('#modal').fadeOut("fast")
-  })
+  });
+  $('.close').on('click', function(e){
+    $('#modal').fadeOut("fast");
+  });
 });

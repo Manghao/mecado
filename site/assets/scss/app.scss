@@ -24,12 +24,28 @@ button.btn_new_item, a.btn_new_list, a.btn_add_item {
   @include btn_text($fontSize: 14px);
   @include btn_color($bgcolor: #1966ff);
   border: 1px solid darken($bginfos, 10);
-
 }
 
 button.btn_new_item, a.btn_new_list {
   float: right;
   margin-top: 0;
+}
+
+a.btn_cancel {
+  @include button($width: 100px);
+  @include btn_text($fontSize: 14px);
+  @include btn_color($bgcolor: grey);
+  border: 1px solid darken(grey, 10);
+  display: inline-block;
+}
+
+button.btn_create_item {
+  @include button($width: 100px);
+  @include btn_text($fontSize: 14px);
+  @include btn_color($bgcolor: #1966ff);
+  border: 1px solid darken($bginfos, 10);
+  display: inline-block;
+  height: auto;
 }
 
 .presentation {
@@ -187,12 +203,13 @@ a.product_url {
 .modal-content {
   background-color: white;
   margin: 8% auto;
-  padding: 5px;
+  padding: 20px;
   border: 1px solid grey;
+  border-radius: 5px;
   width: 50%;
 }
 
-.close {
+#closeModal {
   color : grey;
   float: right;
   font-size: 30px;
