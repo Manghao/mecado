@@ -438,7 +438,7 @@ a.btn_cancel {
     opacity: 0.9;
     cursor: pointer; }
 
-button.btn_create_item {
+button.btn_create_item, button.btn_send_msg {
   width: 100px;
   height: 30px;
   margin: 10px 0;
@@ -460,13 +460,16 @@ button.btn_create_item {
   border: 1px solid #20638f;
   display: inline-block;
   height: auto; }
-  button.btn_create_item:hover {
+  button.btn_create_item:hover, button.btn_send_msg:hover {
     opacity: 0.9;
     cursor: pointer; }
 
 .presentation {
   font-size: large;
   text-align: left; }
+
+.mt-50 {
+  margin-top: 50px; }
 
 .mt-20 {
   margin-top: 20px; }
@@ -760,5 +763,22 @@ a.product_url {
 
 strong {
   font-size: large; }
+
+form.form_msg {
+  width: 100%; }
+
+input.add_msg {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px; }
+
+ul.pagination > li:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px; }
+
+ul.pagination > li:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px; }
 
 /*# sourceMappingURL=app.css.map */

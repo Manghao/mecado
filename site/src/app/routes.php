@@ -75,9 +75,16 @@ $app->group('/list', function() {
     $this->get('/{token:[0-9a-zA-Z]+}', ListController::class . ':viewShared')
         ->setName('list.view.shared');
 
+    $this->get('/remove/{id:[0-9]+}', ListController::class . ':remove')
+        ->setName('list.remove');
+
     $this->get('/{id:[0-9]+}/messages', ListController::class . ':messages')
         ->add(new AuthMiddleware($container))
         ->setName('list.messages');
+
+    $this->post('/{id:[0-9]+}/addmessage', ListController::class . ':addmessage')
+        ->add(new AuthMiddleware($container))
+        ->setName('list.addmessage');
 });
 
 $app->group('/products', function() {
