@@ -19,20 +19,17 @@ a.btn_create {
   margin: 0 calc((100% - 200px) / 2);
 }
 
-button.btn_new_item, a.btn_new_list {
+button.btn_new_item, a.btn_new_list, a.btn_add_item {
   @include button($width: auto);
   @include btn_text($fontSize: 14px);
   @include btn_color($bgcolor: #1966ff);
   border: 1px solid darken($bginfos, 10);
-  float: right;
-  margin-top: 0;
+
 }
 
-button.btn_add_item {
-  @include button($width: 100%);
-  @include btn_text($fontSize: 14px);
-  @include btn_color($bgcolor: #1966ff);
-  border: 1px solid darken($bginfos, 10);
+button.btn_new_item, a.btn_new_list {
+  float: right;
+  margin-top: 0;
 }
 
 .presentation {
