@@ -2,6 +2,10 @@
 
 {% set title = list.name %}
 
+{% block js %}
+    <script src="{{ base_url() ~ '/assets/js/modal.js' }}"> </script>
+{% endblock %}
+
 {% block content %}
 
     <a class="right date_exp_head">
@@ -49,6 +53,16 @@
 
     <div class="grid">
         {% for product in products %}
+            <div id="modal-{{ product.id }}" class="modal">
+                <div class="modal-content">
+                    <span id="closeModal" class="close">&times;</span>
+                    <h2>Message</h2>
+                    <hr>
+                    <p><strong>Nom:</strong> {{ message(product.idListProducts).author }}</p>
+                    <p><strong>Message:</strong> {{ message(product.idListProducts).msg }}</p>
+                </div>
+            </div>
+
             <div class="column-4 card {% if product.isReserved == 1%}is_reserved{% endif %}">
                 {% if product.isReserved == 1%}
                     <div class="ribbon"><span>Réservé</span></div>
@@ -62,6 +76,9 @@
                     <p class="mt-10">{{ product.descr }}</p>
                     {% if product.url %}
                         <a class="product_url" href="{{ product.url }}">Voir le produit en vente</a>
+                    {% endif %}
+                    {% if cookie == false %}
+                        <button id="btn-modal-{{ product.id }}" class="btn btn-info btn-el">Voir le message</button>
                     {% endif %}
                 </div>
             </div>
