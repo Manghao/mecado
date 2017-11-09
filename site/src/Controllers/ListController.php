@@ -3,10 +3,12 @@
 namespace Mecado\Controllers;
 
 use Illuminate\Support\Facades\Response;
+use Mecado\Models\Comment;
 use Mecado\Models\Image;
 use Mecado\Models\Liste;
 use Mecado\Models\ListProducts;
 use Mecado\Models\Product;
+use Mecado\Utils\Paginator;
 use Mecado\Utils\Picker;
 use Mecado\Utils\Session;
 use Psr\Http\Message\RequestInterface;
@@ -286,9 +288,20 @@ class ListController extends BaseController
                 ->get();
 
             if (!empty($messages)) {
+                $per_page = 5;
+                $total = sizeof($messages);
+                $offset = ($per_page * (!is_null($request->getParam('page')) ? ($request->getParam('page') - 1) : 0));
+
+                $messages = $list->getComments()
+                    ->limit($per_page)
+                    ->offset($offset)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
                 $this->render($response, 'list/messages', [
                     'list' => $list,
-                    'messages' => $messages
+                    'messages' => $messages,
+                    'pagination' => Paginator::paginate($per_page, $total, $request->getParam('page'))
                 ]);
             } else {
                 $this->flash('error', 'Les messages demandés n\'existent pas ou sont introuveables !');
@@ -297,6 +310,57 @@ class ListController extends BaseController
         } else {
             $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable !');
             return $this->redirect($response, 'index');
+        }
+    }
+
+    public function addmessage(RequestInterface $request, ResponseInterface $response, $args)
+    {
+        if (false === $request->getAttribute('csrf_status')) {
+            $this->flash('error', 'Une erreur est survenue pendant l\'envoi du formulaire !');
+            return $this->redirect($response, 'list.messages', $request->getparams());
+        } else {
+
+            $errors = [];
+
+            if (!Validator::stringType()->notEmpty()->validate($request->getParam('pseudo'))) {
+                $errors['pseudo'] = "Veuillez saisir un nom valide.";
+            }
+
+            if (!Validator::stringType()->notEmpty()->validate($request->getParam('message'))) {
+                $errors['message'] = "Veuillez saisir un message valide.";
+            }
+
+            if(!empty($request->getParam('pic'))){
+                if (!Validator::image()->validate($request->getParam('pic'))) {
+                    $errors['pic'] = "Veuillez ajouter un fichier valide.";
+                }
+            }
+
+            $list = Liste::where('id', '=', $args['id'])
+                ->first();
+
+            if (empty($errors)) {
+                if (!is_null($list)) {
+                    $comment = new Comment();
+                    $comment->id_list = $list->id;
+                    $comment->author = $request->getParam('pseudo');
+                    $comment->msg = $request->getParam('message');
+                    $comment->save();
+
+                    $this->flash('success', 'Votre message a bien été ajouté à la liste !');
+                    return $this->redirect($response, 'list.messages', ['id' => $list->id]);
+                }
+                else {
+                    $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
+                    return $this->redirect($response, 'index');
+                }
+
+            } else {
+                $this->flash('errors', $errors);
+                return $this->redirect($response, 'list.messages', [
+                    'id' => $list->id
+                ]);
+            }
         }
     }
 }
