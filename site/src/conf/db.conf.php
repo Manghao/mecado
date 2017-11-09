@@ -5,9 +5,9 @@ return array(
 
 	'mysql' => array(
 		'driver' => 'mysql',
-		'host' => 'localhost',
+		'host' => '192.168.99.100',
 		'user' => 'root',
-		'pass' => 'toor',
+		'pass' => 'root',
 		'dbName' => 'mecado',
 		'port' => 3307
 	)

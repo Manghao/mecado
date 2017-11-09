@@ -34,7 +34,10 @@
                                 {{ list.date_exp|date('d/m/Y') }}
                             </td>
                             <td>
-                                <a onclick="return confirm('Etes vous sûr de vouloir supprimer cette liste ?')" href="{{ path_for('list.remove', {id: list.id}) }}" class="btn btn-danger btn-el">Supprimer</a>
+                                <div class="row">
+                                    <a onclick="return confirm('Etes vous sûr de vouloir supprimer cette liste ?')" href="{{ path_for('list.remove', {id: list.id}) }}" class="btn btn-danger btn-el">Supprimer</a>
+                                    <a href="{{ path_for('list.listitems', {id: list.id}) }}" class="btn btn-info btn-el">Ajouter des produits</a>
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}

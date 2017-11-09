@@ -7,10 +7,12 @@ use Mecado\Models\Comment;
 use Mecado\Models\Image;
 use Mecado\Models\Liste;
 use Mecado\Models\ListProducts;
+use Mecado\Models\Message;
 use Mecado\Models\Product;
 use Mecado\Utils\Paginator;
 use Mecado\Utils\Picker;
 use Mecado\Utils\Session;
+use Mecado\Utils\Utils;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Respect\Validation\Validator;
@@ -272,10 +274,12 @@ class ListController extends BaseController
                 ->where('list.id', '=', $list->id)
                 ->select(
                     'product.*',
+                    'list_products.id as idListProducts',
                     'list_products.reserve as isReserved',
                     'list_products.user_reserve as userReserve'
                 )
                 ->get();
+
             $this->render($response, 'list/view', [
                 'list' => $list,
                 'products' => $products,
@@ -286,7 +290,6 @@ class ListController extends BaseController
             return $this->redirect($response, 'index');
         }
     }
-
 
     public function remove(RequestInterface $request, ResponseInterface $response, $args)
     {
@@ -307,7 +310,7 @@ class ListController extends BaseController
             return $this->redirect($response, 'user.view');
         }
     }
-  
+
     public function messages(RequestInterface $request, ResponseInterface $response, $args)
     {
         $list = Liste::where('id', '=', $args['id'])
@@ -331,7 +334,8 @@ class ListController extends BaseController
                 $this->render($response, 'list/messages', [
                     'list' => $list,
                     'messages' => $messages,
-                    'pagination' => Paginator::paginate($per_page, $total, $request->getParam('page'))
+                    'pagination' => Paginator::paginate($per_page, $total, $request->getParam('page')),
+                    'cookie' => isset($_COOKIE['mecado_' . $list->id]) ? true : false
                 ]);
             } else {
                 $this->flash('error', 'Les messages demandés n\'existent pas ou sont introuveables !');
@@ -390,6 +394,63 @@ class ListController extends BaseController
                 return $this->redirect($response, 'list.messages', [
                     'id' => $list->id
                 ]);
+            }
+        }
+    }
+  
+    public function reserver(RequestInterface $request, ResponseInterface $response, $args)
+    {
+        if (false === $request->getAttribute('csrf_status')) {
+            $this->flash('error', 'Une erreur est survenue pendant l\'envoi du formulaire !');
+            return $this->redirect($response, 'index', $request->getparams());
+        } else {
+            $list = Liste::where('id', '=', $args['list'])->first();
+
+            if (!is_null($list)) {
+                $errors = [];
+
+                if (!Validator::stringType()->notEmpty()->validate($request->getParam('name'))) {
+                    $errors['name'] = "Veuillez saisir un nom valide.";
+                }
+
+                if (!Validator::stringType()->notEmpty()->validate($request->getParam('message'))) {
+                    $errors['message'] = "Veuillez saisir un message valide.";
+                }
+
+                if (empty($errors)) {
+                    $lisProducts = ListProducts::where('id', '=', $args['idListProducts'])->first();
+                    if (!is_null($lisProducts)) {
+                        $lisProducts->reserve = 1;
+                        $lisProducts->user_reserve = $request->getParam('name');
+                        $lisProducts->save();
+
+                        Message::create([
+                            'id_list_products' => $args['idListProducts'],
+                            'author' => $request->getParam('name'),
+                            'msg' => $request->getParam('message')
+                        ]);
+
+                        $this->flash('success', 'Produit réservé.');
+                        return $this->redirect($response, 'list.view.shared', [
+                            'token' => $list->url_share
+                        ]);
+                    } else {
+                        $this->flash('error', 'Impossible de réserver le produit.');
+                        return $this->redirect($response, 'list.view.shared', [
+                            'token' => $list->url_share,
+                        ]);
+                    }
+                } else {
+                    $errors['modal'] = $args['idListProdutcs'];
+
+                    $this->flash('errors', $errors);
+                    return $this->redirect($response, 'list.view.shared', [
+                        'token' => $list->url_share,
+                    ]);
+                }
+            } else {
+                $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable !');
+                return $this->redirect($response, 'index');
             }
         }
     }
