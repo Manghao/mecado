@@ -85,6 +85,9 @@ $app->group('/list', function() {
     $this->post('/{id:[0-9]+}/addmessage', ListController::class . ':addmessage')
         ->add(new AuthMiddleware($container))
         ->setName('list.addmessage');
+
+    $this->post('/{list:[0-9]+}/reserver/{idListProducts:[0-9]+}', ListController::class . ':reserver')
+        ->setName('product.reserver');
 });
 
 $app->group('/products', function() {

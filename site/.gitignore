@@ -2,6 +2,6 @@
 vendor/
 composer.lock
 var/
-src/conf/db.conf.php
+/src/conf/db.conf.php
 assets/.sass-cache
 .sass-cache

@@ -3,60 +3,64 @@
 {% set title = 'Messages' %}
 
 {% block content %}
-    <div>
-        <h2>Messages</h2>
-        <hr>
-    </div>
+    {% if cookie == false %}
+        <div>
+            <h2>Messages</h2>
+            <hr>
+        </div>
 
-    <div class="grid card">
-        {% for message in messages %}
-            <div class="messages column-12">
-                <div class="card_body">
-                    <p><strong>Par {{ message.author }}</strong> <small><em>le {{ message.created_at | date('d-m-Y H:i') }}</em></small></p>
-                    <p class="msg">{{ message.msg }}</p>
+        <div class="grid card">
+            {% for message in messages %}
+                <div class="messages column-12">
+                    <div class="card_body">
+                        <p><strong>Par {{ message.author }}</strong> <small><em>le {{ message.created_at | date('d-m-Y H:i') }}</em></small></p>
+                        <p class="msg">{{ message.msg }}</p>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
-    {% if pagination %}
-        <ul class="pagination">
-            <li class="{% if pagination.currentPage <= 1 %}disabled{% endif %}">
-                <a href="?page={{ pagination.currentPage - 1 }}#messages" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span>Previous</span>
-                </a>
-            </li>
-
-            {% for i in 1..pagination.lastPage %}
-                <li class="page-item {% if pagination.currentPage == i %}active{% endif %}">
-                    <a class="page-link" href="?page={{ i }}#messages">{{ i }}</a>
-                </li>
             {% endfor %}
+        </div>
+        {% if pagination %}
+            <ul class="pagination">
+                <li class="{% if pagination.currentPage <= 1 %}disabled{% endif %}">
+                    <a href="?page={{ pagination.currentPage - 1 }}#messages" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span>Previous</span>
+                    </a>
+                </li>
 
-            <li class="{% if pagination.currentPage >= pagination.lastPage %}disabled{% endif %}">
-                <a class="page-link" href="?page={{ pagination.currentPage + 1 }}#messages" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span>Next</span>
-                </a>
-            </li>
+                {% for i in 1..pagination.lastPage %}
+                    <li class="page-item {% if pagination.currentPage == i %}active{% endif %}">
+                        <a class="page-link" href="?page={{ i }}#messages">{{ i }}</a>
+                    </li>
+                {% endfor %}
 
-        </ul>
+                <li class="{% if pagination.currentPage >= pagination.lastPage %}disabled{% endif %}">
+                    <a class="page-link" href="?page={{ pagination.currentPage + 1 }}#messages" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span>Next</span>
+                    </a>
+                </li>
+
+            </ul>
+        {% endif %}
+
+        <div class="mt-50">
+            <h4>Ajouter un message</h4>
+            <hr>
+        </div>
+
+        <div class="grid">
+            <form action="{{ path_for('list.addmessage', {id: list.id}) }}" method="post" class="form_msg">
+                {{ csrf() }}
+
+                <label for="pseudo">Votre nom</label>
+                <input type="text" id="pseudo" name="pseudo" value="{{ persistValues.pseudo }}" class="add_msg {% if flash.errors.pseudo %}has-error{% endif %}" required>
+                <label for="message">Votre message</label>
+                <input type="text" id="message" name="message" value="{{ persistValues.message }}" class="add_msg {% if flash.errors.message %}has-error{% endif %}" required>
+                <button class="btn_send_msg">Envoyer</button>
+            </form>
+        </div>
+    {% else %}
+        <div class="alert alert-info">Vous n'êtes pas autorisé à voir les messages.</div>
     {% endif %}
-
-    <div class="mt-50">
-        <h4>Ajouter un message</h4>
-        <hr>
-    </div>
-
-    <div class="grid">
-        <form action="{{ path_for('list.addmessage', {id: list.id}) }}" method="post" class="form_msg">
-            {{ csrf() }}
-
-            <label for="pseudo">Votre nom</label>
-            <input type="text" id="pseudo" name="pseudo" value="{{ persistValues.pseudo }}" class="add_msg {% if flash.errors.pseudo %}has-error{% endif %}" required>
-            <label for="message">Votre message</label>
-            <input type="text" id="message" name="message" value="{{ persistValues.message }}" class="add_msg {% if flash.errors.message %}has-error{% endif %}" required>
-            <button class="btn_send_msg">Envoyer</button>
-        </form>
-    </div>
 {% endblock %}
