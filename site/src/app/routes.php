@@ -68,7 +68,7 @@ $app->group('/list', function() {
     $this->get('/share/{id:[0-9]+}', ListController::class . ':share')
         ->setName('list.share');
 
-    $this->get('/{token:[0-9]+}', ListController::class . ':share')
+    $this->get('/{token:[0-9a-zA-Z]+}', ListController::class . ':viewShared')
         ->setName('list.view.shared');
 });
 

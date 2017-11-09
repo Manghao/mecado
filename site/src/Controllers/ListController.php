@@ -5,6 +5,7 @@ namespace Mecado\Controllers;
 use Mecado\Models\Liste;
 use Mecado\Models\ListProducts;
 use Mecado\Models\Product;
+use Mecado\Utils\Picker;
 use Mecado\Utils\Session;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -194,18 +195,42 @@ class ListController extends BaseController
     {
         $list = Liste::where('id', '=', $args['id'])->first();
         if (!is_null($list)) {
-            $url = $_SERVER['REQUEST_SCHEME'] . '://';
-            $url .= $_SERVER['HTTP_HOST'];
+            $token = uniqid();
+            $url = Picker::get('app.host');
             $url .= $this->container->get('router')
                 ->pathFor('list.view.shared', [
-                    'token' => uniqid()
+                    'token' => $token
                 ]);
 
-            $list->url_share = $url;
+            $list->url_share = $token;
             $list->save();
 
             $this->flash('success', 'URL de partage : ' . $url);
             return $this->redirect($response, 'list.view', ['id' => $list->id]);
+        } else {
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable.');
+            return $this->redirect($response, 'index');
+        }
+    }
+
+    public function viewShared(RequestInterface $request, ResponseInterface $response, $args)
+    {
+        $list = Liste::where('url_share', '=', $args['token'])->first();
+        if (!is_null($list)) {
+            $products = Product::join('list_products', 'list_products.id_prod', '=', 'product.id')
+                ->join('list', 'list.id', '=', 'list_products.id_list')
+                ->where('list.id', '=', $list->id)
+                ->select(
+                    'product.*',
+                    'list_products.reserve as isReserved',
+                    'list_products.user_reserve as userReserve'
+                )
+                ->get();
+            $this->render($response, 'list/view', [
+                'list' => $list,
+                'products' => $products,
+                'sharedPage' => true
+            ]);
         } else {
             $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable.');
             return $this->redirect($response, 'index');
