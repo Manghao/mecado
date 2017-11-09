@@ -2,6 +2,7 @@
 
 namespace Mecado\Controllers;
 
+use Illuminate\Support\Facades\Response;
 use Mecado\Models\Image;
 use Mecado\Models\Liste;
 use Mecado\Models\ListProducts;
@@ -134,7 +135,7 @@ class ListController extends BaseController
                     return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
                 }
                 else {
-                    $this->flash('error', 'La liste n\'existe pas !');
+                    $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
                     return $this->redirect($response, 'index');
                 }
 
@@ -162,11 +163,11 @@ class ListController extends BaseController
                     'list' => $list,
                     'products' => $products]);
             } else {
-                $this->flash('error', 'Les produits n\'existent pas !');
+                $this->flash('error', 'Les produits demandés n\'existent pas ou sont introuvables !');
                 return $this->redirect($response, 'index');
             }
         } else {
-            $this->flash('error', 'La liste n\'existe pas !');
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
             return $this->redirect($response, 'index');
         }
     }
@@ -197,11 +198,11 @@ class ListController extends BaseController
                     return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
                 }
             } else {
-                $this->flash('error', 'Le produit n\'existe pas !');
+                $this->flash('error', 'Le produit demandé n\'existe pas ou est introuvable !');
                 return $this->redirect($response, 'index');
             }
         } else {
-            $this->flash('error', 'La liste n\'existe pas !');
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
             return $this->redirect($response, 'index');
         }
     }
@@ -271,6 +272,30 @@ class ListController extends BaseController
             ]);
         } else {
             $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable.');
+            return $this->redirect($response, 'index');
+        }
+    }
+
+    public function messages(RequestInterface $request, ResponseInterface $response, $args)
+    {
+        $list = Liste::where('id', '=', $args['id'])
+            ->first();
+
+        if (!is_null($list)) {
+            $messages = $list->getComments()
+                ->get();
+
+            if (!empty($messages)) {
+                $this->render($response, 'list/messages', [
+                    'list' => $list,
+                    'messages' => $messages
+                ]);
+            } else {
+                $this->flash('error', 'Les messages demandés n\'existent pas ou sont introuveables !');
+                return $this->redirect($response, 'index');
+            }
+        } else {
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable !');
             return $this->redirect($response, 'index');
         }
     }

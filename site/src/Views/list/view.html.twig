@@ -22,7 +22,7 @@
                     {% if list.getComments|length == 0 %}
                         <div class="btn btn-danger btn-el">Aucun message</div>
                     {% else %}
-                        <a href="" class="btn btn-danger btn-el">Messages</a>
+                        <a href="{{ path_for('list.messages', {id: list.id}) }}" class="btn btn-danger btn-el">Messages</a>
                     {% endif %}
                 </div>
                 <div class="column-4">
