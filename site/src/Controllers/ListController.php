@@ -90,55 +90,52 @@ class ListController extends BaseController
                 $errors['link'] = "Veuillez saisir un lien valide.";
             }
 
-            if (!Validator::floatval()->notEmpty()->validate($request->getParam('price'))) {
+            if (!Validator::floatVal()->notEmpty()->validate($request->getParam('price'))) {
                 $errors['price'] = "Veuillez saisir un lien valide.";
             }
 
             if(!empty($request->getParam('pic'))){
-              if (!Validator::image()->validate($request->getParam('pic'))) {
-                  $errors['pic'] = "Veuillez ajouter un fichier valide.";
-              }
+                if (!Validator::image()->validate($request->getParam('pic'))) {
+                    $errors['pic'] = "Veuillez ajouter un fichier valide.";
+                }
             }
 
             $list = Liste::where('id', '=', $args['id'])
                 ->first();
 
-            if (empty($errors)) {
+            if (!is_null($list)) {
+                if (empty($errors)) {
 
+                    $product = new Product();
+                    $product->name=$request->getParam('name');
+                    $product->descr=$request->getParam('description');
+                    $product->url=$request->getParam('link');
+                    $product->price=$request->getParam('price');
+                    $product->custom_product=1;
+                    $product->save();
 
-              if (!is_null($list)) {
+                    $image= new Image();
+                    $image->id_prod=$product->id;
+                    //default image
+                    if(empty($request->getParam('pic'))){
+                        $image->name='item.png';
+                    } else {
+                        //move_uploaded_file($_FILES['pic']);
+                    }
+                    $image->save();
 
-                $product = new Product();
-                $product->name=$request->getParam('name');
-                $product->descr=$request->getParam('description');
-                $product->url=$request->getParam('link');
-                $product->price=$request->getParam('price');
-                $product->custom_product=1;
-                $product->save();
-
-                $image= new Image();
-                $image->id_prod=$product->id;
-                //default image
-                if(empty($request->getParam('pic'))){
-                  $image->name='item.png';
-                }else{
-                  //move_uploaded_file($_FILES['pic']);
+                    $this->flash('success', 'Le produit "' . $product->name . '" a bien été ajouté à votre liste !');
+                    return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
                 }
-                $image->save();
-
-                $this->flash('success', 'Le produit "' . $product->name . '" a bien été ajouté à votre liste !');
-                return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
-              }
-              else {
-                  $this->flash('error', 'La liste n\'existe pas !');
-                  return $this->redirect($response, 'index');
-              }
-
+                else {
+                    $this->flash('errors', $errors);
+                    return $this->redirect($response, 'list.listitems', [
+                        'id' => $list->id
+                    ]);
+                }
             } else {
-                $this->flash('errors', $errors);
-                return $this->redirect($response, 'list.listitems', [
-                  'id' => $list->id
-                ]);
+                $this->flash('error', 'La liste n\'existe pas !');
+                return $this->redirect($response, 'index');
             }
         }
     }
@@ -203,12 +200,12 @@ class ListController extends BaseController
     }
 
     public function view(RequestInterface $request, ResponseInterface $response, $args)
-  {
+    {
         $list = Liste::where('id', '=', $args['id'])->first();
         if (!is_null($list)) {
             $this->render($response, 'list/view', ['list' => $list]);
         } else {
-            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable.');
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
             return $this->redirect($response, 'index');
         }
     }
@@ -220,9 +217,9 @@ class ListController extends BaseController
             $url = $_SERVER['REQUEST_SCHEME'] . '://';
             $url .= $_SERVER['HTTP_HOST'];
             $url .= $this->container->get('router')
-                        ->pathFor('list.view.shared', [
-                            'token' => uniqid()
-                        ]);
+                ->pathFor('list.view.shared', [
+                    'token' => uniqid()
+                ]);
 
             $list->url_share = $url;
             $list->save();
@@ -230,7 +227,7 @@ class ListController extends BaseController
             $this->flash('success', 'URL de partage : ' . $url);
             return $this->redirect($response, 'list.view', ['id' => $list->id]);
         } else {
-            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable.');
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
             return $this->redirect($response, 'index');
         }
     }

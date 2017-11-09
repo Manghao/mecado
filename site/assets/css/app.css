@@ -413,6 +413,57 @@ button.btn_new_item, a.btn_new_list {
   float: right;
   margin-top: 0; }
 
+a.btn_cancel {
+  width: 100px;
+  height: 30px;
+  margin: 10px 0;
+  border-radius: 3px;
+  transition: opacity 0.5s;
+  display: block;
+  line-height: 30px;
+  padding: 0 10px;
+  background-color: #16a085;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  text-align: center;
+  background-color: grey;
+  color: #fff;
+  border: 1px solid #676767;
+  display: inline-block; }
+  a.btn_cancel:hover {
+    opacity: 0.9;
+    cursor: pointer; }
+
+button.btn_create_item {
+  width: 100px;
+  height: 30px;
+  margin: 10px 0;
+  border-radius: 3px;
+  transition: opacity 0.5s;
+  display: block;
+  line-height: 30px;
+  padding: 0 10px;
+  background-color: #16a085;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  text-align: center;
+  background-color: #1966ff;
+  color: #fff;
+  border: 1px solid #20638f;
+  display: inline-block;
+  height: auto; }
+  button.btn_create_item:hover {
+    opacity: 0.9;
+    cursor: pointer; }
+
 .presentation {
   font-size: large;
   text-align: left; }
@@ -560,11 +611,12 @@ a.product_url {
 .modal-content {
   background-color: white;
   margin: 8% auto;
-  padding: 5px;
+  padding: 20px;
   border: 1px solid grey;
+  border-radius: 5px;
   width: 50%; }
 
-.close {
+#closeModal {
   color: grey;
   float: right;
   font-size: 30px;

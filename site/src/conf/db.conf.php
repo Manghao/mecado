@@ -7,8 +7,8 @@ return array(
 		'driver' => 'mysql',
 		'host' => 'localhost',
 		'user' => 'root',
-		'pass' => '',
+		'pass' => 'toor',
 		'dbName' => 'mecado',
-		'port' => 3306
+		'port' => 3307
 	)
 );
