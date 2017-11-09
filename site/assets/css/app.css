@@ -385,7 +385,7 @@ a.btn_create {
     opacity: 0.9;
     cursor: pointer; }
 
-button.btn_new_item, a.btn_new_list {
+button.btn_new_item, a.btn_new_list, a.btn_add_item {
   width: auto;
   height: 30px;
   margin: 10px 0;
@@ -404,36 +404,14 @@ button.btn_new_item, a.btn_new_list {
   text-align: center;
   background-color: #1966ff;
   color: #fff;
-  border: 1px solid #20638f;
-  float: right;
-  margin-top: 0; }
-  button.btn_new_item:hover, a.btn_new_list:hover {
+  border: 1px solid #20638f; }
+  button.btn_new_item:hover, a.btn_new_list:hover, a.btn_add_item:hover {
     opacity: 0.9;
     cursor: pointer; }
 
-button.btn_add_item {
-  width: 100%;
-  height: 30px;
-  margin: 10px 0;
-  border-radius: 3px;
-  transition: opacity 0.5s;
-  display: block;
-  line-height: 30px;
-  padding: 0 10px;
-  background-color: #16a085;
-  color: #fff;
-  text-decoration: none;
-  font-size: 12px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 14px;
-  text-align: center;
-  background-color: #1966ff;
-  color: #fff;
-  border: 1px solid #20638f; }
-  button.btn_add_item:hover {
-    opacity: 0.9;
-    cursor: pointer; }
+button.btn_new_item, a.btn_new_list {
+  float: right;
+  margin-top: 0; }
 
 .presentation {
   font-size: large;

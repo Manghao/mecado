@@ -65,18 +65,16 @@
             {% for product in products %}
                 <div class="column-4 card">
                     <div class="card_body">
-                        <form action="{{ path_for('list.additem', {id: list.id, idProd: product.id}) }}" method="post">
-                            <img src="{{ base_url() ~ '/assets/img/' ~ product.getImages[0].name }}" alt="{{ product.name }}">
-                            {% if product.price %}
-                                <span class="price">{{ product.price }} €</span>
-                            {% endif %}
-                            <h4>{{ product.name }}</h4>
-                            <p class="mt-10">{{ product.descr }}</p>
-                            {% if product.url %}
-                                <a class="product_url" href="{{ product.url }}">Voir le produit en vente</a>
-                            {% endif %}
-                            <button class="btn_add_item">Ajouter à la liste</button>
-                        </form>
+                        <img src="{{ base_url() ~ '/assets/img/' ~ product.getImages[0].name }}" alt="{{ product.name }}">
+                        {% if product.price %}
+                            <span class="price">{{ product.price }} €</span>
+                        {% endif %}
+                        <h4>{{ product.name }}</h4>
+                        <p class="mt-10">{{ product.descr }}</p>
+                        {% if product.url %}
+                            <a class="product_url" href="{{ product.url }}">Voir le produit en vente</a>
+                        {% endif %}
+                        <a class="btn_add_item" href="{{ path_for('list.additem', {id: list.id, idProd: product.id}) }}">Ajouter à la liste</a>
                     </div>
                 </div>
             {% endfor %}
