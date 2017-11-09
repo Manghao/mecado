@@ -16,6 +16,7 @@ setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
 // Variables globales
 define('DS', DIRECTORY_SEPARATOR);
 define('SRC', __DIR__ . DS . 'src');
+define('UPLOAD', __DIR__ . DS . 'assets' . DS . 'img');
 
 // Configuration de la connexion a la base de donnees
 DatabaseFactory::setConfig();
