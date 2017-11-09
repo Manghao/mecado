@@ -208,7 +208,7 @@
   flex-wrap: wrap; }
 
 .col-1 {
-  flex-basis: 6.33333%;
+  flex-basis: 6.3333333333%;
   flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
@@ -217,7 +217,7 @@
   box-sizing: border-box; }
 
 .col-2 {
-  flex-basis: 14.66667%;
+  flex-basis: 14.6666666667%;
   flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
@@ -235,7 +235,7 @@
   box-sizing: border-box; }
 
 .col-4 {
-  flex-basis: 31.33333%;
+  flex-basis: 31.3333333333%;
   flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
@@ -244,7 +244,7 @@
   box-sizing: border-box; }
 
 .col-5 {
-  flex-basis: 39.66667%;
+  flex-basis: 39.6666666667%;
   flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
@@ -262,7 +262,7 @@
   box-sizing: border-box; }
 
 .col-7 {
-  flex-basis: 56.33333%;
+  flex-basis: 56.3333333333%;
   flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
@@ -271,7 +271,7 @@
   box-sizing: border-box; }
 
 .col-8 {
-  flex-basis: 64.66667%;
+  flex-basis: 64.6666666667%;
   flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
@@ -289,7 +289,7 @@
   box-sizing: border-box; }
 
 .col-10 {
-  flex-basis: 81.33333%;
+  flex-basis: 81.3333333333%;
   flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
@@ -298,7 +298,7 @@
   box-sizing: border-box; }
 
 .col-11 {
-  flex-basis: 89.66667%;
+  flex-basis: 89.6666666667%;
   flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;
@@ -490,6 +490,37 @@ ul.navBar li a.titleNav:hover {
   transition: color 0.5s ease-in;
   color: #e1e1e1; }
 
+@media screen and (max-width: 600px) {
+  ul.navBar li:nth-child(n+2) a {
+    display: none; } }
+
+@media screen and (max-width: 600px) {
+  ul.navBar.dropped li:nth-child(n+2) a {
+    display: block;
+    padding-top: 5px; } }
+
+ul.navBar li a.navIcon {
+  display: none;
+  font-size: 1.5em;
+  font-weight: bold;
+  position: absolute;
+  right: 20px;
+  top: 15px; }
+  @media screen and (max-width: 600px) {
+    ul.navBar li a.navIcon {
+      display: block;
+      float: right; } }
+
+@media screen and (max-width: 600px) {
+  .navBar.dropped {
+    position: relative;
+    flex-direction: column; } }
+@media screen and (max-width: 600px) {
+  .navBar.dropped a {
+    float: none;
+    display: block;
+    text-align: left; } }
+
 form label, form input {
   display: block; }
 
@@ -542,7 +573,7 @@ a.product_url {
   flex-wrap: wrap; }
 
 .column-4 {
-  flex-basis: 31.33333%;
+  flex-basis: 31.3333333333%;
   flex-shrink: 0;
   margin-left: 1%;
   margin-right: 1%;

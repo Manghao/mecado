@@ -1,5 +1,5 @@
 <nav>
-    <ul class="navBar">
+    <ul class="navBar" id="navBar">
         <li>
             <a href="{{ path_for('index') }}" class="titleNav">Mecado</a>
         </li>
@@ -22,6 +22,9 @@
             </li>
             <li>
                 <a href="{{ path_for('user.register.form') }}">Inscription</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="navIcon" onclick="dropDown()"> &#9776; </a>
             </li>
         {% endif %}
     </ul>
