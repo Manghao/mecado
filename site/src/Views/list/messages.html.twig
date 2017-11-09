@@ -1,0 +1,29 @@
+{% extends "layouts/layout.html.twig" %}
+
+{% set title = 'Messages' %}
+
+{% block content %}
+    <div>
+        <h2>Messages</h2>
+        <hr>
+    </div>
+
+    <div class="grid card">
+        {% for message in messages %}
+            <div class="messages column-12">
+                <div class="card_body">
+                    <p><strong>Par {{ message.author }}</strong> <small><em>le {{ message.created_at | date('d-m-Y H:i') }}</em></small></p>
+                    <p class="msg">{{ message.msg }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="grid card">
+        <div class="">
+            <label for=""></label>
+            <input type="text">
+            <button>Envoyer</button>
+        </div>
+    </div>
+{% endblock %}
