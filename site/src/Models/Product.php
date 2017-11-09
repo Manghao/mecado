@@ -35,4 +35,5 @@ class Product extends Model
     public function getMessage() {
         return $this->belongsTo(ListProducts::class, 'message', 'id_list_products');
     }
+
 }

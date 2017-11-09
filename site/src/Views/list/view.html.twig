@@ -64,11 +64,51 @@
                         <a class="product_url" href="{{ product.url }}">Voir le produit en vente</a>
                     {% endif %}
                     {% if cookie == false %}
-                        <a href="" class="btn btn-info btn-el">Voir le message</a>
+                        {% if product.isReserved == 1 %}
+                            <a href="" class="btn btn-info btn-el">Voir le message</a>
+                        {% else %}
+                            <div id="modalBtn" class="btn btn-success btn-el">Réserver</div>
+
+                            <div id="modal" class="modal">
+                                <div class="modal-content">
+                                    <span id="closeModal" class="close">&times;</span>
+                                    <h2>Réserver : {{ product.name }}</h2>
+                                    <hr>
+                                    <form action="{{ path_for('product.reserver', {list: list.id, prod: product.idListProducts}) }}" method="post" enctype="multipart/form-data">
+                                        {{ csrf() }}
+
+                                        <label for="name">Nom</label>
+                                        <input type="text" name="name" id="name" value="{{ persistValues.name }}" class="{% if flash.errors.name %}has-error{% endif %}" required>
+                                        {% if flash.errors.name %}
+                                            <span>{{ flash.errors.name }}</span>
+                                        {% endif %}
+
+                                        <label for="message">Message</label>
+                                        <input type="text" name="message" id="message" value="{{ persistValues.message }}" class="{% if flash.errors.description %}has-error{% endif %}" required>
+                                        {% if flash.errors.message %}
+                                            <span>{{ flash.errors.message }}</span>
+                                        {% endif %}
+
+                                        <a class="close btn_cancel">Annuler</a>
+                                        <button class="btn_create_item">Réserver</button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>
         {% endfor %}
     </div>
+{% endblock %}
 
+{% block js %}
+    <script src="{{ base_url() ~ '/assets/js/modal.js' }}"> </script>
+    {% if flash.errors is defined %}
+        <script>
+            $( document ).ready(function() {
+                $('#modalBtn').trigger('click')
+            });
+        </script>
+    {% endif %}
 {% endblock %}
