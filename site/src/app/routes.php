@@ -58,10 +58,14 @@ $app->group('/list', function() {
         ->add(new AuthMiddleware($container))
         ->setName('list.additem');
 
+    $this->get('/{id:[0-9]+}/createproduct', ListController::class . ':createproductForm')
+          ->add(new AuthMiddleware($container))
+          ->setName('list.createproduct.form');
+
     $this->post('/{id:[0-9]+}/createproduct', ListController::class . ':createproduct')
         ->add(new AuthMiddleware($container))
         ->setName('list.createproduct');
-  
+
     $this->get('/view/{id:[0-9]+}', ListController::class . ':view')
         ->setName('list.view');
 
