@@ -283,7 +283,8 @@ class ListController extends BaseController
             $this->render($response, 'list/view', [
                 'list' => $list,
                 'products' => $products,
-                'sharedPage' => true
+                'sharedPage' => true,
+                'cookie' => isset($_COOKIE['mecado_' . $list->id]) ? true : false
             ]);
         } else {
             $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable.');
