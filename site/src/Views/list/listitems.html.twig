@@ -28,7 +28,7 @@
             <span id="closeModal" class="close">&times;</span>
             <h2>Ajouter un produit</h2>
             <hr>
-            <form action="{{ path_for('list.createproduct', {id: list.id}) }}" method="post">
+            <form action="{{ path_for('list.createproduct', {id: list.id}) }}" method="post" enctype="multipart/form-data">
                 {{ csrf() }}
 
                 <label for="name">Nom du produit</label>
@@ -56,7 +56,7 @@
                 {% endif %}
 
             <label for="pic">Photo du produit</label>
-            <input type="file" name="pic" id="pic" value="{{ persistValues.pic }}" class="{% if flash.errors.pic %}has-error{% endif %}">
+            <input type="file" name="pic" accept="image/*" id="pic" value="{{ persistValues.pic }}" class="{% if flash.errors.pic %}has-error{% endif %}">
             {% if flash.errors.pic %}
               <span>{{ flash.errors.pic }}</span>
             {% endif %}

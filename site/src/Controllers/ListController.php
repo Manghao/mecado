@@ -60,7 +60,7 @@ class ListController extends BaseController
 
             } else {
                 $this->flash('errors', $errors);
-                return $this->redirect($response, 'user.register.form', $args);
+                return $this->redirect($response, 'list.creationlist', $args);
             }
         }
     }
@@ -70,83 +70,83 @@ class ListController extends BaseController
         $this->render($response, 'list/createproduct');
     }
 
-public function createproduct(RequestInterface $request, ResponseInterface $response, $args)
-  {
-    if (false === $request->getAttribute('csrf_status')) {
-      $this->flash('error', 'Une erreur est survenue pendant l\'envoi du formulaire !');
-      return $this->redirect($response, 'list.createproduct.form', $request->getparams());
-    } else {
+    public function createproduct(RequestInterface $request, ResponseInterface $response, $args)
+    {
+        if (false === $request->getAttribute('csrf_status')) {
+            $this->flash('error', 'Une erreur est survenue pendant l\'envoi du formulaire !');
+            return $this->redirect($response, 'list.createproduct.form', $request->getparams());
+        } else {
 
-      $errors = [];
+            $errors = [];
 
-      if (!Validator::stringType()->notEmpty()->validate($request->getParam('name'))) {
-        $errors['name'] = "Veuillez saisir un nom valide.";
-      }
-
-      if (!Validator::stringType()->notEmpty()->validate($request->getParam('description'))) {
-        $errors['description'] = "Veuillez saisir une descritpion valide.";
-      }
-
-      if (!Validator::url()->validate($request->getParam('link'))) {
-        $errors['link'] = "Veuillez saisir un lien valide.";
-      }
-
-      if (!Validator::floatval()->notEmpty()->validate($request->getParam('price'))) {
-        $errors['price'] = "Veuillez saisir un lien valide.";
-      }
-
-      if(!empty($request->getParam('pic'))){
-        if (!Validator::image()->validate($request->getParam('pic'))) {
-          $errors['pic'] = "Veuillez ajouter un fichier valide.";
-        }
-      }
-
-      $list = Liste::where('id', '=', $args['id'])
-      ->first();
-
-      if (empty($errors)) {
-        if (!is_null($list)) {
-          $product = new Product();
-          $product->name=$request->getParam('name');
-          $product->descr=$request->getParam('description');
-          $product->url=$request->getParam('link');
-          $product->price=$request->getParam('price');
-          $product->custom_product=1;
-          $product->save();
-
-          $image= new Image();
-          $image->id_prod=$product->id;
-
-          $file = $request->getUploadedFiles();
-
-          if (!empty($file)) {
-            $img = $file['pic'];
-            if ($img->getError() == UPLOAD_ERR_OK) {
-              $name = strtolower(Utils::slug($request->getParam('name')) . '_' . $img->getClientFilename());
-              $img->moveTo(UPLOAD . DS . $name);
-
-              $image->name=$name;
-              $image->save();
+            if (!Validator::stringType()->notEmpty()->validate($request->getParam('name'))) {
+                $errors['name'] = "Veuillez saisir un nom valide.";
             }
-          }
 
-          $this->flash('success', 'Le produit "' . $product->name . '" a bien été ajouté à votre liste !');
-          return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
-        }
-        else {
-          $this->flash('error', 'La liste n\'existe pas !');
-          return $this->redirect($response, 'index');
-        }
+            if (!Validator::stringType()->notEmpty()->validate($request->getParam('description'))) {
+                $errors['description'] = "Veuillez saisir une descritpion valide.";
+            }
 
-      } else {
-        $this->flash('errors', $errors);
-        return $this->redirect($response, 'list.listitems', [
-          'id' => $list->id
-        ]);
-      }
+            if (!Validator::url()->validate($request->getParam('link'))) {
+                $errors['link'] = "Veuillez saisir un lien valide.";
+            }
+
+            if (!Validator::floatval()->notEmpty()->validate($request->getParam('price'))) {
+                $errors['price'] = "Veuillez saisir un lien valide.";
+            }
+
+            if(!empty($request->getParam('pic'))){
+                if (!Validator::image()->validate($request->getParam('pic'))) {
+                    $errors['pic'] = "Veuillez ajouter un fichier valide.";
+                }
+            }
+
+            $list = Liste::where('id', '=', $args['id'])
+                ->first();
+
+            if (empty($errors)) {
+                if (!is_null($list)) {
+                    $product = new Product();
+                    $product->name=$request->getParam('name');
+                    $product->descr=$request->getParam('description');
+                    $product->url=$request->getParam('link');
+                    $product->price=$request->getParam('price');
+                    $product->custom_product=1;
+                    $product->save();
+
+                    $image= new Image();
+                    $image->id_prod=$product->id;
+
+                    $file = $request->getUploadedFiles();
+
+                    if (!empty($file)) {
+                        $img = $file['pic'];
+                        if ($img->getError() == UPLOAD_ERR_OK) {
+                            $name = strtolower(Utils::slug($request->getParam('name')) . '_' . $img->getClientFilename());
+                            $img->moveTo(UPLOAD . DS . $name);
+
+                            $image->name=$name;
+                            $image->save();
+                        }
+                    }
+
+                    $this->flash('success', 'Le produit "' . $product->name . '" a bien été ajouté à votre liste !');
+                    return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
+                }
+                else {
+                    $this->flash('error', 'La liste n\'existe pas !');
+                    return $this->redirect($response, 'index');
+                }
+
+            } else {
+                $this->flash('errors', $errors);
+                return $this->redirect($response, 'list.listitems', [
+                    'id' => $list->id
+                ]);
+            }
+        }
     }
-  }
-  
+
     public function listitems(RequestInterface $request, ResponseInterface $response, $args) {
         $list = Liste::where('id', '=', $args['id'])
             ->first();
@@ -172,38 +172,38 @@ public function createproduct(RequestInterface $request, ResponseInterface $resp
     }
 
     public function additem(RequestInterface $request, ResponseInterface $response, $args) {
-      $list = Liste::where('id', '=', $args['id'])
-      ->first();
+        $list = Liste::where('id', '=', $args['id'])
+            ->first();
 
-      if (!is_null($list)) {
-        $product = Product::where('id', '=', $args['idProd'])
-        ->first();
+        if (!is_null($list)) {
+            $product = Product::where('id', '=', $args['idProd'])
+                ->first();
 
-        if (!is_null($product)) {
-          $list_product = ListProducts::where('id_list', '=', $list->id)
-          ->where('id_prod', '=', $product->id)
-          ->first();
+            if (!is_null($product)) {
+                $list_product = ListProducts::where('id_list', '=', $list->id)
+                    ->where('id_prod', '=', $product->id)
+                    ->first();
 
-          if (is_null($list_product)) {
-            $list_product = new ListProducts();
-            $list_product->id_list = $list->id;
-            $list_product->id_prod = $product->id;
-            $list_product->save();
+                if (is_null($list_product)) {
+                    $list_product = new ListProducts();
+                    $list_product->id_list = $list->id;
+                    $list_product->id_prod = $product->id;
+                    $list_product->save();
 
-            $this->flash('success', 'Le produit "' . $product->name . '" a bien été ajouté à votre liste !');
-            return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
-          } else {
-            $this->flash('error', 'Le produit a déjà été ajouté à la liste !');
-            return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
-          }
+                    $this->flash('success', 'Le produit "' . $product->name . '" a bien été ajouté à votre liste !');
+                    return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
+                } else {
+                    $this->flash('error', 'Le produit a déjà été ajouté à la liste !');
+                    return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
+                }
+            } else {
+                $this->flash('error', 'Le produit n\'existe pas !');
+                return $this->redirect($response, 'index');
+            }
         } else {
-          $this->flash('error', 'Le produit n\'existe pas !');
-          return $this->redirect($response, 'index');
+            $this->flash('error', 'La liste n\'existe pas !');
+            return $this->redirect($response, 'index');
         }
-      } else {
-        $this->flash('error', 'La liste n\'existe pas !');
-        return $this->redirect($response, 'index');
-      }
     }
 
     public function view(RequestInterface $request, ResponseInterface $response, $args)
