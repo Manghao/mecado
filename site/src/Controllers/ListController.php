@@ -214,12 +214,14 @@ class ListController extends BaseController
     public function view(RequestInterface $request, ResponseInterface $response, $args)
     {
         $list = Liste::where('id', '=', $args['id'])->first();
+
         if (!is_null($list)) {
             $products = Product::join('list_products', 'list_products.id_prod', '=', 'product.id')
                 ->join('list', 'list.id', '=', 'list_products.id_list')
                 ->where('list.id', '=', $list->id)
                 ->select(
                     'product.*',
+                    'list_products.id as idListProducts',
                     'list_products.reserve as isReserved',
                     'list_products.user_reserve as userReserve'
                 )
