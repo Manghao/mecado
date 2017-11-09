@@ -284,7 +284,6 @@ class ListController extends BaseController
         }
     }
 
-
     public function remove(RequestInterface $request, ResponseInterface $response, $args)
     {
         $list = Liste::where('id', '=', $args['id'])->first();
@@ -328,7 +327,8 @@ class ListController extends BaseController
                 $this->render($response, 'list/messages', [
                     'list' => $list,
                     'messages' => $messages,
-                    'pagination' => Paginator::paginate($per_page, $total, $request->getParam('page'))
+                    'pagination' => Paginator::paginate($per_page, $total, $request->getParam('page')),
+                    'cookie' => isset($_COOKIE['mecado_' . $list->id]) ? true : false
                 ]);
             } else {
                 $this->flash('error', 'Les messages demandés n\'existent pas ou sont introuveables !');
