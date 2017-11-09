@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mer 08 Novembre 2017 à 22:33
+-- Généré le :  Jeu 09 Novembre 2017 à 11:08
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -85,7 +85,7 @@ CREATE TABLE `list` (
 --
 
 INSERT INTO `list` (`id`, `name`, `descr`, `date_exp`, `url_share`, `id_creator`, `other_dest`, `created_at`, `updated_at`) VALUES
-(1, 'Admin_list', 'Liste créé par l\'admin pour tester les fonctionnalités du projet.', '2017-11-08 21:32:32', NULL, 1, 1, '2017-11-08 19:42:59', '2017-11-08 21:32:32');
+(1, 'Admin_list', 'Liste créé par l\'admin pour tester les fonctionnalités du projet.', '2017-11-09 07:32:10', 'http://localhost/mecado/site/list/5a04047adb381', 1, 1, '2017-11-08 19:42:59', '2017-11-09 07:32:10');
 
 -- --------------------------------------------------------
 
@@ -97,9 +97,18 @@ CREATE TABLE `list_products` (
   `id` int(10) UNSIGNED NOT NULL,
   `id_list` int(10) UNSIGNED NOT NULL,
   `id_prod` int(10) UNSIGNED NOT NULL,
+  `reserve` tinyint(1) NOT NULL DEFAULT '0',
+  `user_reserve` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `list_products`
+--
+
+INSERT INTO `list_products` (`id`, `id_list`, `id_prod`, `reserve`, `user_reserve`, `created_at`, `updated_at`) VALUES
+(9, 1, 1, 0, NULL, '2017-11-09 07:31:02', '2017-11-09 07:31:02');
 
 -- --------------------------------------------------------
 
@@ -126,10 +135,8 @@ CREATE TABLE `product` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `descr` text,
-  `url` varchar(255) DEFAULT NULL,
+  `url` text,
   `price` decimal(10,2) UNSIGNED DEFAULT NULL,
-  `reserve` tinyint(1) NOT NULL DEFAULT '0',
-  `user_reserve` varchar(255) DEFAULT NULL,
   `custom_product` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -139,14 +146,14 @@ CREATE TABLE `product` (
 -- Contenu de la table `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `descr`, `url`, `price`, `reserve`, `user_reserve`, `custom_product`, `created_at`, `updated_at`) VALUES
-(1, 'test', 'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l\'imprimerie depuis les années 1500, quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.', NULL, '135.00', 0, NULL, 0, '2017-11-08 10:47:17', '2017-11-08 14:26:12'),
-(2, 'test2', NULL, NULL, NULL, 0, NULL, 0, '2017-11-08 12:13:36', '2017-11-08 12:13:36'),
-(3, 'test3', NULL, NULL, NULL, 0, NULL, 0, '2017-11-08 12:13:36', '2017-11-08 12:13:36'),
-(4, 'test4', NULL, NULL, NULL, 0, NULL, 0, '2017-11-08 12:13:57', '2017-11-08 12:13:57'),
-(5, 'test5', NULL, NULL, NULL, 0, NULL, 0, '2017-11-08 12:13:57', '2017-11-08 12:13:57'),
-(6, 'test6', NULL, NULL, NULL, 0, NULL, 0, '2017-11-08 12:14:17', '2017-11-08 12:14:17'),
-(7, 'test7', NULL, NULL, NULL, 0, NULL, 0, '2017-11-08 12:14:17', '2017-11-08 12:14:17');
+INSERT INTO `product` (`id`, `name`, `descr`, `url`, `price`, `custom_product`, `created_at`, `updated_at`) VALUES
+(1, 'test', 'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l\'imprimerie depuis les années 1500, quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.', 'https://www.amazon.fr/gp/product/224685587X/ref=s9_acss_bw_cg_prixlitt_2a1_w?pf_rd_m=A1X6FK5RDHNB96&pf_rd_s=merchandised-search-2&pf_rd_r=K8SAYGW0GB15K6W6K3S3&pf_rd_t=101&pf_rd_p=c3d8d0c4-ad50-4f4a-bb1d-e266de599ea4&pf_rd_i=301061', '135.00', 0, '2017-11-08 10:47:17', '2017-11-08 22:32:15'),
+(2, 'test2', NULL, NULL, NULL, 0, '2017-11-08 12:13:36', '2017-11-08 12:13:36'),
+(3, 'test3', NULL, NULL, NULL, 0, '2017-11-08 12:13:36', '2017-11-08 12:13:36'),
+(4, 'test4', NULL, NULL, NULL, 0, '2017-11-08 12:13:57', '2017-11-08 12:13:57'),
+(5, 'test5', NULL, NULL, NULL, 0, '2017-11-08 12:13:57', '2017-11-08 12:13:57'),
+(6, 'test6', NULL, NULL, NULL, 0, '2017-11-08 12:14:17', '2017-11-08 12:14:17'),
+(7, 'test7', NULL, NULL, NULL, 0, '2017-11-08 12:14:17', '2017-11-08 12:14:17');
 
 -- --------------------------------------------------------
 
@@ -245,12 +252,12 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT pour la table `image`
 --
 ALTER TABLE `image`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT pour la table `list`
 --
 ALTER TABLE `list`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT pour la table `list_products`
 --
@@ -260,12 +267,12 @@ ALTER TABLE `list_products`
 -- AUTO_INCREMENT pour la table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Contraintes pour les tables exportées
 --

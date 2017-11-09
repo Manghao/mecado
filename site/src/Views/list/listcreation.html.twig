@@ -12,13 +12,13 @@
       <span class="error">{{ flash.errors.list_title }}</span>
     {% endif %}
 
-    <label for="descritpion">Description</label>
+    <label for="description">Description</label>
     <input class="{% if flash.errors.first_name %}has-error{% endif %}" type="text" name="description" id="description" value="{{ persistValues.description }}" required>
     {% if flash.errors.description %}
       <span class="error">{{ flash.errors.description }}</span>
     {% endif %}
 
-    <label for="end_date">Date de fin</label>
+    <label for="datepicker">Date de fin</label>
     <input class="{% if flash.errors.first_name %}has-error{% endif %}" type="text" name="end_date" id="datepicker" value="{{ persistValues.end_date }}" required>
     {% if flash.errors.end_date %}
       <span class="error">{{ flash.errors.end_date }}</span>
