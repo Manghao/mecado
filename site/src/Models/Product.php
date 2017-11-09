@@ -31,4 +31,8 @@ class Product extends Model
     {
         return $this->belongsToMany(Liste::class, 'list_products', 'id_prod', 'id_list');
     }
+
+    public function getMessage() {
+        return $this->belongsTo(ListProducts::class, 'message', 'id_list_products');
+    }
 }
