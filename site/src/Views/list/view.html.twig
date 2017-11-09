@@ -25,12 +25,40 @@
 
     {% if sharedPage is not defined %}
         <div class="grid">
-            {% if auth.id == list.id_creator %}
-                <div class="{% if cookie == true %}column-6{% else %}column-4{% endif %}">
-                    <a href="" class="btn btn-success btn-el">&Eacute;diter la liste</a>
-                </div>
+            {% if isEnded == false %}
+                {% if auth.id == list.id_creator %}
+                    <div class="{% if cookie == true %}column-6{% else %}column-4{% endif %}">
+                        <a href="" class="btn btn-success btn-el">&Eacute;diter la liste</a>
+                    </div>
+                    {% if cookie == false %}
+                        <div class="column-4">
+                            {% if list.getComments|length == 0 %}
+                                <div class="btn btn-danger btn-el">Aucun message</div>
+                            {% else %}
+                                <a href="{{ path_for('list.messages', {id: list.id}) }}" class="btn btn-danger btn-el">Messages</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    <div class="{%  if cookie == true %}column-6{% else %}column-4{% endif %}">
+                        {% if list.url_share|length > 0 %}
+                            <script>
+                                function copyToClipboard(text) {
+                                    var copyText = document.getElementById("url_share");
+                                    copyText.select();
+                                    document.execCommand("Copy");
+                                    alert("Url copiée dans le presse-papier.");
+                                }
+                            </script>
+                            <input type="text" value="{{ picker('app.host') ~ path_for('list.view.shared', {token: list.url_shar}) ~ list.url_share }}" id="url_share" class="url_share">
+                            <button onclick="copyToClipboard()" class="btn btn-info btn-el">Url de partage</button>
+                        {% else %}
+                            <a href="{{ path_for('list.share', {id: list.id}) }}" class="btn btn-info btn-el">Partager</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% else %}
                 {% if cookie == false %}
-                    <div class="column-4">
+                    <div class="column-12">
                         {% if list.getComments|length == 0 %}
                             <div class="btn btn-danger btn-el">Aucun message</div>
                         {% else %}
@@ -38,20 +66,16 @@
                         {% endif %}
                     </div>
                 {% endif %}
-                <div class="{%  if cookie == true %}column-6{% else %}column-4{% endif %}">
-                    {% if list.url_share|length > 0 %}
-                        <script>
-                            function copyToClipboard(text) {
-                                var copyText = document.getElementById("url_share");
-                                copyText.select();
-                                document.execCommand("Copy");
-                                alert("Url copiée dans le presse-papier.");
-                            }
-                        </script>
-                        <input type="text" value="{{ picker('app.host') ~ path_for('list.view.shared', {token: list.url_shar}) ~ list.url_share }}" id="url_share" class="url_share">
-                        <button onclick="copyToClipboard()" class="btn btn-info btn-el">Url de partage</button>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="grid">
+            {% if cookie == false %}
+                <div class="column-12">
+                    {% if list.getComments|length == 0 %}
+                        <div class="btn btn-danger btn-el">Aucun message</div>
                     {% else %}
-                        <a href="{{ path_for('list.share', {id: list.id}) }}" class="btn btn-info btn-el">Partager</a>
+                        <a href="{{ path_for('list.messages', {id: list.id}) }}" class="btn btn-danger btn-el">Messages</a>
                     {% endif %}
                 </div>
             {% endif %}
@@ -88,34 +112,38 @@
                         {% if product.isReserved == 1 %}
                             <button id="btn-modal-{{ product.id }}" class="btn btn-info btn-el">Voir le message</button>
                         {% else %}
-                            <div id="btn-modal-reserve-{{ product.idListProducts }}" class="btn btn-success btn-el">Réserver</div>
+                            {% if sharedPage is defined %}
+                                {% if canReserved == true %}
+                                    <div id="btn-modal-reserve-{{ product.idListProducts }}" class="btn btn-success btn-el">Réserver</div>
 
-                            <div id="modal-reserve-{{ product.idListProducts }}" class="modal">
-                                <div class="modal-content">
-                                    <span id="closeModal" class="close">&times;</span>
-                                    <h2>Réserver : {{ product.name }}</h2>
-                                    <hr>
+                                    <div id="modal-reserve-{{ product.idListProducts }}" class="modal">
+                                        <div class="modal-content">
+                                            <span id="closeModal" class="close">&times;</span>
+                                            <h2>Réserver : {{ product.name }}</h2>
+                                            <hr>
 
-                                    <form action="{{ path_for('product.reserver', {list: list.id, idListProducts: product.idListProducts}) }}" method="post">
-                                        {{ csrf() }}
+                                            <form action="{{ path_for('product.reserver', {list: list.id, idListProducts: product.idListProducts}) }}" method="post">
+                                                {{ csrf() }}
 
-                                        <label for="name">Nom</label>
-                                        <input type="text" name="name" id="name" value="{{ persistValues.name }}" class="{% if flash.errors.name %}has-error{% endif %}" required>
-                                        {% if flash.errors.name %}
-                                            <span>{{ flash.errors.name }}</span>
-                                        {% endif %}
+                                                <label for="name">Nom</label>
+                                                <input type="text" name="name" id="name" value="{{ persistValues.name }}" class="{% if flash.errors.name %}has-error{% endif %}" required>
+                                                {% if flash.errors.name %}
+                                                    <span>{{ flash.errors.name }}</span>
+                                                {% endif %}
 
-                                        <label for="message">Message</label>
-                                        <input type="text" name="message" id="message" value="{{ persistValues.message }}" class="{% if flash.errors.description %}has-error{% endif %}" required>
-                                        {% if flash.errors.message %}
-                                            <span>{{ flash.errors.message }}</span>
-                                        {% endif %}
+                                                <label for="message">Message</label>
+                                                <input type="text" name="message" id="message" value="{{ persistValues.message }}" class="{% if flash.errors.description %}has-error{% endif %}" required>
+                                                {% if flash.errors.message %}
+                                                    <span>{{ flash.errors.message }}</span>
+                                                {% endif %}
 
-                                        <a class="close btn_cancel">Annuler</a>
-                                        <button class="btn_create_item">Réserver</button>
-                                    </form>
-                                </div>
-                            </div>
+                                                <a class="close btn_cancel">Annuler</a>
+                                                <button class="btn_create_item">Réserver</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
                         {% endif %}
                     {% endif %}
                 </div>
