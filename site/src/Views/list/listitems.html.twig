@@ -2,20 +2,26 @@
 
 {% set title = 'Ajout de produits' %}
 
-{% block content %}
-    <div>
-        <button id="modalBtn" class="btn_new_item">+ Ajouter un cadeau d'un autre site</button>
-        <h2>Produits</h2>
-        <hr class="clear-r">
-    </div>
-
-    {% if errorModal %}
+{% block js %}
+    <script src="{{ base_url() ~ '/assets/js/modal.js' }}"> </script>
+    {% if flash.errors is defined %}
         <script>
             $( document ).ready(function() {
                 $('#modalBtn').trigger('click')
             });
         </script>
     {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+    <div>
+        <button id="modalBtn" class="btn_new_item">+ Ajouter un cadeau d'un autre site</button>
+        <h2>Produits</h2>
+        <hr class="clear-r">
+    </div>
+
 
     <div id="modal" class="modal">
         <div class="modal-content">
@@ -26,31 +32,31 @@
                 {{ csrf() }}
 
                 <label for="name">Nom du produit</label>
-                <input type="text" name="name" id="name" value="{{ persistValues.name }}" required>
+                <input type="text" name="name" id="name" value="{{ persistValues.name }}" class="{% if flash.errors.name %}has-error{% endif %}" required>
                 {% if flash.errors.name %}
                     <span>{{ flash.errors.name }}</span>
                 {% endif %}
 
                 <label for="descritpion">Description</label>
-                <textarea name="description" id="description" value="{{ persistValues.description }}" required></textarea>
+                <input type="text" name="description" id="description" value="{{ persistValues.description }}" class="{% if flash.errors.description %}has-error{% endif %}" required>
                 {% if flash.errors.description %}
                     <span>{{ flash.errors.description }}</span>
                 {% endif %}
 
                 <label for="link">Lien du produit</label>
-                <input type="text" name="link" id="link" value="{{ persistValues.link }}" required>
+                <input type="text" name="link" id="link" value="{{ persistValues.link }}"class="{% if flash.errors.link %}has-error{% endif %}" class="{% if flash.errors.last_name %}has-error{% endif %}" required>
                 {% if flash.errors.link %}
                     <span>{{ flash.errors.link }}</span>
                 {% endif %}
 
                 <label for="price">Prix du produit</label>
-                <input type="text" name="price" id="price" value="{{ persistValues.price }}" required>
+                <input type="text" name="price" id="price" value="{{ persistValues.price }}" class="{% if flash.errors.price %}has-error{% endif %}" required>
                 {% if flash.errors.price %}
                     <span>{{ flash.errors.price }}</span>
                 {% endif %}
 
             <label for="pic">Photo du produit</label>
-            <input type="file" name="pic" id="pic" value="{{ persistValues.pic }}">
+            <input type="file" name="pic" id="pic" value="{{ persistValues.pic }}" class="{% if flash.errors.pic %}has-error{% endif %}">
             {% if flash.errors.pic %}
               <span>{{ flash.errors.pic }}</span>
             {% endif %}
@@ -82,8 +88,4 @@
             <p class="alert alert-info">Les produits ont tous été ajouté à votre liste !</p>
         {% endif %}
     </div>
-{% endblock %}
-
-{% block js %}
-    <script src="{{ base_url() ~ '/assets/js/modal.js' }}"> </script>
 {% endblock %}

@@ -100,11 +100,12 @@ class ListController extends BaseController
               }
             }
 
+            $list = Liste::where('id', '=', $args['id'])
+                ->first();
 
             if (empty($errors)) {
 
-              $list = Liste::where('id', '=', $args['id'])
-                  ->first();
+
               if (!is_null($list)) {
 
                 $product = new Product();
@@ -125,8 +126,7 @@ class ListController extends BaseController
                 }
                 $image->save();
 
-
-
+                $this->flash('success', 'Le produit "' . $product->name . '" a bien été ajouté à votre liste !');
                 return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
               }
               else {
@@ -136,7 +136,9 @@ class ListController extends BaseController
 
             } else {
                 $this->flash('errors', $errors);
-                return $this->redirect($response, 'list.listitems', $args);
+                return $this->redirect($response, 'list.listitems', [
+                  'id' => $list->id
+                ]);
             }
         }
     }
