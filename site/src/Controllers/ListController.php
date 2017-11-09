@@ -215,12 +215,14 @@ class ListController extends BaseController
     public function view(RequestInterface $request, ResponseInterface $response, $args)
     {
         $list = Liste::where('id', '=', $args['id'])->first();
+
         if (!is_null($list)) {
             $products = Product::join('list_products', 'list_products.id_prod', '=', 'product.id')
                 ->join('list', 'list.id', '=', 'list_products.id_list')
                 ->where('list.id', '=', $list->id)
                 ->select(
                     'product.*',
+                    'list_products.id as idListProducts',
                     'list_products.reserve as isReserved',
                     'list_products.user_reserve as userReserve'
                 )
@@ -270,10 +272,12 @@ class ListController extends BaseController
                 ->where('list.id', '=', $list->id)
                 ->select(
                     'product.*',
+                    'list_products.id as idListProducts',
                     'list_products.reserve as isReserved',
                     'list_products.user_reserve as userReserve'
                 )
                 ->get();
+
             $this->render($response, 'list/view', [
                 'list' => $list,
                 'products' => $products,
@@ -412,20 +416,34 @@ class ListController extends BaseController
                 }
 
                 if (empty($errors)) {
-                    Message::create([
-                        'id_list_produtcs' => $args['products'],
-                        'author' => $request->getParam('name'),
-                        'msg' => $request->getParam('message')
-                    ]);
+                    $lisProducts = ListProducts::where('id', '=', $args['idListProducts'])->first();
+                    if (!is_null($lisProducts)) {
+                        $lisProducts->reserve = 1;
+                        $lisProducts->user_reserve = $request->getParam('name');
+                        $lisProducts->save();
 
-                    $this->flash('success', 'Produit réservé.');
-                    return $this->redirect($response, 'list.view.shared', [
-                        'token' => $list->url_share
-                    ]);
+                        Message::create([
+                            'id_list_products' => $args['idListProducts'],
+                            'author' => $request->getParam('name'),
+                            'msg' => $request->getParam('message')
+                        ]);
+
+                        $this->flash('success', 'Produit réservé.');
+                        return $this->redirect($response, 'list.view.shared', [
+                            'token' => $list->url_share
+                        ]);
+                    } else {
+                        $this->flash('error', 'Impossible de réserver le produit.');
+                        return $this->redirect($response, 'list.view.shared', [
+                            'token' => $list->url_share,
+                        ]);
+                    }
                 } else {
+                    $errors['modal'] = $args['idListProdutcs'];
+
                     $this->flash('errors', $errors);
                     return $this->redirect($response, 'list.view.shared', [
-                        'token' => $list->url_share
+                        'token' => $list->url_share,
                     ]);
                 }
             } else {

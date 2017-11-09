@@ -2,6 +2,17 @@
 
 {% set title = list.name %}
 
+{% block js %}
+    <script src="{{ base_url() ~ '/assets/js/modal.js' }}"> </script>
+    {% if flash.errors is defined %}
+        <script>
+            $( document ).ready(function() {
+                $('#modal-reserve-' + {{ flash.errors.modal }}).trigger('click')
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 
     <a class="right date_exp_head">
@@ -49,6 +60,16 @@
 
     <div class="grid">
         {% for product in products %}
+            <div id="modal-{{ product.id }}" class="modal">
+                <div class="modal-content">
+                    <span id="closeModal" class="close">&times;</span>
+                    <h2>Message</h2>
+                    <hr>
+                    <p><strong>Nom:</strong> {{ message(product.idListProducts).author }}</p>
+                    <p><strong>Message:</strong> {{ message(product.idListProducts).msg }}</p>
+                </div>
+            </div>
+
             <div class="column-4 card {% if product.isReserved == 1%}is_reserved{% endif %}">
                 {% if product.isReserved == 1%}
                     <div class="ribbon"><span>Réservé</span></div>
@@ -65,16 +86,17 @@
                     {% endif %}
                     {% if cookie == false %}
                         {% if product.isReserved == 1 %}
-                            <a href="" class="btn btn-info btn-el">Voir le message</a>
+                            <button id="btn-modal-{{ product.id }}" class="btn btn-info btn-el">Voir le message</button>
                         {% else %}
-                            <div id="modalBtn" class="btn btn-success btn-el">Réserver</div>
+                            <div id="btn-modal-reserve-{{ product.idListProducts }}" class="btn btn-success btn-el">Réserver</div>
 
-                            <div id="modal" class="modal">
+                            <div id="modal-reserve-{{ product.idListProducts }}" class="modal">
                                 <div class="modal-content">
                                     <span id="closeModal" class="close">&times;</span>
                                     <h2>Réserver : {{ product.name }}</h2>
                                     <hr>
-                                    <form action="{{ path_for('product.reserver', {list: list.id, prod: product.idListProducts}) }}" method="post" enctype="multipart/form-data">
+
+                                    <form action="{{ path_for('product.reserver', {list: list.id, idListProducts: product.idListProducts}) }}" method="post">
                                         {{ csrf() }}
 
                                         <label for="name">Nom</label>
@@ -100,15 +122,4 @@
             </div>
         {% endfor %}
     </div>
-{% endblock %}
-
-{% block js %}
-    <script src="{{ base_url() ~ '/assets/js/modal.js' }}"> </script>
-    {% if flash.errors is defined %}
-        <script>
-            $( document ).ready(function() {
-                $('#modalBtn').trigger('click')
-            });
-        </script>
-    {% endif %}
 {% endblock %}

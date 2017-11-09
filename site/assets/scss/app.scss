@@ -72,7 +72,6 @@ button.btn_create_item, button.btn_send_msg {
 .pd-10 {
   padding-top: 10px;
 }
-
 ul.navBar li a.titleNav {
   font-weight: 700;
   text-transform: uppercase;
@@ -83,6 +82,43 @@ ul.navBar li a.titleNav:hover {
   border-bottom: 0;
   transition: color 0.5s ease-in;
   color: darken(#eee, 5);
+}
+ul.navBar li:nth-child(n+2) a {
+  @media screen and (max-width: 600px) {
+  display: none;
+  }
+}
+ul.navBar.dropped li:nth-child(n+2) a {
+  @media screen and (max-width: 600px) {
+    display: block;
+    padding-top: 5px;
+  }
+}
+
+ul.navBar li a.navIcon {
+  display: none;
+  font-size: 1.5em;
+  font-weight: bold;
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  @media screen and (max-width: 600px) {
+    display: block;
+    float: right;
+  }
+}
+.navBar.dropped {
+  @media screen and (max-width: 600px) {
+    position: relative;
+    flex-direction: column;
+  }
+  a {
+    @media screen and (max-width: 600px) {
+      float: none;
+      display: block;
+      text-align: left;
+    }
+  }
 }
 
 form label, form input {
@@ -199,7 +235,7 @@ a.product_url {
 .modal {
   display: none;
   position: fixed;
-  z-index : 1;
+  z-index : 9;
   left : 0;
   top: 0;
   width: 100%;
