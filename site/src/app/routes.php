@@ -1,10 +1,11 @@
 <?php
 
 use Mecado\Controllers\AppController;
+use Mecado\Controllers\ProductController;
 use Mecado\Controllers\UserController;
 use Mecado\Controllers\ListController;
-use Mecado\Middlewares\AuthMiddleware;
 use Mecado\Middlewares\GuestMiddleware;
+use Mecado\Middlewares\AuthMiddleware;
 
 $app->get('/', AppController::class . ':index')
     ->setName('index');
@@ -42,21 +43,25 @@ $app->group('/list', function() {
    $container = $this->getContainer();
 
     $this->get('/creationlist', ListController::class . ':creationlistForm')
-        ->add(new GuestMiddleware($container))
+        ->add(new AuthMiddleware($container))
         ->setName('list.creationlist.form');
 
     $this->post('/creationlist', ListController::class . ':creationlist')
-        ->add(new GuestMiddleware($container))
+        ->add(new AuthMiddleware($container))
         ->setName('list.creationlist');
 
     $this->get('/{id:[0-9]+}/listitems', ListController::class . ':listitems')
-        ->add(new GuestMiddleware($container))
+        ->add(new AuthMiddleware($container))
         ->setName('list.listitems');
 
-    $this->post('/{id:[0-9]+}/additem', ListController::class . ':additem')
-        ->add(new GuestMiddleware($container))
+    $this->post('/{id:[0-9]+}/additem/{idProd:[0-9]+}', ListController::class . ':additem')
+        ->add(new AuthMiddleware($container))
         ->setName('list.additem');
 
+    $this->post('/{id:[0-9]+}/createproduct', ListController::class . ':createproduct')
+        ->add(new AuthMiddleware($container))
+        ->setName('list.createproduct');
+  
     $this->get('/view/{id:[0-9]+}', ListController::class . ':view')
         ->setName('list.view');
 
@@ -65,4 +70,11 @@ $app->group('/list', function() {
 
     $this->get('/{token:[0-9]+}', ListController::class . ':share')
         ->setName('list.view.shared');
+});
+
+$app->group('/products', function() {
+   $container = $this->getContainer();
+
+   $this->get('[/]', ProductController::class . ':products')
+       ->setName('product.products');
 });

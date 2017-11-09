@@ -7,31 +7,32 @@
     {{ csrf() }}
 
     <label for="list_title">Titre de la liste</label>
-    <input type="text" name="list_title" id="list_title" value="{{ persistValues.list_title }}" required>
+    <input class="{% if flash.errors.first_name %}has-error{% endif %}" type="text" name="list_title" id="list_title" value="{{ persistValues.list_title }}" required>
     {% if flash.errors.list_title %}
-      <span>{{ flash.errors.list_title }}</span>
+      <span class="error">{{ flash.errors.list_title }}</span>
     {% endif %}
 
     <label for="descritpion">Description</label>
-    <textarea name="description" id="description" value="{{ persistValues.description }}" required></textarea>
+    <input class="{% if flash.errors.first_name %}has-error{% endif %}" type="text" name="description" id="description" value="{{ persistValues.description }}" required>
     {% if flash.errors.description %}
-      <span>{{ flash.errors.description }}</span>
+      <span class="error">{{ flash.errors.description }}</span>
     {% endif %}
 
     <label for="end_date">Date de fin</label>
-    <input type="date" name="end_date" id="end_date" value="{{ persistValues.end_date }}" required>
+    <input class="{% if flash.errors.first_name %}has-error{% endif %}" type="text" name="end_date" id="datepicker" value="{{ persistValues.end_date }}" required>
     {% if flash.errors.end_date %}
-      <span>{{ flash.errors.end_date }}</span>
+      <span class="error">{{ flash.errors.end_date }}</span>
     {% endif %}
 
-    <label for="other_dest">Liste pour une autre personne que moi
+    <input class="{% if flash.errors.first_name %}has-error{% endif %}" type="checkbox" name="other_dest" id="other_dest" value="{{ persistValues.other_dest }}">
+    <label for="other_dest">
+      Liste pour une autre personne que moi
+      <i class="material-icons" title="Cochez cette case si la liste que vous créer ne vous est pas déstinée, ainsi vous aurez accès en direct aux messages postés par les participants">help_outline</i>
     </label>
-    <input type="checkbox" name="other_dest" id="other_dest" value="{{ persistValues.other_dest }}">
     {% if flash.errors.other_dest %}
-      <span>{{ flash.errors.other_dest }}</span>
+      <span class="error">{{ flash.errors.other_dest }}</span>
     {% endif %}
-    <i class="material-icons" title="Cochez cette case si la liste que vous créer ne vous est pas déstinée, ainsi vous aurez accès en direct aux messages postés par les participants">help_outline</i>
 
-    <button>Créer la liste</button>
+    <button class="btn btn-info">Créer la liste</button>
   </form>
 {% endblock %}

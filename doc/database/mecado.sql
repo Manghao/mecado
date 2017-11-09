@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mer 08 Novembre 2017 à 11:53
+-- Généré le :  Mer 08 Novembre 2017 à 22:33
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -44,10 +44,23 @@ CREATE TABLE `comment` (
 CREATE TABLE `image` (
   `id` int(10) UNSIGNED NOT NULL,
   `id_prod` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL DEFAULT 'item.png',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `image`
+--
+
+INSERT INTO `image` (`id`, `id_prod`, `name`, `created_at`, `updated_at`) VALUES
+(1, 1, 'item.png', '2017-11-08 14:35:21', '2017-11-08 14:35:21'),
+(2, 2, 'item.png', '2017-11-08 21:30:30', '2017-11-08 21:30:30'),
+(3, 3, 'item.png', '2017-11-08 21:30:30', '2017-11-08 21:30:30'),
+(4, 4, 'item.png', '2017-11-08 21:30:40', '2017-11-08 21:30:40'),
+(5, 5, 'item.png', '2017-11-08 21:30:40', '2017-11-08 21:30:40'),
+(6, 6, 'item.png', '2017-11-08 21:30:49', '2017-11-08 21:30:49'),
+(7, 7, 'item.png', '2017-11-08 21:30:49', '2017-11-08 21:30:49');
 
 -- --------------------------------------------------------
 
@@ -59,8 +72,7 @@ CREATE TABLE `list` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `descr` text,
-  `dateExp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `id_prod` int(10) UNSIGNED NOT NULL,
+  `date_exp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `url_share` varchar(255) DEFAULT NULL,
   `id_creator` int(10) UNSIGNED NOT NULL,
   `other_dest` tinyint(1) NOT NULL DEFAULT '0',
@@ -72,8 +84,8 @@ CREATE TABLE `list` (
 -- Contenu de la table `list`
 --
 
-INSERT INTO `list` (`id`, `name`, `descr`, `dateExp`, `id_prod`, `url_share`, `id_creator`, `other_dest`, `created_at`, `updated_at`) VALUES
-(2, 'test', NULL, '2017-11-08 10:47:26', 1, NULL, 1, 0, '2017-11-08 10:47:26', '2017-11-08 10:47:26');
+INSERT INTO `list` (`id`, `name`, `descr`, `date_exp`, `url_share`, `id_creator`, `other_dest`, `created_at`, `updated_at`) VALUES
+(1, 'Admin_list', 'Liste créé par l\'admin pour tester les fonctionnalités du projet.', '2017-11-08 21:32:32', NULL, 1, 1, '2017-11-08 19:42:59', '2017-11-08 21:32:32');
 
 -- --------------------------------------------------------
 
@@ -115,7 +127,7 @@ CREATE TABLE `product` (
   `name` varchar(255) NOT NULL,
   `descr` text,
   `url` varchar(255) DEFAULT NULL,
-  `price` int(10) UNSIGNED DEFAULT NULL,
+  `price` decimal(10,2) UNSIGNED DEFAULT NULL,
   `reserve` tinyint(1) NOT NULL DEFAULT '0',
   `user_reserve` varchar(255) DEFAULT NULL,
   `custom_product` tinyint(1) NOT NULL DEFAULT '0',
@@ -128,7 +140,13 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `descr`, `url`, `price`, `reserve`, `user_reserve`, `custom_product`, `created_at`, `updated_at`) VALUES
-(1, 'test', NULL, NULL, NULL, 0, NULL, 0, '2017-11-08 10:47:17', '2017-11-08 10:47:17');
+(1, 'test', 'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l\'imprimerie depuis les années 1500, quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.', NULL, '135.00', 0, NULL, 0, '2017-11-08 10:47:17', '2017-11-08 14:26:12'),
+(2, 'test2', NULL, NULL, NULL, 0, NULL, 0, '2017-11-08 12:13:36', '2017-11-08 12:13:36'),
+(3, 'test3', NULL, NULL, NULL, 0, NULL, 0, '2017-11-08 12:13:36', '2017-11-08 12:13:36'),
+(4, 'test4', NULL, NULL, NULL, 0, NULL, 0, '2017-11-08 12:13:57', '2017-11-08 12:13:57'),
+(5, 'test5', NULL, NULL, NULL, 0, NULL, 0, '2017-11-08 12:13:57', '2017-11-08 12:13:57'),
+(6, 'test6', NULL, NULL, NULL, 0, NULL, 0, '2017-11-08 12:14:17', '2017-11-08 12:14:17'),
+(7, 'test7', NULL, NULL, NULL, 0, NULL, 0, '2017-11-08 12:14:17', '2017-11-08 12:14:17');
 
 -- --------------------------------------------------------
 
@@ -153,7 +171,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `last_name`, `first_name`, `mail`, `password`, `token`, `last_login`, `created_at`, `updated_at`) VALUES
-(1, NULL, NULL, 'test@test.fr', 'test', NULL, '2017-11-08 10:47:04', '2017-11-08 10:47:04', '2017-11-08 10:47:04');
+(1, 'Admin', 'Root', 'admin@gmail.com', '$2y$10$oC5bodBGOfxAZFpo53Uhg.ZWcDWLNRZlwEntI39j6FrKR9YAGo3/C', NULL, '2017-11-08 21:29:46', '2017-11-08 15:49:03', '2017-11-08 21:29:46');
 
 --
 -- Index pour les tables exportées
@@ -181,7 +199,6 @@ ALTER TABLE `image`
 ALTER TABLE `list`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_creator` (`id_creator`),
-  ADD KEY `id_prod` (`id_prod`),
   ADD KEY `id` (`id`);
 
 --
@@ -228,27 +245,27 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT pour la table `image`
 --
 ALTER TABLE `image`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT pour la table `list`
 --
 ALTER TABLE `list`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT pour la table `list_products`
 --
 ALTER TABLE `list_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT pour la table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Contraintes pour les tables exportées
 --
@@ -269,7 +286,6 @@ ALTER TABLE `image`
 -- Contraintes pour la table `list`
 --
 ALTER TABLE `list`
-  ADD CONSTRAINT `fk_product_list` FOREIGN KEY (`id_prod`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_user_list` FOREIGN KEY (`id_creator`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
