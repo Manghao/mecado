@@ -11,6 +11,7 @@ use Mecado\Models\Product;
 use Mecado\Utils\Paginator;
 use Mecado\Utils\Picker;
 use Mecado\Utils\Session;
+use Mecado\Utils\Utils;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Respect\Validation\Validator;
@@ -306,7 +307,7 @@ class ListController extends BaseController
             return $this->redirect($response, 'user.view');
         }
     }
-  
+
     public function messages(RequestInterface $request, ResponseInterface $response, $args)
     {
         $list = Liste::where('id', '=', $args['id'])
