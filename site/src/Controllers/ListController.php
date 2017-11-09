@@ -92,21 +92,21 @@ class ListController extends BaseController
       if (!Validator::floatval()->notEmpty()->validate($request->getParam('price'))) {
         $errors['price'] = "Veuillez saisir un lien valide.";
       }
-      if (!Validator::notEmpty()->validate($request->getParam('pic'))) {
+      if (!Validator::image()->validate($request->getParam('pic'))) {
         $errors['pic'] = "Veuillez ajouter un fichier valide.";
       }
 
 
       if (empty($errors)) {
-        $liste = new Liste();
-        $liste->name=$request->getParam('list_title');
-        $liste->descr=$request->getParam('description');
-        $liste->dateExp=date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
-        $liste->other_dest=is_null($request->getParam('other_dest')) ? 0 : 1;
+        $product = new Product();
+        $product->name=$request->getParam('name');
+        $product->descr=$request->getParam('description');
+        $product->url=$request->getParam('link');
+        $product->price=$request->getParam('price');
+        $product->custom_product=1;
+        $product->save();
 
-        //TMP
-        $liste->id_creator=Session::get('user')->id;
-        $liste->save();
+
 
         return $this->redirect($response, 'list.listitems', ['id' => $liste->id]);
 

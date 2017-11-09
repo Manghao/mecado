@@ -48,7 +48,7 @@
             {% endif %}
 
             <label for="pic">Photo du produit</label>
-            <input type="text" name="pic" id="pic" value="{{ persistValues.pic }}" required>
+            <input type="file" name="pic" id="pic" value="{{ persistValues.pic }}" required>
             {% if flash.errors.pic %}
               <span>{{ flash.errors.pic }}</span>
             {% endif %}
