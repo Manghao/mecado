@@ -1,6 +1,7 @@
 <?php
 
 use Mecado\Controllers\AppController;
+use Mecado\Controllers\ProductController;
 use Mecado\Controllers\UserController;
 use Mecado\Controllers\ListController;
 use Mecado\Middlewares\GuestMiddleware;
@@ -53,10 +54,31 @@ $app->group('/list', function() {
         ->add(new AuthMiddleware($container))
         ->setName('list.listitems');
 
-    $this->post('/{id:[0-9]+}/createproduct', ListController::class . ':createproduct')
-        ->add(new GuestMiddleware($container))
-          ->setName('list.createproduct');
-    $this->post('/{id:[0-9]+}/additem', ListController::class . ':additem')
+    $this->get('/{id:[0-9]+}/additem/{idProd:[0-9]+}', ListController::class . ':additem')
         ->add(new AuthMiddleware($container))
         ->setName('list.additem');
+
+    $this->get('/{id:[0-9]+}/createproduct', ListController::class . ':createproductForm')
+          ->add(new AuthMiddleware($container))
+          ->setName('list.createproduct.form');
+
+    $this->post('/{id:[0-9]+}/createproduct', ListController::class . ':createproduct')
+        ->add(new AuthMiddleware($container))
+        ->setName('list.createproduct');
+
+    $this->get('/view/{id:[0-9]+}', ListController::class . ':view')
+        ->setName('list.view');
+
+    $this->get('/share/{id:[0-9]+}', ListController::class . ':share')
+        ->setName('list.share');
+
+    $this->get('/{token:[0-9]+}', ListController::class . ':share')
+        ->setName('list.view.shared');
+});
+
+$app->group('/products', function() {
+   $container = $this->getContainer();
+
+   $this->get('[/]', ProductController::class . ':products')
+       ->setName('product.products');
 });
