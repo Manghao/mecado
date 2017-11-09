@@ -60,7 +60,7 @@ class ListController extends BaseController
 
             } else {
                 $this->flash('errors', $errors);
-                return $this->redirect($response, 'user.register.form', $args);
+                return $this->redirect($response, 'list.creationlist', $args);
             }
         }
     }
@@ -76,7 +76,6 @@ class ListController extends BaseController
             $this->flash('error', 'Une erreur est survenue pendant l\'envoi du formulaire !');
             return $this->redirect($response, 'list.createproduct.form', $request->getparams());
         } else {
-
             $errors = [];
 
             if (!Validator::stringType()->notEmpty()->validate($request->getParam('name'))) {
@@ -137,7 +136,6 @@ class ListController extends BaseController
                     $this->flash('error', 'La liste n\'existe pas !');
                     return $this->redirect($response, 'index');
                 }
-
             } else {
                 $this->flash('errors', $errors);
                 return $this->redirect($response, 'list.listitems', [
