@@ -2,6 +2,7 @@
 
 namespace Mecado\Controllers;
 
+use Mecado\Models\Liste;
 use Mecado\Models\User;
 use Mecado\Utils\Session;
 use Psr\Http\Message\RequestInterface;
@@ -117,7 +118,10 @@ class UserController extends BaseController
 
     public function view(RequestInterface $request, ResponseInterface $response)
     {
-        $this->render($response, 'user/view');
+        $lists = Liste::where('id_creator', '=', Session::get('user')->id)->get();
+        $this->render($response, 'user/view', [
+            'lists' => $lists
+        ]);
     }
 
     public function logout(RequestInterface $request, ResponseInterface $response)

@@ -25,13 +25,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                    {% for list in auth.getLists %}
+                    {% for list in lists %}
                         <tr>
                             <td>
                                 <a href="{{ path_for('list.view', {id: list.id}) }}">{{ list.name }}</a>
                             </td>
                             <td>
-                                {{ list.dateExp|date('d-m-y') }}
+                                {{ list.date_exp|date('d/m/Y') }}
                             </td>
                         </tr>
                     {% endfor %}
