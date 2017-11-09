@@ -16,7 +16,7 @@ use Psr\Http\Message\ResponseInterface;
 class ProductController extends BaseController
 {
     public function products(RequestInterface $request, ResponseInterface $response, $args) {
-        $products = Product::get();
+        $products = Product::where('custom_product','=','0')->get();
 
         if (!is_null($products)) {
             $this->render($response, 'product/products', ['products' => $products]);
