@@ -2,6 +2,7 @@
 
 namespace Mecado\Controllers;
 
+use Mecado\Models\Image;
 use Mecado\Models\Liste;
 use Mecado\Models\ListProducts;
 use Mecado\Models\Product;
@@ -51,7 +52,6 @@ class ListController extends BaseController
                 $liste->date_exp=date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
                 $liste->other_dest=is_null($request->getParam('other_dest')) ? 0 : 1;
 
-                //TMP
                 $liste->id_creator=Session::get('user')->id;
                 $liste->save();
 
@@ -90,29 +90,52 @@ class ListController extends BaseController
                 $errors['link'] = "Veuillez saisir un lien valide.";
             }
 
-            if (!Validator::floatval()->notEmpty()->validate($request->getParam('price'))) {
+            if (!Validator::floatVal()->notEmpty()->validate($request->getParam('price'))) {
                 $errors['price'] = "Veuillez saisir un lien valide.";
             }
-            if (!Validator::notEmpty()->validate($request->getParam('pic'))) {
-                $errors['pic'] = "Veuillez ajouter un fichier valide.";
+
+            if(!empty($request->getParam('pic'))){
+                if (!Validator::image()->validate($request->getParam('pic'))) {
+                    $errors['pic'] = "Veuillez ajouter un fichier valide.";
+                }
             }
 
-            if (empty($errors)) {
-                $liste = new Liste();
-                $liste->name=$request->getParam('list_title');
-                $liste->descr=$request->getParam('description');
-                $liste->date_exp=date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
-                $liste->other_dest=is_null($request->getParam('other_dest')) ? 0 : 1;
+            $list = Liste::where('id', '=', $args['id'])
+                ->first();
 
-                //TMP
-                $liste->id_creator=Session::get('user')->id;
-                $liste->save();
+            if (!is_null($list)) {
+                if (empty($errors)) {
 
-                return $this->redirect($response, 'list.listitems', ['id' => $liste->id]);
+                    $product = new Product();
+                    $product->name=$request->getParam('name');
+                    $product->descr=$request->getParam('description');
+                    $product->url=$request->getParam('link');
+                    $product->price=$request->getParam('price');
+                    $product->custom_product=1;
+                    $product->save();
 
+                    $image= new Image();
+                    $image->id_prod=$product->id;
+                    //default image
+                    if(empty($request->getParam('pic'))){
+                        $image->name='item.png';
+                    } else {
+                        //move_uploaded_file($_FILES['pic']);
+                    }
+                    $image->save();
+
+                    $this->flash('success', 'Le produit "' . $product->name . '" a bien été ajouté à votre liste !');
+                    return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
+                }
+                else {
+                    $this->flash('errors', $errors);
+                    return $this->redirect($response, 'list.listitems', [
+                        'id' => $list->id
+                    ]);
+                }
             } else {
-                $this->flash('errors', $errors);
-                return $this->redirect($response, 'user.register.form', $args);
+                $this->flash('error', 'La liste n\'existe pas !');
+                return $this->redirect($response, 'index');
             }
         }
     }
@@ -175,9 +198,9 @@ class ListController extends BaseController
             return $this->redirect($response, 'index');
         }
     }
-  
+
     public function view(RequestInterface $request, ResponseInterface $response, $args)
-  {
+    {
         $list = Liste::where('id', '=', $args['id'])->first();
         if (!is_null($list)) {
             $this->render($response, 'list/view', ['list' => $list]);
@@ -194,9 +217,9 @@ class ListController extends BaseController
             $url = $_SERVER['REQUEST_SCHEME'] . '://';
             $url .= $_SERVER['HTTP_HOST'];
             $url .= $this->container->get('router')
-                        ->pathFor('list.view.shared', [
-                            'token' => uniqid()
-                        ]);
+                ->pathFor('list.view.shared', [
+                    'token' => uniqid()
+                ]);
 
             $list->url_share = $url;
             $list->save();
