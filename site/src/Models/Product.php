@@ -18,8 +18,6 @@ class Product extends Model
         'reserve',
         'user_reserve',
         'custom_product'
-
-
     ];
 
     public $timestamps = true;
