@@ -77,6 +77,10 @@ $app->group('/list', function() {
 
     $this->get('/remove/{id:[0-9]+}', ListController::class . ':remove')
         ->setName('list.remove');
+
+    $this->get('/{id:[0-9]+}/messages', ListController::class . ':messages')
+        ->add(new AuthMiddleware($container))
+        ->setName('list.messages');
 });
 
 $app->group('/products', function() {
