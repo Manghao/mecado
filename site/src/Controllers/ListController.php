@@ -159,9 +159,10 @@ class ListController extends BaseController
             ->first();
 
         if (!is_null($list)) {
-            $products = Product::whereNotIn('id', function($query) {
+            $products = Product::whereNotIn('id', function($query) use ($list) {
                 $query->select('id_prod')
-                    ->from('list_products');
+                    ->from('list_products')
+                    ->where('id_list', '=', $list->id);
             })->get();
 
             if (!is_null($products)) {
