@@ -230,10 +230,15 @@ class ListController extends BaseController
                 )
                 ->get();
 
+
+            $currentDate = strtotime(date('Y-m-d'));
+            $exp_date = strtotime(date('Y-m-d', strtotime($list->date_exp)));
+
             $this->render($response, 'list/view', [
                 'list' => $list,
                 'products' => $products,
-                'cookie' => isset($_COOKIE['mecado_' . $list->id]) ? true : false
+                'cookie' => isset($_COOKIE['mecado_' . $list->id]) ? true : false,
+                'isEnded' => ($currentDate > $exp_date) ? true : false
             ]);
         } else {
             $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
@@ -280,11 +285,15 @@ class ListController extends BaseController
                 )
                 ->get();
 
+            $currentDate = strtotime(date('Y-m-d'));
+            $exp_date = strtotime(date('Y-m-d', strtotime($list->date_exp)));
+
             $this->render($response, 'list/view', [
                 'list' => $list,
                 'products' => $products,
                 'sharedPage' => true,
-                'cookie' => isset($_COOKIE['mecado_' . $list->id]) ? true : false
+                'cookie' => isset($_COOKIE['mecado_' . $list->id]) ? true : false,
+                'canReserved' => ($currentDate > $exp_date) ? false : true
             ]);
         } else {
             $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable.');
