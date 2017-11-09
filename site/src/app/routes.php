@@ -74,6 +74,10 @@ $app->group('/list', function() {
 
     $this->get('/{token:[0-9a-zA-Z]+}', ListController::class . ':viewShared')
         ->setName('list.view.shared');
+
+    $this->get('/{id:[0-9]+}/messages', ListController::class . ':messages')
+        ->add(new AuthMiddleware($container))
+        ->setName('list.messages');
 });
 
 $app->group('/products', function() {
