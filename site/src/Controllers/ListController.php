@@ -56,6 +56,10 @@ class ListController extends BaseController
                 $liste->id_creator=Session::get('user')->id;
                 $liste->save();
 
+                if ($liste->other_dest == 0) {
+                    setcookie('mecado_' . $liste->id, $liste->id, strtotime($request->getParam('end_date')), '/', current($request->getHeader('Host')), false, true);
+                }
+
                 return $this->redirect($response, 'list.listitems', ['id' => $liste->id]);
 
             } else {
@@ -217,9 +221,11 @@ class ListController extends BaseController
                     'list_products.user_reserve as userReserve'
                 )
                 ->get();
+
             $this->render($response, 'list/view', [
                 'list' => $list,
-                'products' => $products
+                'products' => $products,
+                'cookie' => isset($_COOKIE['mecado_' . $list->id]) ? true : false
             ]);
         } else {
             $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
@@ -242,7 +248,9 @@ class ListController extends BaseController
             $list->save();
 
             $this->flash('success', 'URL de partage : ' . $url);
-            return $this->redirect($response, 'list.view', ['id' => $list->id]);
+            return $this->redirect($response, 'list.view', [
+                'id' => $list->id
+            ]);
         } else {
             $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
             return $this->redirect($response, 'index');
@@ -270,6 +278,26 @@ class ListController extends BaseController
         } else {
             $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable.');
             return $this->redirect($response, 'index');
+        }
+    }
+
+    public function remove(RequestInterface $request, ResponseInterface $response, $args)
+    {
+        $list = Liste::where('id', '=', $args['id'])->first();
+        if (!is_null($list)) {
+            $list->getComments()->delete();
+            $listProducts = ListProducts::where('id_list', '=', $list->id)->get();
+            foreach ($listProducts as $listProduct) {
+                $listProduct->delete();
+            }
+            $list->getProducts()->delete();
+            $list->delete();
+
+            $this->flash('success', 'Liste supprimée avec succès.');
+            return $this->redirect($response, 'user.view');
+        } else {
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
+            return $this->redirect($response, 'user.view');
         }
     }
 }

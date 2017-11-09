@@ -74,6 +74,9 @@ $app->group('/list', function() {
 
     $this->get('/{token:[0-9a-zA-Z]+}', ListController::class . ':viewShared')
         ->setName('list.view.shared');
+
+    $this->get('/remove/{id:[0-9]+}', ListController::class . ':remove')
+        ->setName('list.remove');
 });
 
 $app->group('/products', function() {
