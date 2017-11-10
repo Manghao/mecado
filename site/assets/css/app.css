@@ -802,4 +802,8 @@ ul.pagination > li:last-child {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px; }
 
+#div_name_dest {
+  display: none;
+  margin-top: 10px; }
+
 /*# sourceMappingURL=app.css.map */

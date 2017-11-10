@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Ven 10 Novembre 2017 à 14:23
+-- Généré le :  Ven 10 Novembre 2017 à 17:35
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -72,7 +72,8 @@ INSERT INTO `image` (`id`, `id_prod`, `name`, `created_at`, `updated_at`) VALUES
 (8, 8, 'portable.png', '2017-11-10 11:57:47', '2017-11-10 11:57:47'),
 (9, 9, 'calendrier.png', '2017-11-10 11:57:47', '2017-11-10 11:57:47'),
 (10, 10, 'bapteme_vol.png', '2017-11-10 11:57:47', '2017-11-10 11:57:47'),
-(11, 11, 'item.png', '2017-11-10 12:36:15', '2017-11-10 12:36:15');
+(11, 11, 'item.png', '2017-11-10 12:36:15', '2017-11-10 12:36:15'),
+(14, 16, 'item.png', '2017-11-10 14:53:05', '2017-11-10 14:53:05');
 
 -- --------------------------------------------------------
 
@@ -88,6 +89,7 @@ CREATE TABLE `list` (
   `url_share` varchar(255) DEFAULT NULL,
   `id_creator` int(10) UNSIGNED NOT NULL,
   `other_dest` tinyint(1) NOT NULL DEFAULT '0',
+  `name_dest` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -96,9 +98,9 @@ CREATE TABLE `list` (
 -- Contenu de la table `list`
 --
 
-INSERT INTO `list` (`id`, `name`, `descr`, `date_exp`, `url_share`, `id_creator`, `other_dest`, `created_at`, `updated_at`) VALUES
-(1, 'List de Hugo', 'Liste de cadeaux destiné à Hugo', '2017-11-10 12:23:36', '5a0598ef03077', 6, 1, '2017-11-10 12:14:49', '2017-11-10 12:23:36'),
-(2, 'Ma liste de cadeaux', 'Ma liste de cadeaux que j\'aimerais pour Noël', '2017-11-10 12:50:06', '5a05a07e0f1af', 6, 0, '2017-11-10 12:24:44', '2017-11-10 12:50:06');
+INSERT INTO `list` (`id`, `name`, `descr`, `date_exp`, `url_share`, `id_creator`, `other_dest`, `name_dest`, `created_at`, `updated_at`) VALUES
+(1, 'List de Hugo', 'Liste de cadeaux destiné à Hugo', '2017-11-10 16:32:36', '5a0598ef03077', 6, 1, 'Hugo', '2017-11-10 12:14:49', '2017-11-10 16:32:36'),
+(2, 'Ma liste de cadeaux', 'Ma liste de cadeaux que j\'aimerais pour Noël', '2017-11-10 12:50:06', '5a05a07e0f1af', 6, 0, NULL, '2017-11-10 12:24:44', '2017-11-10 12:50:06');
 
 -- --------------------------------------------------------
 
@@ -186,7 +188,8 @@ INSERT INTO `product` (`id`, `name`, `descr`, `url`, `price`, `custom_product`, 
 (8, 'Portable Huawei', 'Huawei P8 Lite version 2017 Smartphone débloqué 4G (Ecran: 5,2 pouces - 16 Go - Double Nano-SIM - Android 7.0 Nougat) Noir', 'https://www.amazon.fr/Huawei-version-Smartphone-d%C3%A9bloqu%C3%A9-Ecran/dp/B01MU9R2EN/ref=sr_1_8?s=electronics&ie=UTF8&qid=1510314481&sr=1-8&keywords=t%C3%A9l%C3%A9phone+portable&dpID=41NNN1NttFL&preST=_SY300_QL70_&dpSrc=srch', '194.40', 0, '2017-11-10 11:49:06', '2017-11-10 11:49:06'),
 (9, 'Calendrier de l\'avent', 'CALENDRIER DE L\'AVENT BEER OF THE WORLD ', 'https://www.amazon.fr/Plan%C3%A8te-Drinks-CALENDRIER-LAVENT-WORLD/dp/B076B3CRLX/ref=sr_1_1?ie=UTF8&qid=1510314630&sr=8-1&keywords=calendrier+de+l%27avent+de+biere&dpID=51qk3mBTpIL&preST=_SX342_QL70_&dpSrc=srch', '64.90', 0, '2017-11-10 11:53:45', '2017-11-10 11:53:45'),
 (10, 'Baptème vol', 'Baptême vol en patrouille – près de Bordeaux', 'https://www.ideecadeau.fr/bapteme-vol-en-patrouille-pres-de-bordeaux.html', '150.00', 0, '2017-11-10 11:53:45', '2017-11-10 11:53:45'),
-(11, 'Fifa 18 édition Ronaldo', 'Le célèbre jeu de football Fifa année 2018 sur ps4', 'https://www.amazon.fr/Electronic-Arts-FIFA-18-Edition/dp/B071WK2M5Z/ref=sr_1_2?s=videogames&ie=UTF8&qid=1510317202&sr=1-2&keywords=fifa+18+ps4&dpID=51wmRLCXAHL&preST=_SY300_QL70_&dpSrc=srch', '109.99', 1, '2017-11-10 12:36:15', '2017-11-10 12:36:46');
+(11, 'Fifa 18 édition Ronaldo', 'Le célèbre jeu de football Fifa année 2018 sur ps4', 'https://www.amazon.fr/Electronic-Arts-FIFA-18-Edition/dp/B071WK2M5Z/ref=sr_1_2?s=videogames&ie=UTF8&qid=1510317202&sr=1-2&keywords=fifa+18+ps4&dpID=51wmRLCXAHL&preST=_SY300_QL70_&dpSrc=srch', '109.99', 1, '2017-11-10 12:36:15', '2017-11-10 12:36:46'),
+(16, 'test', 'test', '', '125.00', 1, '2017-11-10 14:53:05', '2017-11-10 14:53:05');
 
 -- --------------------------------------------------------
 
@@ -211,7 +214,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `last_name`, `first_name`, `mail`, `password`, `token`, `last_login`, `created_at`, `updated_at`) VALUES
-(6, 'Dupont', 'Jean', 'jean.dupont@gmail.com', '$2y$10$zQaLqWpn9wQ82hinjmzz0eQoN4UI/WEzEGYu6n.3NcOAJ0KCIUzB6', NULL, '2017-11-10 12:00:22', '2017-11-10 12:00:22', '2017-11-10 12:00:22');
+(6, 'Dupont', 'Jean', 'jean.dupont@gmail.com', '$2y$10$zQaLqWpn9wQ82hinjmzz0eQoN4UI/WEzEGYu6n.3NcOAJ0KCIUzB6', NULL, '2017-11-10 12:00:22', '2017-11-10 12:00:22', '2017-11-10 12:00:22'),
+(9, 'test', 'test', 'test@gmail.com', '$2y$10$0OnKTio8f8BqiTrO/SRBcuF5ezcfX6JqOzStLpzH9UVp4RLjbp8uW', NULL, '2017-11-10 13:42:56', '2017-11-10 13:42:56', '2017-11-10 13:42:56');
 
 --
 -- Index pour les tables exportées
@@ -285,17 +289,17 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT pour la table `image`
 --
 ALTER TABLE `image`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT pour la table `list`
 --
 ALTER TABLE `list`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT pour la table `list_products`
 --
 ALTER TABLE `list_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT pour la table `message`
 --
@@ -305,12 +309,12 @@ ALTER TABLE `message`
 -- AUTO_INCREMENT pour la table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- Contraintes pour les tables exportées
 --
