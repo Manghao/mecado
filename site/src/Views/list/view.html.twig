@@ -28,7 +28,7 @@
             {% if isEnded == false %}
                 {% if auth.id == list.id_creator %}
                     <div class="{% if cookie == true %}column-6{% else %}column-4{% endif %}">
-                        <a href="" class="btn btn-success btn-el">&Eacute;diter la liste</a>
+                        <a href="{{ path_for('list.edit.form', {id: list.id}) }}" class="btn btn-success btn-el">&Eacute;diter la liste</a>
                     </div>
                     {% if cookie == false %}
                         <div class="column-4">
