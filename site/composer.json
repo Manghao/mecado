@@ -15,7 +15,8 @@
         "slim/flash": "^0.2.0",
         "slim/csrf": "^0.8.1",
         "respect/validation": "^1.1",
-        "fzaninotto/faker": "^1.6"
+        "fzaninotto/faker": "^1.6",
+        "voku/anti-xss": "^2.1"
     },
     "autoload": {
     	"psr-4": {
