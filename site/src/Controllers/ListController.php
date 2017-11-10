@@ -639,4 +639,3 @@ class ListController extends BaseController
         }
     }
 }
-
