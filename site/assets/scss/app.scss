@@ -201,10 +201,36 @@ a.product_url {
 
 .column-6 {
   @include col((((6 / $max_columns) * 100%) - (2 * $columns_spacing)));
+
+  @media screen and (max-width: 1036px) {
+    & {
+      @include col((((12 / $max_columns) * 100%) - (2 * $columns_spacing)));
+    }
+  }
 }
 
 .column-12 {
   @include col((((12 / $max_columns) * 100%) - (2 * $columns_spacing)));
+}
+
+#btn_add_products {
+  display: block;
+
+  @media screen and (max-width: 573px) {
+      & {
+        display: none;
+      }
+  }
+}
+
+#btn_add_products_hidden {
+  display: none;
+
+  @media screen and (max-width: 573px) {
+    & {
+      display: block;
+    }
+  }
 }
 
 .card {

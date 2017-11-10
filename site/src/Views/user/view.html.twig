@@ -8,7 +8,7 @@
 
     <div class="grid">
         <div class="column-6">
-            <h2 class="center">Mes informations</h2>
+            <h2>Mes informations</h2>
             <hr class="clear-r">
             <p><strong>Pr&eacute;nom:</strong> {{ auth.first_name }}</p>
             <p><strong>Nom:</strong> {{ auth.last_name }}</p>
@@ -36,7 +36,8 @@
                             <td>
                                 <div class="row">
                                     <a onclick="return confirm('Etes vous sûr de vouloir supprimer cette liste ?')" href="{{ path_for('list.remove', {id: list.id}) }}" class="btn btn-danger btn-el">Supprimer</a>
-                                    <a href="{{ path_for('list.listitems', {id: list.id}) }}" class="btn btn-info btn-el">Ajouter des produits</a>
+                                    <a href="{{ path_for('list.listitems', {id: list.id}) }}" id="btn_add_products" class="btn btn-info btn-el">Ajouter des produits</a>
+                                    <a href="{{ path_for('list.listitems', {id: list.id}) }}" id="btn_add_products_hidden" class="btn btn-info btn-el">Ajouter</a>
                                 </div>
                             </td>
                         </tr>
