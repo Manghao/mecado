@@ -464,4 +464,104 @@ class ListController extends BaseController
             }
         }
     }
+
+    public function listEditForm(RequestInterface $request, ResponseInterface $response, $args)
+    {
+        $list = Liste::where('id', '=', $args['id'])->first();
+
+        if (!is_null($list)) {
+            $this->render($response, 'list/edit', [
+                'list' => $list
+            ]);
+        } else {
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable !');
+            return $this->redirect($response, 'index');
+        }
+    }
+
+    public function listEdit(RequestInterface $request, ResponseInterface $response, $args)
+    {
+        $list = Liste::where('id', '=', $args['id'])->first();
+        if (!is_null($list)) {
+            if (false === $request->getAttribute('csrf_status')) {
+                $this->flash('error', 'Une erreur est survenue pendant l\'envoi du formulaire !');
+                return $this->redirect($response, 'list.creationlist.form', $request->getparams());
+            } else {
+
+                $errors = [];
+
+                if (!Validator::stringType()->notEmpty()->validate($request->getParam('list_title'))) {
+                    $errors['list_title'] = "Veuillez saisir un titre valide.";
+                }
+
+                if (!Validator::stringType()->notEmpty()->validate($request->getParam('description'))) {
+                    $errors['description'] = "Veuillez saisir une descritpion valide.";
+                }
+
+                if (!Validator::notEmpty()->validate($request->getParam('end_date'))) {
+                    $errors['end_date'] = "Veuillez saisir une date valide.";
+                }
+
+                $dateListe = strtotime($request->getParam('end_date'));
+                $date = strtotime(date('d/m/Y'));
+
+                if ($date > $dateListe) {
+                    $errors['end_date'] = "Veuillez saisir une date qui n'est pas encore passée.";
+                }
+
+                if (empty($errors)) {
+                    $list->name = $request->getParam('list_title');
+                    $list->descr = $request->getParam('description');
+                    $list->date_exp = date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
+                    $list->other_dest = is_null($request->getParam('other_dest')) ? 0 : 1;
+
+                    $list->id_creator = Session::get('user')->id;
+                    $list->save();
+
+                    if ($list->other_dest == 0) {
+                        setcookie('mecado_' . $list->id, $list->id, strtotime($request->getParam('end_date')), '/', current($request->getHeader('Host')), false, true);
+                    }
+
+                    $this->flash('success', 'Liste mise à jour');
+                    return $this->redirect($response, 'list.edit.form', [
+                        'id' => $list->id
+                    ]);
+
+                } else {
+                    $this->flash('errors', $errors);
+                    return $this->redirect($response, 'list.edit.form', [
+                        'id' => $list->id
+                    ]);
+                }
+            }
+        } else {
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable !');
+            return $this->redirect($response, 'index');
+        }
+    }
+
+    public function removeProduct(RequestInterface $request, ResponseInterface $response, $args)
+    {
+        $list = Liste::where('id', '=', $args['list'])->first();
+        if (!is_null($list)) {
+
+            $listProduct = ListProducts::where('id_list', '=', $list->id)
+                ->where('id_prod', '=', $args['prod'])
+                ->first();
+
+            if (!is_null($listProduct)) {
+                $listProduct->delete();
+                $this->flash('success', 'Prouit supprimé de la liste');
+            } else {
+                $this->flash('error', 'Impossible de supprimer le produit de la liste');
+            }
+
+            return $this->redirect($response, 'list.edit.form', [
+                'id' => $list->id
+            ]);
+        } else {
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable !');
+            return $this->redirect($response, 'index');
+        }
+    }
 }
