@@ -124,7 +124,7 @@ class UserController extends BaseController
                             $this->flash('success', "Connexion réussie avec succès.");
                             return $this->redirect($response, 'user.view');
                         } else {
-                            $this->flash('error', "Mot de passe incorrecte");
+                            $this->flash('error', "Mot de passe incorrect");
                             return $this->redirect($response, 'user.login.form', []);
                         }
                     } else {
