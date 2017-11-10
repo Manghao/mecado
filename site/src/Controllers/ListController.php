@@ -40,7 +40,10 @@ class ListController extends BaseController
             $antiXssEndDate = new AntiXSS();
             $antiXssEndDate->xss_clean($request->getParam('end_date'));
 
-            if (!$antiXssTitle->isXssFound() && !$antiXssDescr->isXssFound() && !$antiXssEndDate->isXssFound()) {
+            $antiXssNameDest = new AntiXSS();
+            $antiXssNameDest->xss_clean($request->getParam('name_dest'));
+
+            if (!$antiXssTitle->isXssFound() && !$antiXssDescr->isXssFound() && !$antiXssEndDate->isXssFound() && !$antiXssNameDest->isXssFound()) {
                 $errors = [];
 
                 if (!Validator::stringType()->notEmpty()->validate($request->getParam('list_title'))) {
@@ -54,6 +57,13 @@ class ListController extends BaseController
                 if (!Validator::notEmpty()->validate($request->getParam('end_date'))) {
                     $errors['end_date'] = "Veuillez saisir une date valide.";
                 }
+
+                if (!empty($request->getParam('name_dest'))) {
+                    if (!Validator::stringType()->notEmpty()->validate($request->getParam('name_dest'))) {
+                        $errors['name_dest'] = "Veuillez saisir un nom valide.";
+                    }
+                }
+
                 $dateListe = strtotime($request->getParam('end_date'));
                 $date = strtotime(date('Y-m-d'));
 
@@ -67,7 +77,7 @@ class ListController extends BaseController
                     $liste->descr = $request->getParam('description');
                     $liste->date_exp = date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
                     $liste->other_dest = is_null($request->getParam('other_dest')) ? 0 : 1;
-
+                    $liste->name_dest = !empty($request->getParam('name_dest')) ? $request->getParam('name_dest') : null;
                     $liste->id_creator = Session::get('user')->id;
                     $liste->save();
 
