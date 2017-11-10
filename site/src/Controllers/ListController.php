@@ -31,45 +31,58 @@ class ListController extends BaseController
             $this->flash('error', 'Une erreur est survenue pendant l\'envoi du formulaire !');
             return $this->redirect($response, 'list.creationlist.form', $request->getparams());
         } else {
+            $antiXssTitle = new AntiXSS();
+            $antiXssTitle->xss_clean($request->getParam('list_title'));
 
-            $errors = [];
+            $antiXssDescr = new AntiXSS();
+            $antiXssDescr->xss_clean($request->getParam('description'));
 
-            if (!Validator::stringType()->notEmpty()->validate($request->getParam('list_title'))) {
-                $errors['list_title'] = "Veuillez saisir un titre valide.";
-            }
+            $antiXssEndDate = new AntiXSS();
+            $antiXssEndDate->xss_clean($request->getParam('end_date'));
 
-            if (!Validator::stringType()->notEmpty()->validate($request->getParam('description'))) {
-                $errors['description'] = "Veuillez saisir une descritpion valide.";
-            }
+            if (!$antiXssTitle->isXssFound() && !$antiXssDescr->isXssFound() && !$antiXssEndDate->isXssFound()) {
+                $errors = [];
 
-            if (!Validator::notEmpty()->validate($request->getParam('end_date'))) {
-                $errors['end_date'] = "Veuillez saisir une date valide.";
-            }
-            $dateListe = strtotime($request->getParam('end_date'));
-            $date = strtotime(date('Y-m-d'));
-
-            if ($date > $dateListe) {
-                $errors['end_date'] = "Veuillez saisir une date qui n'est pas encore passée.";
-            }
-
-            if (empty($errors)) {
-                $liste = new Liste();
-                $liste->name=$request->getParam('list_title');
-                $liste->descr=$request->getParam('description');
-                $liste->date_exp=date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
-                $liste->other_dest=is_null($request->getParam('other_dest')) ? 0 : 1;
-
-                $liste->id_creator=Session::get('user')->id;
-                $liste->save();
-
-                if ($liste->other_dest == 0) {
-                    setcookie('mecado_' . $liste->id, $liste->id, strtotime($request->getParam('end_date')), '/', current($request->getHeader('Host')), false, true);
+                if (!Validator::stringType()->notEmpty()->validate($request->getParam('list_title'))) {
+                    $errors['list_title'] = "Veuillez saisir un titre valide.";
                 }
 
-                return $this->redirect($response, 'list.listitems', ['id' => $liste->id]);
+                if (!Validator::stringType()->notEmpty()->validate($request->getParam('description'))) {
+                    $errors['description'] = "Veuillez saisir une descritpion valide.";
+                }
 
+                if (!Validator::notEmpty()->validate($request->getParam('end_date'))) {
+                    $errors['end_date'] = "Veuillez saisir une date valide.";
+                }
+                $dateListe = strtotime($request->getParam('end_date'));
+                $date = strtotime(date('Y-m-d'));
+
+                if ($date > $dateListe) {
+                    $errors['end_date'] = "Veuillez saisir une date qui n'est pas encore passée.";
+                }
+
+                if (empty($errors)) {
+                    $liste = new Liste();
+                    $liste->name = $request->getParam('list_title');
+                    $liste->descr = $request->getParam('description');
+                    $liste->date_exp = date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
+                    $liste->other_dest = is_null($request->getParam('other_dest')) ? 0 : 1;
+
+                    $liste->id_creator = Session::get('user')->id;
+                    $liste->save();
+
+                    if ($liste->other_dest == 0) {
+                        setcookie('mecado_' . $liste->id, $liste->id, strtotime($request->getParam('end_date')), '/', current($request->getHeader('Host')), false, true);
+                    }
+
+                    return $this->redirect($response, 'list.listitems', ['id' => $liste->id]);
+
+                } else {
+                    $this->flash('errors', $errors);
+                    return $this->redirect($response, 'list.creationlist', $args);
+                }
             } else {
-                $this->flash('errors', $errors);
+                $this->flash('error', 'Impossible de traiter le fomulaire !');
                 return $this->redirect($response, 'list.creationlist', $args);
             }
         }
@@ -82,76 +95,93 @@ class ListController extends BaseController
 
     public function createproduct(RequestInterface $request, ResponseInterface $response, $args)
     {
-        if (false === $request->getAttribute('csrf_status')) {
-            $this->flash('error', 'Une erreur est survenue pendant l\'envoi du formulaire !');
-            return $this->redirect($response, 'list.createproduct.form', $request->getparams());
-        } else {
-            $errors = [];
+        $list = Liste::where('id', '=', $args['id'])->first();
+        if (!is_null($list)) {
+            if (false === $request->getAttribute('csrf_status')) {
+                $this->flash('error', 'Une erreur est survenue pendant l\'envoi du formulaire !');
+                return $this->redirect($response, 'list.createproduct.form', $request->getparams());
+            } else {
+                $antiXssName = new AntiXSS();
+                $antiXssName->xss_clean($request->getParam('name'));
 
-            if (!Validator::stringType()->notEmpty()->validate($request->getParam('name'))) {
-                $errors['name'] = "Veuillez saisir un nom valide.";
-            }
+                $antiXssDescr = new AntiXSS();
+                $antiXssDescr->xss_clean($request->getParam('description'));
 
-            if (!Validator::stringType()->notEmpty()->validate($request->getParam('description'))) {
-                $errors['description'] = "Veuillez saisir une descritpion valide.";
-            }
+                $antiXssLink = new AntiXSS();
+                $antiXssLink->xss_clean($request->getParam('link'));
 
-            if (!Validator::url()->validate($request->getParam('link'))) {
-                $errors['link'] = "Veuillez saisir un lien valide.";
-            }
+                $antiXssPrice = new AntiXSS();
+                $antiXssPrice->xss_clean($request->getParam('price'));
 
-            if (!Validator::floatval()->notEmpty()->validate($request->getParam('price'))) {
-                $errors['price'] = "Veuillez saisir un lien valide.";
-            }
+                if (!$antiXssName->isXssFound() && !$antiXssDescr->isXssFound() && !$antiXssLink->isXssFound() && !$antiXssPrice->isXssFound()) {
+                    $errors = [];
 
-            if(!empty($request->getParam('pic'))){
-                if (!Validator::image()->validate($request->getParam('pic'))) {
-                    $errors['pic'] = "Veuillez ajouter un fichier valide.";
-                }
-            }
+                    if (!Validator::stringType()->notEmpty()->validate($request->getParam('name'))) {
+                        $errors['name'] = "Veuillez saisir un nom valide.";
+                    }
 
-            $list = Liste::where('id', '=', $args['id'])
-                ->first();
+                    if (!Validator::stringType()->notEmpty()->validate($request->getParam('description'))) {
+                        $errors['description'] = "Veuillez saisir une descritpion valide.";
+                    }
 
-            if (empty($errors)) {
-                if (!is_null($list)) {
-                    $product = new Product();
-                    $product->name=$request->getParam('name');
-                    $product->descr=$request->getParam('description');
-                    $product->url=$request->getParam('link');
-                    $product->price=$request->getParam('price');
-                    $product->custom_product=1;
-                    $product->save();
+                    if (!Validator::url()->validate($request->getParam('link'))) {
+                        $errors['link'] = "Veuillez saisir un lien valide.";
+                    }
 
-                    $image= new Image();
-                    $image->id_prod=$product->id;
+                    if (!Validator::floatval()->notEmpty()->validate($request->getParam('price'))) {
+                        $errors['price'] = "Veuillez saisir un lien valide.";
+                    }
 
-                    $file = $request->getUploadedFiles();
-
-                    if (!empty($file)) {
-                        $img = $file['pic'];
-                        if ($img->getError() == UPLOAD_ERR_OK) {
-                            $name = strtolower(Utils::slug($request->getParam('name')) . '_' . $img->getClientFilename());
-                            $img->moveTo(UPLOAD . DS . $name);
-
-                            $image->name=$name;
-                            $image->save();
+                    if (!empty($request->getParam('pic'))) {
+                        if (!Validator::image()->validate($request->getParam('pic'))) {
+                            $errors['pic'] = "Veuillez ajouter un fichier valide.";
                         }
                     }
 
-                    $this->flash('success', 'Le produit "' . $product->name . '" a bien été ajouté à votre liste !');
-                    return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
+                    if (empty($errors)) {
+
+                        $product = new Product();
+                        $product->name = $request->getParam('name');
+                        $product->descr = $request->getParam('description');
+                        $product->url = $request->getParam('link');
+                        $product->price = $request->getParam('price');
+                        $product->custom_product = 1;
+                        $product->save();
+
+                        $image = new Image();
+                        $image->id_prod = $product->id;
+
+                        $file = $request->getUploadedFiles();
+
+                        if (!empty($file)) {
+                            $img = $file['pic'];
+                            if ($img->getError() == UPLOAD_ERR_OK) {
+                                $name = strtolower(Utils::slug($request->getParam('name')) . '_' . $img->getClientFilename());
+                                $img->moveTo(UPLOAD . DS . $name);
+
+                                $image->name = $name;
+                                $image->save();
+                            }
+                        }
+
+                        $this->flash('success', 'Le produit "' . $product->name . '" a bien été ajouté à votre liste !');
+                        return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
+                    } else {
+                        $this->flash('errors', $errors);
+                        return $this->redirect($response, 'list.listitems', [
+                            'id' => $list->id
+                        ]);
+                    }
+                } else {
+                    $this->flash('error', 'Impossible de traiter le formulaire !');
+                    return $this->redirect($response, 'list.listitems', [
+                        'id' => $list->id
+                    ]);
                 }
-                else {
-                    $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
-                    return $this->redirect($response, 'index');
-                }
-            } else {
-                $this->flash('errors', $errors);
-                return $this->redirect($response, 'list.listitems', [
-                    'id' => $list->id
-                ]);
             }
+        } else {
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
+            return $this->redirect($response, 'index');
         }
     }
 
@@ -297,7 +327,7 @@ class ListController extends BaseController
                 'canReserved' => ($currentDate > $exp_date) ? false : true
             ]);
         } else {
-            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable.');
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable.');
             return $this->redirect($response, 'index');
         }
     }
@@ -349,11 +379,11 @@ class ListController extends BaseController
                     'cookie' => isset($_COOKIE['mecado_' . $list->id]) ? true : false
                 ]);
             } else {
-                $this->flash('error', 'Les messages demandés n\'existent pas ou sont introuveables !');
+                $this->flash('error', 'Les messages demandés n\'existent pas ou sont introuvables !');
                 return $this->redirect($response, 'index');
             }
         } else {
-            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable !');
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
             return $this->redirect($response, 'index');
         }
     }
@@ -364,51 +394,63 @@ class ListController extends BaseController
             $this->flash('error', 'Une erreur est survenue pendant l\'envoi du formulaire !');
             return $this->redirect($response, 'list.messages', $request->getparams());
         } else {
+            $antiXssPseudo = new AntiXSS();
+            $antiXssPseudo->xss_clean($request->getParam('pseudo'));
 
-            $errors = [];
+            $antiXssMessage = new AntiXSS();
+            $antiXssMessage->xss_clean($request->getParam('message'));
 
-            if (!Validator::stringType()->notEmpty()->validate($request->getParam('pseudo'))) {
-                $errors['pseudo'] = "Veuillez saisir un nom valide.";
-            }
+            if (!$antiXssPseudo->isXssFound() && !$antiXssMessage->isXssFound()) {
+                $errors = [];
 
-            if (!Validator::stringType()->notEmpty()->validate($request->getParam('message'))) {
-                $errors['message'] = "Veuillez saisir un message valide.";
-            }
-
-            if(!empty($request->getParam('pic'))){
-                if (!Validator::image()->validate($request->getParam('pic'))) {
-                    $errors['pic'] = "Veuillez ajouter un fichier valide.";
-                }
-            }
-
-            $list = Liste::where('id', '=', $args['id'])
-                ->first();
-
-            if (empty($errors)) {
-                if (!is_null($list)) {
-                    $comment = new Comment();
-                    $comment->id_list = $list->id;
-                    $comment->author = $request->getParam('pseudo');
-                    $comment->msg = $request->getParam('message');
-                    $comment->save();
-
-                    $this->flash('success', 'Votre message a bien été ajouté à la liste !');
-                    return $this->redirect($response, 'list.messages', ['id' => $list->id]);
-                }
-                else {
-                    $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
-                    return $this->redirect($response, 'index');
+                if (!Validator::stringType()->notEmpty()->validate($request->getParam('pseudo'))) {
+                    $errors['pseudo'] = "Veuillez saisir un nom valide.";
                 }
 
+                if (!Validator::stringType()->notEmpty()->validate($request->getParam('message'))) {
+                    $errors['message'] = "Veuillez saisir un message valide.";
+                }
+
+                if(!empty($request->getParam('pic'))){
+                    if (!Validator::image()->validate($request->getParam('pic'))) {
+                        $errors['pic'] = "Veuillez ajouter un fichier valide.";
+                    }
+                }
+
+                $list = Liste::where('id', '=', $args['id'])
+                    ->first();
+
+                if (empty($errors)) {
+                    if (!is_null($list)) {
+                        $comment = new Comment();
+                        $comment->id_list = $list->id;
+                        $comment->author = $request->getParam('pseudo');
+                        $comment->msg = $request->getParam('message');
+                        $comment->save();
+
+                        $this->flash('success', 'Votre message a bien été ajouté à la liste !');
+                        return $this->redirect($response, 'list.messages', ['id' => $list->id]);
+                    }
+                    else {
+                        $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
+                        return $this->redirect($response, 'index');
+                    }
+
+                } else {
+                    $this->flash('errors', $errors);
+                    return $this->redirect($response, 'list.messages', [
+                        'id' => $list->id
+                    ]);
+                }
             } else {
-                $this->flash('errors', $errors);
+                $this->flash('error', 'Impossible de traiter le formulaire !');
                 return $this->redirect($response, 'list.messages', [
                     'id' => $list->id
                 ]);
             }
         }
     }
-  
+
     public function reserver(RequestInterface $request, ResponseInterface $response, $args)
     {
         if (false === $request->getAttribute('csrf_status')) {
@@ -418,49 +460,62 @@ class ListController extends BaseController
             $list = Liste::where('id', '=', $args['list'])->first();
 
             if (!is_null($list)) {
-                $errors = [];
+                $antiXssName = new AntiXSS();
+                $antiXssName->xss_clean($request->getParam('name'));
 
-                if (!Validator::stringType()->notEmpty()->validate($request->getParam('name'))) {
-                    $errors['name'] = "Veuillez saisir un nom valide.";
-                }
+                $antiXssMessage = new AntiXSS();
+                $antiXssMessage->xss_clean($request->getParam('message'));
 
-                if (!Validator::stringType()->notEmpty()->validate($request->getParam('message'))) {
-                    $errors['message'] = "Veuillez saisir un message valide.";
-                }
+                if (!$antiXssName->isXssFound() && ! $antiXssMessage->isXssFound()) {
+                    $errors = [];
 
-                if (empty($errors)) {
-                    $lisProducts = ListProducts::where('id', '=', $args['idListProducts'])->first();
-                    if (!is_null($lisProducts)) {
-                        $lisProducts->reserve = 1;
-                        $lisProducts->user_reserve = $request->getParam('name');
-                        $lisProducts->save();
+                    if (!Validator::stringType()->notEmpty()->validate($request->getParam('name'))) {
+                        $errors['name'] = "Veuillez saisir un nom valide.";
+                    }
 
-                        Message::create([
-                            'id_list_products' => $args['idListProducts'],
-                            'author' => $request->getParam('name'),
-                            'msg' => $request->getParam('message')
-                        ]);
+                    if (!Validator::stringType()->notEmpty()->validate($request->getParam('message'))) {
+                        $errors['message'] = "Veuillez saisir un message valide.";
+                    }
 
-                        $this->flash('success', 'Produit réservé.');
-                        return $this->redirect($response, 'list.view.shared', [
-                            'token' => $list->url_share
-                        ]);
+                    if (empty($errors)) {
+                        $lisProducts = ListProducts::where('id', '=', $args['idListProducts'])->first();
+                        if (!is_null($lisProducts)) {
+                            $lisProducts->reserve = 1;
+                            $lisProducts->user_reserve = $request->getParam('name');
+                            $lisProducts->save();
+
+                            Message::create([
+                                'id_list_products' => $args['idListProducts'],
+                                'author' => $request->getParam('name'),
+                                'msg' => $request->getParam('message')
+                            ]);
+
+                            $this->flash('success', 'Produit réservé.');
+                            return $this->redirect($response, 'list.view.shared', [
+                                'token' => $list->url_share
+                            ]);
+                        } else {
+                            $this->flash('error', 'Impossible de réserver le produit.');
+                            return $this->redirect($response, 'list.view.shared', [
+                                'token' => $list->url_share,
+                            ]);
+                        }
                     } else {
-                        $this->flash('error', 'Impossible de réserver le produit.');
+                        $errors['modal'] = $args['idListProdutcs'];
+
+                        $this->flash('errors', $errors);
                         return $this->redirect($response, 'list.view.shared', [
                             'token' => $list->url_share,
                         ]);
                     }
                 } else {
-                    $errors['modal'] = $args['idListProdutcs'];
-
-                    $this->flash('errors', $errors);
+                    $this->flash('error', 'Impossible de traiter le formulaire !');
                     return $this->redirect($response, 'list.view.shared', [
                         'token' => $list->url_share,
                     ]);
                 }
             } else {
-                $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable !');
+                $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
                 return $this->redirect($response, 'index');
             }
         }
@@ -475,7 +530,7 @@ class ListController extends BaseController
                 'list' => $list
             ]);
         } else {
-            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable !');
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
             return $this->redirect($response, 'index');
         }
     }
@@ -488,55 +543,70 @@ class ListController extends BaseController
                 $this->flash('error', 'Une erreur est survenue pendant l\'envoi du formulaire !');
                 return $this->redirect($response, 'list.creationlist.form', $request->getparams());
             } else {
+                $antiXssTitle = new AntiXSS();
+                $antiXssTitle->xss_clean($request->getParam('list_title'));
 
-                $errors = [];
+                $antiXssDescr = new AntiXSS();
+                $antiXssDescr->xss_clean($request->getParam('description'));
 
-                if (!Validator::stringType()->notEmpty()->validate($request->getParam('list_title'))) {
-                    $errors['list_title'] = "Veuillez saisir un titre valide.";
-                }
+                $antiXssEndDate = new AntiXSS();
+                $antiXssEndDate->xss_clean($request->getParam('end_date'));
 
-                if (!Validator::stringType()->notEmpty()->validate($request->getParam('description'))) {
-                    $errors['description'] = "Veuillez saisir une descritpion valide.";
-                }
+                if (!$antiXssTitle->isXssFound() && !$antiXssDescr->isXssFound() && !$antiXssEndDate->isXssFound()) {
+                    $errors = [];
 
-                if (!Validator::notEmpty()->validate($request->getParam('end_date'))) {
-                    $errors['end_date'] = "Veuillez saisir une date valide.";
-                }
-
-                $dateListe = strtotime($request->getParam('end_date'));
-                $date = strtotime(date('d/m/Y'));
-
-                if ($date > $dateListe) {
-                    $errors['end_date'] = "Veuillez saisir une date qui n'est pas encore passée.";
-                }
-
-                if (empty($errors)) {
-                    $list->name = $request->getParam('list_title');
-                    $list->descr = $request->getParam('description');
-                    $list->date_exp = date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
-                    $list->other_dest = is_null($request->getParam('other_dest')) ? 0 : 1;
-
-                    $list->id_creator = Session::get('user')->id;
-                    $list->save();
-
-                    if ($list->other_dest == 0) {
-                        setcookie('mecado_' . $list->id, $list->id, strtotime($request->getParam('end_date')), '/', current($request->getHeader('Host')), false, true);
+                    if (!Validator::stringType()->notEmpty()->validate($request->getParam('list_title'))) {
+                        $errors['list_title'] = "Veuillez saisir un titre valide.";
                     }
 
-                    $this->flash('success', 'Liste mise à jour');
-                    return $this->redirect($response, 'list.edit.form', [
-                        'id' => $list->id
-                    ]);
+                    if (!Validator::stringType()->notEmpty()->validate($request->getParam('description'))) {
+                        $errors['description'] = "Veuillez saisir une descritpion valide.";
+                    }
 
+                    if (!Validator::notEmpty()->validate($request->getParam('end_date'))) {
+                        $errors['end_date'] = "Veuillez saisir une date valide.";
+                    }
+
+                    $dateListe = strtotime($request->getParam('end_date'));
+                    $date = strtotime(date('d/m/Y'));
+
+                    if ($date > $dateListe) {
+                        $errors['end_date'] = "Veuillez saisir une date qui n'est pas encore passée.";
+                    }
+
+                    if (empty($errors)) {
+                        $list->name = $request->getParam('list_title');
+                        $list->descr = $request->getParam('description');
+                        $list->date_exp = date('Y-m-d H:i:s', strtotime($request->getParam('end_date')));
+                        $list->other_dest = is_null($request->getParam('other_dest')) ? 0 : 1;
+
+                        $list->id_creator = Session::get('user')->id;
+                        $list->save();
+
+                        if ($list->other_dest == 0) {
+                            setcookie('mecado_' . $list->id, $list->id, strtotime($request->getParam('end_date')), '/', current($request->getHeader('Host')), false, true);
+                        }
+
+                        $this->flash('success', 'Liste mise à jour');
+                        return $this->redirect($response, 'list.edit.form', [
+                            'id' => $list->id
+                        ]);
+
+                    } else {
+                        $this->flash('errors', $errors);
+                        return $this->redirect($response, 'list.edit.form', [
+                            'id' => $list->id
+                        ]);
+                    }
                 } else {
-                    $this->flash('errors', $errors);
+                    $this->flash('error', 'Impossible de traiter le formulaire !');
                     return $this->redirect($response, 'list.edit.form', [
                         'id' => $list->id
                     ]);
                 }
             }
         } else {
-            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable !');
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
             return $this->redirect($response, 'index');
         }
     }
@@ -561,7 +631,7 @@ class ListController extends BaseController
                 'id' => $list->id
             ]);
         } else {
-            $this->flash('error', 'La liste demandée n\'existe pas ou est introuveable !');
+            $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
             return $this->redirect($response, 'index');
         }
     }
