@@ -99,7 +99,7 @@ class ListController extends BaseController
                 $errors['link'] = "Veuillez saisir un lien valide.";
             }
 
-            if (!Validator::floatval()->notEmpty()->validate($request->getParam('price'))) {
+            if (!Validator::floatVal()->notEmpty()->validate($request->getParam('price'))) {
                 $errors['price'] = "Veuillez saisir un lien valide.";
             }
 
@@ -134,9 +134,10 @@ class ListController extends BaseController
                             $img->moveTo(UPLOAD . DS . $name);
 
                             $image->name=$name;
-                            $image->save();
                         }
                     }
+
+                    $image->save();
 
                     $this->flash('success', 'Le produit "' . $product->name . '" a bien été ajouté à votre liste !');
                     return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
