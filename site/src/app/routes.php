@@ -79,15 +79,25 @@ $app->group('/list', function() {
         ->setName('list.remove');
 
     $this->get('/{id:[0-9]+}/messages', ListController::class . ':messages')
-        ->add(new AuthMiddleware($container))
         ->setName('list.messages');
 
     $this->post('/{id:[0-9]+}/addmessage', ListController::class . ':addmessage')
-        ->add(new AuthMiddleware($container))
         ->setName('list.addmessage');
 
     $this->post('/{list:[0-9]+}/reserver/{idListProducts:[0-9]+}', ListController::class . ':reserver')
         ->setName('product.reserver');
+
+    $this->get('/edit/{id:[0-9]+}', ListController::class . ':listEditForm')
+        ->add(new AuthMiddleware($container))
+        ->setName('list.edit.form');
+
+    $this->post('/edit/{id:[0-9]+}', ListController::class . ':listEdit')
+        ->add(new AuthMiddleware($container))
+        ->setName('list.edit');
+
+    $this->get('/{list:[0-9]+}/remove/{prod:[0-9]+}', ListController::class . ':removeProduct')
+        ->add(new AuthMiddleware($container))
+        ->setName('list.remove.product');
 });
 
 $app->group('/products', function() {

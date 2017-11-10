@@ -10,14 +10,23 @@
         </div>
 
         <div class="grid card">
-            {% for message in messages %}
+
+            {% if messages | length > 0 %}
+                {% for message in messages %}
+                    <div class="messages column-12">
+                        <div class="card_body">
+                            <p><strong>Par {{ message.author }}</strong> <small><em>le {{ message.created_at | date('d-m-Y H:i') }}</em></small></p>
+                            <p class="msg">{{ message.msg }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
                 <div class="messages column-12">
                     <div class="card_body">
-                        <p><strong>Par {{ message.author }}</strong> <small><em>le {{ message.created_at | date('d-m-Y H:i') }}</em></small></p>
-                        <p class="msg">{{ message.msg }}</p>
+                        <p><strong>Il n'y a aucun message.</strong></p>
                     </div>
                 </div>
-            {% endfor %}
+            {% endif %}
         </div>
         {% if pagination %}
             <ul class="pagination">

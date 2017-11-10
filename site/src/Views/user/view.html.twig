@@ -16,6 +16,7 @@
         </div>
 
         <div class="column-6">
+            <a class="btn btn-info" href="{{ path_for('list.creationlist.form') }}">Créer une liste</a>
             <table class="bordered centered">
                 <thead>
                 <tr>
@@ -25,6 +26,7 @@
                 </tr>
                 </thead>
                 <tbody>
+                {% if lists | length > 0 %}
                     {% for list in lists %}
                         <tr>
                             <td>
@@ -42,6 +44,13 @@
                             </td>
                         </tr>
                     {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td>
+                                Vous n'avez pas de listes
+                            </td>
+                        </tr>
+                    {% endif %}
                 </tbody>
             </table>
         </div>

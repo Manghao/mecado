@@ -1,0 +1,66 @@
+{% extends "layouts/layout.html.twig" %}
+
+{% set title = 'Édition ' ~ list.name %}
+
+
+{% block content %}
+
+    <h2>{{ 'Édition : ' ~ list.name }}</h2>
+    <hr class="clear-r">
+
+    <div class="grid">
+        <form action="{{ path_for('list.edit', {id: list.id}) }}" method="post" class="column-6">
+            {{ csrf() }}
+
+            <label for="list_title">Titre de la liste</label>
+            <input class="{% if flash.errors.list_title %}has-error{% endif %}" type="text" name="list_title" id="list_title" value="{% if persistValues|length > 0 %}{{ persistValues.list_title }}{% else %}{{ list.name }}{% endif %}" required>
+            {% if flash.errors.list_title %}
+                <span class="error">{{ flash.errors.list_title }}</span>
+            {% endif %}
+
+            <label for="description">Description</label>
+            <input class="{% if flash.errors.description %}has-error{% endif %}" type="text" name="description" id="description" value="{% if persistValues|length > 0 %}{{ persistValues.description }}{% else %}{{ list.descr }}{% endif %}" required>
+            {% if flash.errors.description %}
+                <span class="error">{{ flash.errors.description }}</span>
+            {% endif %}
+
+            <label for="datepicker">Date de fin</label>
+            <input class="{% if flash.errors.end_date %}has-error{% endif %}" type="text" name="end_date" id="datepicker" value="{% if persistValues|length > 0 %}{{ persistValues.end_date }}{% else %}{{ list.date_exp|date('d/m/Y') }}{% endif %}" required>
+            {% if flash.errors.end_date %}
+                <span class="error">{{ flash.errors.end_date }}</span>
+            {% endif %}
+
+            <input class="{% if flash.errors.other_dest %}has-error{% endif %}" value="other_dest" type="checkbox" name="other_dest" id="other_dest" value="{{ persistValues.other_dest }}" {% if list.other_dest == 1 %}checked{% endif %}>
+            <label for="other_dest">
+                Liste pour une autre personne que moi
+                <i class="material-icons" title="Cochez cette case si la liste que vous créer ne vous est pas déstinée, ainsi vous aurez accès en direct aux messages postés par les participants">help_outline</i>
+            </label>
+            {% if flash.errors.other_dest %}
+                <span class="error">{{ flash.errors.other_dest }}</span>
+            {% endif %}
+
+            <button class="btn btn-info btn-el">Modifier la liste</button>
+        </form>
+
+        <div class="column-6">
+            <table class="bordered centered">
+                <thead>
+                    <tr>
+                        <th colspan="2">Produits</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in list.getProducts %}
+                        <tr>
+                            <td style="width: 80%;">{{ product.name }}</td>
+                            <td>
+                                <a href="{{ path_for('list.remove.product', {list: list.id, prod: product.id}) }}" class="btn btn-danger">Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
