@@ -113,14 +113,8 @@ class ListController extends BaseController
                 $antiXssPrice = new AntiXSS();
                 $antiXssPrice->xss_clean($request->getParam('price'));
 
-<<<<<<< HEAD
-            if (!Validator::floatVal()->notEmpty()->validate($request->getParam('price'))) {
-                $errors['price'] = "Veuillez saisir un lien valide.";
-            }
-=======
                 if (!$antiXssName->isXssFound() && !$antiXssDescr->isXssFound() && !$antiXssLink->isXssFound() && !$antiXssPrice->isXssFound()) {
                     $errors = [];
->>>>>>> 4b4b5bd0d51e8db6c583eab82cd73e7bf5cb3798
 
                     if (!Validator::stringType()->notEmpty()->validate($request->getParam('name'))) {
                         $errors['name'] = "Veuillez saisir un nom valide.";
@@ -130,45 +124,13 @@ class ListController extends BaseController
                         $errors['description'] = "Veuillez saisir une descritpion valide.";
                     }
 
-                    if (!Validator::url()->validate($request->getParam('link'))) {
-                        $errors['link'] = "Veuillez saisir un lien valide.";
-                    }
-
-            if (empty($errors)) {
-                if (!is_null($list)) {
-                    $product = new Product();
-                    $product->name=$request->getParam('name');
-                    $product->descr=$request->getParam('description');
-                    $product->url=$request->getParam('link');
-                    $product->price=$request->getParam('price');
-                    $product->custom_product=1;
-                    $product->save();
-
-                    $image= new Image();
-                    $image->id_prod=$product->id;
-
-                    $file = $request->getUploadedFiles();
-
-                    if (!empty($file)) {
-                        $img = $file['pic'];
-                        if ($img->getError() == UPLOAD_ERR_OK) {
-                            $name = strtolower(Utils::slug($request->getParam('name')) . '_' . $img->getClientFilename());
-                            $img->moveTo(UPLOAD . DS . $name);
-
-                            $image->name=$name;
+                    if (!empty($request->getParam('link'))) {
+                        if (!Validator::url()->validate($request->getParam('link'))) {
+                            $errors['link'] = "Veuillez saisir un lien valide.";
                         }
                     }
 
-                    $image->save();
-
-                    $this->flash('success', 'Le produit "' . $product->name . '" a bien été ajouté à votre liste !');
-                    return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
-                }
-                else {
-                    $this->flash('error', 'La liste demandée n\'existe pas ou est introuvable !');
-                    return $this->redirect($response, 'index');
-=======
-                    if (!Validator::floatval()->notEmpty()->validate($request->getParam('price'))) {
+                    if (!Validator::floatVal()->notEmpty()->validate($request->getParam('price'))) {
                         $errors['price'] = "Veuillez saisir un lien valide.";
                     }
 
@@ -200,9 +162,10 @@ class ListController extends BaseController
                                 $img->moveTo(UPLOAD . DS . $name);
 
                                 $image->name = $name;
-                                $image->save();
                             }
                         }
+
+                        $image->save();
 
                         $this->flash('success', 'Le produit "' . $product->name . '" a bien été ajouté à votre liste !');
                         return $this->redirect($response, 'list.listitems', ['id' => $list->id]);
@@ -217,7 +180,6 @@ class ListController extends BaseController
                     return $this->redirect($response, 'list.listitems', [
                         'id' => $list->id
                     ]);
->>>>>>> 4b4b5bd0d51e8db6c583eab82cd73e7bf5cb3798
                 }
             }
         } else {
