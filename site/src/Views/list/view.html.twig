@@ -32,11 +32,7 @@
                     </div>
                     {% if cookie == false %}
                         <div class="column-4">
-                            {% if list.getComments|length == 0 %}
-                                <div class="btn btn-danger btn-el">Aucun message</div>
-                            {% else %}
-                                <a href="{{ path_for('list.messages', {id: list.id}) }}" class="btn btn-danger btn-el">Messages</a>
-                            {% endif %}
+                            <a href="{{ path_for('list.messages', {id: list.id}) }}" class="btn btn-danger btn-el">Messages</a>
                         </div>
                     {% endif %}
                     <div class="{%  if cookie == true %}column-6{% else %}column-4{% endif %}">
@@ -72,11 +68,7 @@
         <div class="grid">
             {% if cookie == false %}
                 <div class="column-12">
-                    {% if list.getComments|length == 0 %}
-                        <div class="btn btn-danger btn-el">Aucun message</div>
-                    {% else %}
-                        <a href="{{ path_for('list.messages', {id: list.id}) }}" class="btn btn-danger btn-el">Messages</a>
-                    {% endif %}
+                    <a href="{{ path_for('list.messages', {id: list.id}) }}" class="btn btn-danger btn-el">Messages</a>
                 </div>
             {% endif %}
         </div>
