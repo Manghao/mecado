@@ -43,7 +43,7 @@
                 {% endif %}
 
                 <label for="link">Lien du produit</label>
-                <input type="text" name="link" id="link" value="{{ persistValues.link }}"class="{% if flash.errors.link %}has-error{% endif %}" class="{% if flash.errors.last_name %}has-error{% endif %}" required>
+                <input type="text" name="link" id="link" value="{{ persistValues.link }}" class="{% if flash.errors.link %}has-error{% endif %}">
                 {% if flash.errors.link %}
                     <span>{{ flash.errors.link }}</span>
                 {% endif %}
