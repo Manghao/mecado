@@ -16,6 +16,7 @@ use Mecado\Utils\Utils;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Respect\Validation\Validator;
+use voku\helper\AntiXSS;
 
 class ListController extends BaseController
 {
